@@ -1,0 +1,5 @@
+#pragma once
+
+#define RELATIVE_APRILTAG_IMG_DIR "..\\..\\images\\"
+#define RELATIVE_IMG_INPUT_DIR RELATIVE_APRILTAG_IMG_DIR "input\\"
+#define RELATIVE_IMG_OUTPUT_DIR RELATIVE_APRILTAG_IMG_DIR "output\\"
