@@ -1,7 +1,5 @@
 #include "BaselineTagDetector.h"
-
-#define DO_IF_DRAW_BEGIN if (controls.draw) {
-#define DO_IF_DRAW_END }
+#include "util.h"
 
 void showStep5(Step_5 step5, int rows, int cols)
 {
@@ -114,7 +112,7 @@ void showStep11(Step_11 step11, Step_1 step1)
     imshow("Step 11", baseImage);
 }
 
-std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::TagFamily tagFamily, DemoControls& controls) {
+std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::TagFamily tagFamily, DemoControls* controls) {
     //srand(time(0));
     int width = image.cols;
     int height = image.rows;
@@ -123,9 +121,13 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
     imshow("Pre Steps", image);
     DO_IF_DRAW_END
 
-    Step_1 step1 = createOriginalImage(image);
+    Step_1 step1;
+    DO_TIMING_IF_ENABLED(100, "Step 1 (x100)",
+        step1 = createOriginalImage(image);)
     DO_IF_DRAW_BEGIN
+
     imshow("Step 1", step1.fimOrig);
+
     DO_IF_DRAW_END
 
     //! Gaussian smoothing kernel applied to image (0 == no filter).
@@ -138,7 +140,9 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
         */
     float sigma = 0;
 
-    Step_2 step2 = optionallyApplyLowPassFilter(step1, sigma);
+    Step_2 step2;
+    DO_TIMING_IF_ENABLED(1000, "Step 2 (x1k)",
+        step2 = optionallyApplyLowPassFilter(step1, sigma);)
     DO_IF_DRAW_BEGIN
     imshow("Step 2", step2.fim);
     DO_IF_DRAW_END
@@ -152,7 +156,9 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
         */
     float segSigma = 0.8f;
 
-    Step_3 step3 = applyLowPassFilterAndGrayScale(step1, step2, sigma, segSigma);
+    Step_3 step3;
+    DO_TIMING_IF_ENABLED(1000, "Step 3 (x1k)",
+        step3 = applyLowPassFilterAndGrayScale(step1, step2, sigma, segSigma);)
     DO_IF_DRAW_BEGIN
     imshow("Step 3", step3.fimSeg);
     DO_IF_DRAW_END
@@ -163,7 +169,9 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
     // break up segments, causing us to miss Quads. It is useful to do a Gaussian
     // low pass on this step even if we don't want it for encoding.
 
-    Step_4 step4 = computeLocalGradients(step3);
+    Step_4 step4;
+    DO_TIMING_IF_ENABLED(100, "Step 4 (x100)",
+        step4 = computeLocalGradients(step3);)
     DO_IF_DRAW_BEGIN
     imshow("Step 4a: Magnitutde", step4.fimMag);
     imshow("Step 4b: Theta", step4.fimTheta);
@@ -174,7 +182,9 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
     // thetas together. This is a greedy algorithm: we start with
     // the most similar pixels.  We use 4-connectivity.
 
-    Step_5 step5 = extractEdges(step3, step4, width, height);
+    Step_5 step5;
+    DO_TIMING_IF_ENABLED(100, "Step 5 (x100)",
+        step5 = extractEdges(step3, step4, width, height);)
     DO_IF_DRAW_BEGIN
     showStep5(step5, step3.fimSeg.rows, step3.fimSeg.cols);
     DO_IF_DRAW_END
@@ -183,7 +193,9 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
     // Step six: Loop over the pixels again, collecting statistics for each cluster.
     // We will soon fit lines (segments) to these points.
 
-    Step_6 step6 = createClusters(step3, step4, step5);
+    Step_6 step6;
+    DO_TIMING_IF_ENABLED(1000, "Step 6 (x1k)",
+        step6 = createClusters(step3, step4, step5);)
     DO_IF_DRAW_BEGIN
     showStep6(step6, step3.fimSeg.rows, step3.fimSeg.cols);
     DO_IF_DRAW_END
@@ -191,7 +203,9 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
     //================================================================
     // Step seven: Loop over the clusters, fitting lines (which we call Segments).
 
-    Step_7 step7 = fitSegments(step4, step6);
+    Step_7 step7;
+    DO_TIMING_IF_ENABLED(1000, "Step 7 (x1k)",
+        step7 = fitSegments(step4, step6);)
     DO_IF_DRAW_BEGIN
     showStep7(step7, step1);
     DO_IF_DRAW_END
@@ -200,16 +214,22 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
     // (We will chain segments together next...) The gridder accelerates the search by
     // building (essentially) a 2D hash table.
 
-    Step_8 step8 = connectSegments(&step7, width, height);
+    Step_7 step7_new;
+    Step_8 step8;
+    DO_TIMING_IF_ENABLED(1000, "Step 8 (x1k)",
+        step7_new = step7;
+        step8 = connectSegments(&step7_new, width, height);)
     DO_IF_DRAW_BEGIN
-    showStep8(step7, step1);
+    showStep8(step7_new, step1);
     DO_IF_DRAW_END
 
     //================================================================
     // Step nine: Search all connected segments to see if any form a loop of length 4.
     // Add those to the quads list.
 
-    Step_9 step9 = createQuads(step1, &step7);
+    Step_9 step9;
+    DO_TIMING_IF_ENABLED(1000, "Step 9 (x1k)",
+        step9 = createQuads(step1, &step7_new);)
     DO_IF_DRAW_BEGIN
     showStep9(step9, step1);
     DO_IF_DRAW_END
@@ -219,7 +239,9 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
     // threshold color to decide between 0 and 1. Then, we read off the
     // bits and see if they make sense.
 
-    Step_10 step10 = decodeQuads(step2, step9, width, height, tagFamily);
+    Step_10 step10;
+    DO_TIMING_IF_ENABLED(1000, "Step 10 (x1k)",
+        step10 = decodeQuads(step2, step9, width, height, tagFamily);)
     DO_IF_DRAW_BEGIN
     showStep10(step10, step1);
     DO_IF_DRAW_END
@@ -231,7 +253,9 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
     //keep the one with the lowest error, and if the error is the same,
     //the one with the greatest observed perimeter.
 
-    Step_11 step11 = removeDuplicates(step10);
+    Step_11 step11;
+    DO_TIMING_IF_ENABLED(1000, "Step 11 (x1k)",
+        step11 = removeDuplicates(step10);)
     DO_IF_DRAW_BEGIN
     showStep11(step11, step1);
     DO_IF_DRAW_END

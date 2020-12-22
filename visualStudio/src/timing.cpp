@@ -26,12 +26,13 @@ LPSYSTEMTIME tic()
     return &start;
 }
 
-LPSYSTEMTIME toc(unsigned int silence)
+LPSYSTEMTIME toc(unsigned int silence, const char* message)
 {
     SYSTEMTIME end;
     GetLocalTime(&end);
     if (!silence)
     {
+        std::cout << message << std::endl;
         std::cout << "Toc! Time Elapsed: " << end.wHour - start.wHour << "h "
             << end.wMinute - start.wMinute << "m "
             << end.wSecond - start.wSecond << "s "

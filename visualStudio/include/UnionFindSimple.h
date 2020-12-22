@@ -14,6 +14,7 @@ namespace AprilTag {
         };
 
         public:
+            UnionFindSimple() {}
             explicit UnionFindSimple(int maxId) : data(maxId) {
             init();
             };

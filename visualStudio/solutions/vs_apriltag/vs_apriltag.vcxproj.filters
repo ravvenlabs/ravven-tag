@@ -152,6 +152,9 @@
     <ClInclude Include="..\..\include\DemoControls.h">
       <Filter>Demos</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\util.h">
+      <Filter>Util\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AprilTag">

@@ -15,6 +15,7 @@
 #include "baseline_demo.h"
 #include "BaselineTagDetector.h"
 #include "vs_apriltag.h"
+#include "util.h"
 
 #include "Tags.h"
 
@@ -116,15 +117,12 @@ void BaselineDemo::processImage(cv::Mat& image, cv::Mat& image_gray) {
 
     // detect April tags (requires a gray scale image)
     cv::cvtColor(image, image_gray, cv::ColorConversionCodes::COLOR_BGR2GRAY);
-    if (controls->timing) {
-        tic();
-    }
-    AprilTag::TagFamily tagFamily = AprilTag::TagFamily(tagCodes);
-    std::vector<AprilTag::TagDetection> detections = extractTags(image_gray, tagFamily, *controls);
-    if (controls->timing) {
-        LPSYSTEMTIME dt = toc(1);
-        std::cout << "Extracting tags took " << dt->wSecond << " seconds." << std::endl;
-    }
+
+    std::vector<AprilTag::TagDetection> detections;
+    DO_TIMING_IF_ENABLED(1, "Tag Extraction",
+        AprilTag::TagFamily tagFamily = AprilTag::TagFamily(tagCodes);
+        detections = extractTags(image_gray, tagFamily, controls);
+    )
 
     // print out each detection
     std::cout << detections.size() << " tags detected:" << std::endl;
@@ -133,13 +131,13 @@ void BaselineDemo::processImage(cv::Mat& image, cv::Mat& image_gray) {
     }
 
     // show the current image including any detections
-    if (controls->draw) {
+    DO_IF_DRAW_BEGIN
         for (int i = 0; i < detections.size(); i++) {
             // also highlight in the image
             detections[i].draw(image);
         }
         imshow(windowName, image); // OpenCV call
-    }
+    DO_IF_DRAW_END
 }
 
 void BaselineDemo::execute() {
