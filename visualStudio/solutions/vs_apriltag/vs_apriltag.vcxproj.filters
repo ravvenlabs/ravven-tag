@@ -54,7 +54,10 @@
       <Filter>Demos</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\TagDetector.cc">
-      <Filter>AprilTag\Source</Filter>
+      <Filter>Demos\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\BaselineTagDetector.cpp">
+      <Filter>Demos\Baseline</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,9 +119,6 @@
     <ClInclude Include="..\..\include\TagDetection.h">
       <Filter>AprilTag\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\TagDetector.h">
-      <Filter>AprilTag\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\TagFamily.h">
       <Filter>AprilTag\Headers</Filter>
     </ClInclude>
@@ -142,6 +142,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\Tags.h">
       <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TagDetector.h">
+      <Filter>Demos\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\BaselineTagDetector.h">
+      <Filter>Demos\Baseline</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +174,9 @@
     </Filter>
     <Filter Include="Demos\Baseline">
       <UniqueIdentifier>{4c448424-c89c-4538-8e99-94e212359c0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Common">
+      <UniqueIdentifier>{a6f2cb0c-f61f-4f23-b8f2-647e88816677}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

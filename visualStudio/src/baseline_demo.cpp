@@ -13,13 +13,10 @@
 // on screen
 #include "opencv2/opencv.hpp"
 #include "baseline_demo.h"
+#include "BaselineTagDetector.h"
 #include "vs_apriltag.h"
 
-#include "Tag16h5.h"
-#include "Tag25h7.h"
-#include "Tag25h9.h"
-#include "Tag36h9.h"
-#include "Tag36h11.h"
+#include "Tags.h"
 
 // default constructor
 BaselineDemo::BaselineDemo(const char* name, const char* inputDir) :
@@ -44,8 +41,6 @@ void BaselineDemo::setup() {
     fy = 600;
     px = width / 2;
     py = height / 2;
-
-    tagDetector = new TagDetector(tagCodes);
 
     // prepare window for drawing the camera images
     if (draw) {
@@ -124,7 +119,8 @@ void BaselineDemo::processImage(cv::Mat& image, cv::Mat& image_gray) {
     if (timing) {
         tic();
     }
-    std::vector<AprilTag::TagDetection> detections = tagDetector->extractTags(image_gray);
+    AprilTag::TagFamily tagFamily = AprilTag::TagFamily(tagCodes);
+    std::vector<AprilTag::TagDetection> detections = extractTags(image_gray, tagFamily);
     if (timing) {
         LPSYSTEMTIME dt = toc(1);
         std::cout << "Extracting tags took " << dt->wSecond << " seconds." << std::endl;

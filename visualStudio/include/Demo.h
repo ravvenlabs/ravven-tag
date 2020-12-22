@@ -8,7 +8,6 @@ namespace fs = std::filesystem;
 class Demo {
     protected:
         // Internal variables
-        TagDetector* tagDetector;
         AprilTag::TagCodes tagCodes;
         int width; // image size in pixels
         int height;
@@ -31,7 +30,6 @@ class Demo {
         Demo(const char* name, const char* inputDir) :
             windowName(name),
             inputImgDir(inputDir),
-            tagDetector(NULL),
             tagCodes(AprilTag::tagCodes36h11)
         {
             for (const auto& entry : fs::directory_iterator(inputDir))

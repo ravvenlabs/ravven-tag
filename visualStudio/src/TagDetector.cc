@@ -48,26 +48,6 @@ void cvToFloatImage(const cv::Mat& mat, AprilTag::FloatImage& toRet, double scal
     }
 }
 
-/**
-    * Step 1 output.
-    *
-    * \var Step_1::fimOrig The original, unmodified image for this algorithm.
-    * \var opticalCenter The center point of the image.
-    */
-typedef struct
-{
-    cv::Mat fimOrig;
-    std::pair<int, int> opticalCenter;
-} Step_1;
-
-/**
-    * Convert to internal AprilTag image.
-    *
-    * TODO: Change internally to OpenCV for speedup.
-    *
-    * \param image Greyscaled image
-    * \return Step_1 object.
-    */
 Step_1 createOriginalImage(const cv::Mat& image)
 {
     cv::Mat fimOrig(image.rows, image.cols, CV_32FC1);
@@ -77,23 +57,6 @@ Step_1 createOriginalImage(const cv::Mat& image)
     return { fimOrig, opticalCenter };
 }
 
-/**
-    * Step 2 output.
-    *
-    * \var fim Copy of the original image that may or may not have been filtered.
-    */
-typedef struct
-{
-    cv::Mat fim;
-} Step_2;
-
-/**
-    * Applies a lowpass filter to the image from step 1.
-    *
-    * \param step1 Step 1 output data.
-    * \param sigma The filter intensity.
-    * \return Step 2 object.
-    */
 Step_2 optionallyApplyLowPassFilter(Step_1 step1, float sigma)
 {
     cv::Mat fim = step1.fimOrig.clone();
@@ -115,25 +78,6 @@ Step_2 optionallyApplyLowPassFilter(Step_1 step1, float sigma)
     return { fim };
 }
 
-/**
-    * Output for step 3.
-    *
-    * \var fimSeg The filtered and greyscaled version of original image.
-    */
-typedef struct
-{
-    cv::Mat fimSeg;
-} Step_3;
-
-/**
-    * Applies a low pass filter to the image from step 1 and gray scales.
-    *
-    * \param step1 Output from step 1.
-    * \param step2 Output from step 2.
-    * \param sigma Filter intensity from step 2.
-    * \param segSigma Filter intensity for this step.
-    * \return Step 3 object.
-    */
 Step_3 applyLowPassFilterAndGrayScale(Step_1 step1, Step_2 step2, float sigma, float segSigma)
 {
     cv::Mat fimSeg = step1.fimOrig.clone();
@@ -149,27 +93,6 @@ Step_3 applyLowPassFilterAndGrayScale(Step_1 step1, Step_2 step2, float sigma, f
     return { fimSeg };
 }
 
-/**
-    * Output from step 4.
-    *
-    * \var fimTheta The image's directional vector matrix.
-    * \var fimMag The image's magnitude vector matrix.
-    */
-typedef struct
-{
-    cv::Mat fimTheta;
-    cv::Mat fimMag;
-} Step_4;
-
-/**
-    * Compute the local gradient. We store the direction and magnitude.
-    * This step is quite sensitve to noise, since a few bad theta estimates will
-    * break up segments, causing us to miss Quads. It is useful to do a Gaussian
-    * low pass on this step even if we don't want it for encoding.
-    *
-    * \param step3 Step 3 object output.
-    * \return Step 4 object.
-    */
 Step_4 computeLocalGradients(Step_3 step3)
 {
     cv::Mat fimTheta(step3.fimSeg.rows, step3.fimSeg.cols, CV_32FC1);
@@ -193,25 +116,6 @@ Step_4 computeLocalGradients(Step_3 step3)
     return { fimTheta, fimMag };
 }
 
-/**
-    * Output from step 5.
-    *
-    * \var uf A matrix of edge groups.
-    */
-typedef struct
-{
-    AprilTag::UnionFindSimple uf;
-} Step_5;
-
-/**
-    * Finds the edges given by the thetas from step 4.
-    *
-    * \param step3 Step 3 object output. Used for only their width and height.
-    * \param step4 Step 4 object output.
-    * \param width The width of the original image.
-    * \param height The height of the original image.
-    * \return Step_5 object.
-    */
 Step_5 extractEdges(Step_3 step3, Step_4 step4, int width, int height)
 {
     AprilTag::UnionFindSimple uf(step3.fimSeg.cols * step3.fimSeg.rows);
@@ -276,24 +180,6 @@ void showStep5(Step_5 step5, int rows, int cols)
     imshow("Step 5", to_print);
 }
 
-/**
-    * Output from step 6.
-    *
-    * \var clusters A map of clustered edges.
-    */
-typedef struct
-{
-    std::map<int, std::vector<AprilTag::XYWeight>> clusters;
-} Step_6;
-
-/**
-    * Collect statistics and form clusters.
-    *
-    * \param step3 Step 3 object output. Used for only its width and height.
-    * \param step4 Step 4 object output. Only the magnitude matrix is used.
-    * \param step5 Step 5 object output.
-    * \return Step_6 object.
-    */
 Step_6 createClusters(Step_3 step3, Step_4 step4, Step_5 step5)
 {
     std::map<int, std::vector<AprilTag::XYWeight> > clusters;
@@ -331,24 +217,6 @@ void showStep6(Step_6 step6, int rows, int cols)
     imshow("Step 6", to_print);
 }
 
-/**
-    * Output from step 7.
-    *
-    * \var segments A vector of line segments that were created from the clusters.
-    */
-typedef struct
-{
-    std::vector<AprilTag::Segment> segments;
-} Step_7;
-
-/**
-    * Fits line segments from the given clusters. Uses step 4's magnitude and theta matricies
-    * to determine the winding directions.
-    *
-    * \param step4 Output object from step 4.
-    * \param step6 Output object from step 6.
-    * \return Step_7 object.
-    */
 Step_7 fitSegments(Step_4 step4, Step_6 step6)
 {
     std::vector<AprilTag::Segment> segments; //used in Step six
@@ -430,24 +298,6 @@ void showStep7(Step_7 step7, Step_1 step1)
     imshow("Step 7", baseImage);
 }
 
-/**
-    * Output from step 8.
-    *
-    * Updates the segments in-place. There is no output for this step.
-    */
-typedef struct
-{
-    // Nothing!
-} Step_8;
-
-/**
-    * Connects the given segments together by their end/start points.
-    *
-    * \param step7 Output object from step 7.
-    * \param width The width of the original image.
-    * \param height The height of the original image.
-    * \return Step_8 object.
-    */
 Step_8 connectSegments(Step_7* step7, int width, int height)
 {
     AprilTag::Gridder<AprilTag::Segment> gridder(0, 0, width, height, 10);
@@ -528,23 +378,6 @@ void showStep8(Step_7 step7, Step_1 step1)
     imshow("Step 8", baseImage);
 }
 
-/**
-    * Output from step 9.
-    *
-    * \var quads A vector of found quads.
-    */
-typedef struct
-{
-    std::vector<AprilTag::Quad> quads;
-} Step_9;
-
-/**
-    * Joins line segments with loops of 4.
-    *
-    * \param step1 Output object from Step 1.
-    * \param step7 Output object from Step 7.
-    * \return Step_9 object.
-    */
 Step_9 createQuads(Step_1 step1, Step_7* step7)
 {
     std::vector<AprilTag::Quad> quads;
@@ -573,26 +406,6 @@ void showStep9(Step_9 step9, Step_1 step1)
     imshow("Step 9", baseImage);
 }
 
-/**
-    * Output from step 10.
-    *
-    * \var detections Tags that have been recongized.
-    */
-typedef struct
-{
-    std::vector<AprilTag::TagDetection> detections;
-} Step_10;
-
-/**
-    * Decodes the quads for the given family.
-    *
-    * \param step2 Output object from step 2.
-    * \param step9 Output object from step 9.
-    * \param width The width of the original image.
-    * \param height The height of the original image.
-    * \param tagFamily The tag family to decode for.
-    * \return Step_10 object.
-    */
 Step_10 decodeQuads(Step_2 step2, Step_9 step9, int width, int height, AprilTag::TagFamily tagFamily)
 {
     std::vector<AprilTag::TagDetection> detections;
@@ -703,22 +516,6 @@ void showStep10(Step_10 step10, Step_1 step1)
     imshow("Step 10", baseImage);
 }
 
-/**
-    * Output from step 11.
-    *
-    * \var goodDetections A vector of valid detections.
-    */
-typedef struct
-{
-    std::vector<AprilTag::TagDetection> goodDetections;
-} Step_11;
-
-/**
-    * Removes any duplicate quads that are overlapping.
-    *
-    * \param step10 Output object from step 10.
-    * \return Step_11 object.
-    */
 Step_11 removeDuplicates(Step_10 step10)
 {
     std::vector<AprilTag::TagDetection> goodDetections;
@@ -768,105 +565,4 @@ void showStep11(Step_11 step11, Step_1 step1)
         detect->draw(baseImage);
     }
     imshow("Step 11", baseImage);
-}
-
-std::vector<AprilTag::TagDetection> TagDetector::extractTags(const cv::Mat& image) {
-    srand(time(0));
-    int width = image.cols;
-    int height = image.rows;
-
-    imshow("Pre Steps", image);
-
-    Step_1 step1 = createOriginalImage(image);
-    imshow("Step 1", step1.fimOrig);
-
-    //! Gaussian smoothing kernel applied to image (0 == no filter).
-    /*! Used when sampling bits. Filtering is a good idea in cases
-        * where A) a cheap camera is introducing artifical sharpening, B)
-        * the bayer pattern is creating artifcats, C) the sensor is very
-        * noisy and/or has hot/cold pixels. However, filtering makes it
-        * harder to decode very small tags. Reasonable values are 0, or
-        * [0.8, 1.5].
-        */
-    float sigma = 0;
-
-    Step_2 step2 = optionallyApplyLowPassFilter(step1, sigma);
-    imshow("Step 2", step2.fim);
-
-    //! Gaussian smoothing kernel applied to image (0 == no filter).
-    /*! Used when detecting the outline of the box. It is almost always
-        * useful to have some filtering, since the loss of small details
-        * won't hurt. Recommended value = 0.8. The case where sigma ==
-        * segsigma has been optimized to avoid a redundant filter
-        * operation.
-        */
-    float segSigma = 0.8f;
-
-    Step_3 step3 = applyLowPassFilterAndGrayScale(step1, step2, sigma, segSigma);
-    imshow("Step 3", step3.fimSeg);
-
-    //================================================================
-    // Step four: Compute the local gradient. We store the direction and magnitude.
-    // This step is quite sensitve to noise, since a few bad theta estimates will
-    // break up segments, causing us to miss Quads. It is useful to do a Gaussian
-    // low pass on this step even if we don't want it for encoding.
-
-    Step_4 step4 = computeLocalGradients(step3);
-    imshow("Step 4a: Magnitutde", step4.fimMag);
-    imshow("Step 4b: Theta", step4.fimTheta);
-
-    //================================================================
-    // Step five. Extract edges by grouping pixels with similar
-    // thetas together. This is a greedy algorithm: we start with
-    // the most similar pixels.  We use 4-connectivity.
-
-    Step_5 step5 = extractEdges(step3, step4, width, height);
-    showStep5(step5, step3.fimSeg.rows, step3.fimSeg.cols);
-
-    //================================================================
-    // Step six: Loop over the pixels again, collecting statistics for each cluster.
-    // We will soon fit lines (segments) to these points.
-
-    Step_6 step6 = createClusters(step3, step4, step5);
-    showStep6(step6, step3.fimSeg.rows, step3.fimSeg.cols);
-
-    //================================================================
-    // Step seven: Loop over the clusters, fitting lines (which we call Segments).
-
-    Step_7 step7 = fitSegments(step4, step6);
-    showStep7(step7, step1);
-
-    // Step eight: For each segment, find segments that begin where this segment ends.
-    // (We will chain segments together next...) The gridder accelerates the search by
-    // building (essentially) a 2D hash table.
-
-    Step_8 step8 = connectSegments(&step7, width, height);
-    showStep8(step7, step1);
-
-    //================================================================
-    // Step nine: Search all connected segments to see if any form a loop of length 4.
-    // Add those to the quads list.
-
-    Step_9 step9 = createQuads(step1, &step7);
-    showStep9(step9, step1);
-
-    //================================================================
-    // Step ten. Decode the quads. For each quad, we first estimate a
-    // threshold color to decide between 0 and 1. Then, we read off the
-    // bits and see if they make sense.
-
-    Step_10 step10 = decodeQuads(step2, step9, width, height, thisTagFamily);
-    showStep10(step10, step1);
-
-    //================================================================
-    //Step eleven: Some quads may be detected more than once, due to
-    //partial occlusion and our aggressive attempts to recover from
-    //broken lines. When two quads (with the same id) overlap, we will
-    //keep the one with the lowest error, and if the error is the same,
-    //the one with the greatest observed perimeter.
-
-    Step_11 step11 = removeDuplicates(step10);
-    showStep11(step11, step1);
-
-    return step11.goodDetections;
 }
