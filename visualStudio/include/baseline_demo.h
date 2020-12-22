@@ -16,7 +16,7 @@ class BaselineDemo : public Demo {
     int m_gain;
     int m_brightness;
 public:
-    BaselineDemo(const char* name, const char* inputDir);
+    BaselineDemo(const char* name, const char* inputDir, DemoControls* ctrl);
 
     // parse command line options to change default behavior
     void setup();

@@ -17,9 +17,13 @@ int main(int argc, char* argv[])
     Demo* demo;
     int user_input;
     /* Do not move outside. Doesn't work if you do. No idea why. */
+    DemoControls* withVisualExports = new DemoControls();
+    withVisualExports->draw = true;
+
     DemoItem demos[] =
     {
-        {"Baseline Demo", new BaselineDemo("Simple Test", RELATIVE_IMG_INPUT_DIR)},
+        {"Baseline Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, new DemoControls())},
+        {"Baseline With Visuals Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, withVisualExports)}
     };
 
     std::cout << "Select one of the following demos:" << std::endl;

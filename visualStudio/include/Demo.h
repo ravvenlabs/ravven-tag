@@ -2,6 +2,7 @@
 #include <TagDetector.h>
 #include <Tags.h>
 #include <filesystem>
+#include "DemoControls.h"
 
 namespace fs = std::filesystem;
 
@@ -23,14 +24,14 @@ class Demo {
         const char* windowName;
         const char* inputImgDir;
         // Control flags
-        bool timing; // Compute timings for key points of the algorithm
-        bool draw; // Draw intermediate steps to the screen
+        DemoControls* controls;
 
         // default constructor
-        Demo(const char* name, const char* inputDir) :
+        Demo(const char* name, const char* inputDir, DemoControls* ctrl) :
             windowName(name),
             inputImgDir(inputDir),
-            tagCodes(AprilTag::tagCodes36h11)
+            tagCodes(AprilTag::tagCodes36h11),
+            controls(ctrl)
         {
             for (const auto& entry : fs::directory_iterator(inputDir))
             {

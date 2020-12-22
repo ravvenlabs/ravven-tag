@@ -149,6 +149,9 @@
     <ClInclude Include="..\..\include\BaselineTagDetector.h">
       <Filter>Demos\Baseline</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\DemoControls.h">
+      <Filter>Demos</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AprilTag">

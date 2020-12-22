@@ -175,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\BaselineTagDetector.h" />
+    <ClInclude Include="..\..\include\DemoControls.h" />
     <ClInclude Include="..\..\include\Tags.h" />
     <ClInclude Include="..\..\include\vs_apriltag.h" />
     <ClInclude Include="..\..\include\baseline_demo.h" />

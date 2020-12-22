@@ -19,8 +19,8 @@
 #include "Tags.h"
 
 // default constructor
-BaselineDemo::BaselineDemo(const char* name, const char* inputDir) :
-    Demo(name, inputDir),
+BaselineDemo::BaselineDemo(const char* name, const char* inputDir, DemoControls* ctrl) :
+    Demo(name, inputDir, ctrl),
     // default settings, most can be modified through command line options (see below)
     m_arduino(false),
 
@@ -43,7 +43,7 @@ void BaselineDemo::setup() {
     py = height / 2;
 
     // prepare window for drawing the camera images
-    if (draw) {
+    if (controls->draw) {
         cv::namedWindow(windowName, 1);
     }
 }
@@ -116,12 +116,12 @@ void BaselineDemo::processImage(cv::Mat& image, cv::Mat& image_gray) {
 
     // detect April tags (requires a gray scale image)
     cv::cvtColor(image, image_gray, cv::ColorConversionCodes::COLOR_BGR2GRAY);
-    if (timing) {
+    if (controls->timing) {
         tic();
     }
     AprilTag::TagFamily tagFamily = AprilTag::TagFamily(tagCodes);
-    std::vector<AprilTag::TagDetection> detections = extractTags(image_gray, tagFamily);
-    if (timing) {
+    std::vector<AprilTag::TagDetection> detections = extractTags(image_gray, tagFamily, *controls);
+    if (controls->timing) {
         LPSYSTEMTIME dt = toc(1);
         std::cout << "Extracting tags took " << dt->wSecond << " seconds." << std::endl;
     }
@@ -133,7 +133,7 @@ void BaselineDemo::processImage(cv::Mat& image, cv::Mat& image_gray) {
     }
 
     // show the current image including any detections
-    if (draw) {
+    if (controls->draw) {
         for (int i = 0; i < detections.size(); i++) {
             // also highlight in the image
             detections[i].draw(image);
