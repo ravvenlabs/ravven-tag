@@ -168,7 +168,7 @@
     <ClCompile Include="..\..\src\TagFamily.cc" />
     <ClCompile Include="..\..\src\timing.cpp" />
     <ClCompile Include="..\..\src\UnionFindSimple.cc" />
-    <ClCompile Include="vs_apriltag.cpp" />
+    <ClCompile Include="..\..\src\vs_apriltag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\vs_apriltag.h" />
