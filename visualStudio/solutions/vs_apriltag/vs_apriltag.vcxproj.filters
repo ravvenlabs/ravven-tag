@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="vs_apriltag.cpp" />
+    <ClCompile Include="..\..\src\UnionFindSimple.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\TagFamily.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\TagDetector.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\TagDetection.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Segment.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Quad.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\MathUtil.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Homography33.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GrayModel.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GLineSegment2D.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GLine2D.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Gaussian.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\FloatImage.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Edge.cc">
+      <Filter>AprilTag\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common.cpp">
+      <Filter>Util\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\timing.cpp">
+      <Filter>Util\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\baseline_demo.cpp">
+      <Filter>Demos\Baseline</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\vs_apriltag.h" />
+    <ClInclude Include="..\..\include\Edge.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\FloatImage.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Gaussian.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\GLine2D.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\GLineSegment2D.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\GrayModel.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Gridder.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Homography33.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\MathUtil.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Quad.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Segment.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Tag16h5.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Tag16h5_other.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Tag25h7.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Tag25h9.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Tag36h9.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Tag36h11.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Tag36h11_other.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TagDetection.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TagDetector.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TagFamily.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\UnionFindSimple.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\XYWeight.h">
+      <Filter>AprilTag\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\common.h">
+      <Filter>Util\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Demo.h">
+      <Filter>Util\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\timing.h">
+      <Filter>Util\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\baseline_demo.h">
+      <Filter>Demos\Baseline</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="AprilTag">
+      <UniqueIdentifier>{6e70ff95-568e-48e7-9428-a53ea56f32ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AprilTag\Source">
+      <UniqueIdentifier>{e9b7b6d6-e93d-4f63-a285-1e516493737e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AprilTag\Headers">
+      <UniqueIdentifier>{fe9dc960-605c-4d3a-8ace-d7091aafe953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{15675b61-8131-413f-8539-7267a669fcea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Source">
+      <UniqueIdentifier>{866316e3-9ca2-44e4-bf71-34ba5bcf786d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Headers">
+      <UniqueIdentifier>{3fac3578-8b43-42a0-8eb9-c12236076a3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos">
+      <UniqueIdentifier>{364505f6-50e2-4db1-b6f7-663a7bb2fce4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Baseline">
+      <UniqueIdentifier>{4c448424-c89c-4538-8e99-94e212359c0b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
