@@ -7,9 +7,6 @@
     <ClCompile Include="..\..\src\TagFamily.cc">
       <Filter>AprilTag\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\TagDetector.cc">
-      <Filter>AprilTag\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\TagDetection.cc">
       <Filter>AprilTag\Source</Filter>
     </ClCompile>
@@ -55,6 +52,9 @@
     <ClCompile Include="..\..\src\vs_apriltag.cpp" />
     <ClCompile Include="..\..\src\Demo.cpp">
       <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\TagDetector.cc">
+      <Filter>AprilTag\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

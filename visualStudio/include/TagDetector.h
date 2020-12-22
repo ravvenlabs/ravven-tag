@@ -9,19 +9,16 @@
 #include "TagFamily.h"
 #include "FloatImage.h"
 
-namespace AprilTag {
+class TagDetector {
+    public:
 
-    class TagDetector {
-        public:
-            
-            const TagFamily thisTagFamily;
+        const AprilTag::TagFamily thisTagFamily;
 
-            //! Constructor
-            // note: TagFamily is instantiated here from TagCodes
-            TagDetector(const TagCodes& tagCodes) : thisTagFamily(tagCodes) {}
-            
-            std::vector<TagDetection> extractTags(const cv::Mat& image);
-    };
-} // namespace
+        //! Constructor
+        // note: TagFamily is instantiated here from TagCodes
+        TagDetector(const AprilTag::TagCodes& tagCodes) : thisTagFamily(tagCodes) {}
+
+        virtual std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image) = 0;
+};
 
 #endif

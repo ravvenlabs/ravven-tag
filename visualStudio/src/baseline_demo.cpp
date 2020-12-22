@@ -45,7 +45,7 @@ void BaselineDemo::setup() {
     px = width / 2;
     py = height / 2;
 
-    tagDetector = new AprilTag::TagDetector(tagCodes);
+    tagDetector = new TagDetector(tagCodes);
 
     // prepare window for drawing the camera images
     if (draw) {

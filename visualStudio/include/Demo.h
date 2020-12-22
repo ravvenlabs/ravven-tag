@@ -8,7 +8,7 @@ namespace fs = std::filesystem;
 class Demo {
     protected:
         // Internal variables
-        AprilTag::TagDetector* tagDetector;
+        TagDetector* tagDetector;
         AprilTag::TagCodes tagCodes;
         int width; // image size in pixels
         int height;
