@@ -30,7 +30,7 @@ namespace AprilTag {
             minimumHammingDistance(tagCodes.minHammingDistance),
             errorRecoveryBits(1), codes() {
         if ( bits != dimension*dimension )
-            cerr << "Error: TagFamily constructor called with bits=" << bits << "; must be a square number!" << endl;
+            std::cerr << "Error: TagFamily constructor called with bits=" << bits << "; must be a square number!" << std::endl;
         codes = tagCodes.codes;
     }
 
@@ -50,7 +50,7 @@ namespace AprilTag {
             for (int c = 0; c<d; c++) {
                 int b = r + d*c;
                 wr = wr<<1;
-                
+
                 if ((w & (oneLongLong<<b)) != 0)
         wr |= 1;
             }
@@ -112,16 +112,16 @@ namespace AprilTag {
     }
 
     void TagFamily::printHammingDistances() const {
-        vector<int> hammings(dimension*dimension+1);
+        std::vector<int> hammings(dimension*dimension+1);
         for (unsigned i = 0; i < codes.size(); i++) {
             unsigned long long r0 = codes[i];
             unsigned long long r1 = rotate90(r0, dimension);
             unsigned long long r2 = rotate90(r1, dimension);
             unsigned long long r3 = rotate90(r2, dimension);
             for (unsigned int j = i+1; j < codes.size(); j++) {
-                int d = min(min(hammingDistance(r0, codes[j]),
+                int d = std::min(std::min(hammingDistance(r0, codes[j]),
                         hammingDistance(r1, codes[j])),
-                min(hammingDistance(r2, codes[j]),
+                    std::min(hammingDistance(r2, codes[j]),
                         hammingDistance(r3, codes[j])));
                 hammings[d]++;
             }

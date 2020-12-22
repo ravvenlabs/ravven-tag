@@ -1,7 +1,5 @@
 #include "timing.h"
 
-using namespace std;
-
 SYSTEMTIME start;
 
 /**
@@ -34,10 +32,10 @@ LPSYSTEMTIME toc(unsigned int silence)
     GetLocalTime(&end);
     if (!silence)
     {
-        cout << "Toc! Time Elapsed: " << end.wHour - start.wHour << "h "
+        std::cout << "Toc! Time Elapsed: " << end.wHour - start.wHour << "h "
             << end.wMinute - start.wMinute << "m "
             << end.wSecond - start.wSecond << "s "
-            << end.wMilliseconds - start.wMilliseconds << "ms" << endl;
+            << end.wMilliseconds - start.wMilliseconds << "ms" << std::endl;
     }
     return sub(&end, &start);
 }

@@ -12,8 +12,6 @@
 #include <map>
 
 #include "TagDetection.h"
-using namespace std;
-
 namespace AprilTag {
 
 class TagCodes {

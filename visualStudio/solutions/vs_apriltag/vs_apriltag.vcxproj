@@ -137,6 +137,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\lib\eigen-3.3.7;$(SolutionDir)..\..\include;$(CUDA_PATH)\include;$(OPENCV_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\baseline_demo.cpp" />
     <ClCompile Include="..\..\src\common.cpp" />
+    <ClCompile Include="..\..\src\Demo.cpp" />
     <ClCompile Include="..\..\src\Edge.cc" />
     <ClCompile Include="..\..\src\FloatImage.cc" />
     <ClCompile Include="..\..\src\Gaussian.cc" />
@@ -171,6 +173,7 @@
     <ClCompile Include="..\..\src\vs_apriltag.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\Tags.h" />
     <ClInclude Include="..\..\include\vs_apriltag.h" />
     <ClInclude Include="..\..\include\baseline_demo.h" />
     <ClInclude Include="..\..\include\common.h" />

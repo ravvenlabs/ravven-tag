@@ -1,11 +1,10 @@
-using namespace std;
-
 #include <Windows.h>
 #include <iostream>
 
 #include "Demo.h"
 /* Include different versions here */
 #include "baseline_demo.h"
+#include <vs_apriltag.h>
 
 typedef struct
 {
@@ -20,19 +19,19 @@ int main(int argc, char* argv[])
     /* Do not move outside. Doesn't work if you do. No idea why. */
     DemoItem demos[] =
     {
-        {"Baseline Demo", new BaselineDemo("Simple Test")},
+        {"Baseline Demo", new BaselineDemo("Simple Test", RELATIVE_IMG_INPUT_DIR)},
     };
 
-    cout << "Select one of the following demos:" << endl;
+    std::cout << "Select one of the following demos:" << std::endl;
 
     for (int i = 1; i < (sizeof(demos) / sizeof(DemoItem)) + 1; i++)
     {
-        cout << i << ") " << demos[i - 1].demo_name << endl;
+        std::cout << i << ") " << demos[i - 1].demo_name << std::endl;
     }
 
     user_input = getchar() - '1';
 
-    cout << "Executing " << demos[user_input].demo_name << "..." << endl;
+    std::cout << "Executing " << demos[user_input].demo_name << "..." << std::endl;
 
     demo = demos[user_input].demo;
 

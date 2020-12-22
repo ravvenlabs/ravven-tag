@@ -53,6 +53,9 @@
       <Filter>Demos\Baseline</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\vs_apriltag.cpp" />
+    <ClCompile Include="..\..\src\Demo.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\vs_apriltag.h" />
@@ -128,14 +131,17 @@
     <ClInclude Include="..\..\include\common.h">
       <Filter>Util\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\Demo.h">
-      <Filter>Util\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\timing.h">
       <Filter>Util\Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\baseline_demo.h">
       <Filter>Demos\Baseline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Demo.h">
+      <Filter>Demos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Tags.h">
+      <Filter>AprilTag\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

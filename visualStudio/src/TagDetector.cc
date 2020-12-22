@@ -35,8 +35,6 @@
 #include <opencv/highgui.h>
 #endif
 
-using namespace std;
-
 namespace AprilTag {
 
     template<class T>
@@ -59,7 +57,6 @@ namespace AprilTag {
      */
     typedef struct
     {
-        //! Hello, World!
         cv::Mat fimOrig;
         std::pair<int, int> opticalCenter;
     } Step_1;
@@ -220,7 +217,7 @@ namespace AprilTag {
     {
         UnionFindSimple uf(step3.fimSeg.cols * step3.fimSeg.rows);
 
-        vector<Edge> edges(width * height * 4);
+        std::vector<Edge> edges(width * height * 4);
         size_t nEdges = 0;
 
         // Bounds on the thetas assigned to this group. Note that because
@@ -230,7 +227,7 @@ namespace AprilTag {
             /* Previously all this was on the stack, but this is 1.2MB for 320x240 images
              * That's already a problem for OS X (default 512KB thread stack size),
              * could be a problem elsewhere for bigger images... so store on heap */
-            vector<float> storage(width * height * 4);  // do all the memory in one big block, exception safe
+            std::vector<float> storage(width * height * 4);  // do all the memory in one big block, exception safe
             float* tmin = &storage[width * height * 0];
             float* tmax = &storage[width * height * 1];
             float* mmin = &storage[width * height * 2];
@@ -287,7 +284,7 @@ namespace AprilTag {
      */
     typedef struct
     {
-        map<int, vector<XYWeight>> clusters;
+        std::map<int, std::vector<XYWeight>> clusters;
     } Step_6;
 
     /**
@@ -300,7 +297,7 @@ namespace AprilTag {
      */
     Step_6 createClusters(Step_3 step3, Step_4 step4, Step_5 step5)
     {
-        map<int, vector<XYWeight> > clusters;
+        std::map<int, std::vector<XYWeight> > clusters;
         for (int y = 0; y + 1 < step3.fimSeg.rows; y++) {
             for (int x = 0; x + 1 < step3.fimSeg.cols; x++) {
                 if (step5.uf.getSetSize(y * step3.fimSeg.cols + x) < Segment::minimumSegmentSize)
@@ -308,12 +305,12 @@ namespace AprilTag {
 
                 int rep = (int)step5.uf.getRepresentative(y * step3.fimSeg.cols + x);
 
-                map<int, vector<XYWeight> >::iterator it = clusters.find(rep);
+                std::map<int, std::vector<XYWeight> >::iterator it = clusters.find(rep);
                 if (it == clusters.end()) {
-                    clusters[rep] = vector<XYWeight>();
+                    clusters[rep] = std::vector<XYWeight>();
                     it = clusters.find(rep);
                 }
-                vector<XYWeight>& points = it->second;
+                std::vector<XYWeight>& points = it->second;
                 points.push_back(XYWeight(x, y, step4.fimMag.at<float>(y, x)));
             }
         }
@@ -324,10 +321,10 @@ namespace AprilTag {
     void showStep6(Step_6 step6, int rows, int cols)
     {
         cv::Mat to_print(rows, cols, CV_8UC3, cv::Vec3b(0, 0, 0));
-        for (map<int, vector<XYWeight>>::iterator it = step6.clusters.begin(); it != step6.clusters.end(); it++)
+        for (std::map<int, std::vector<XYWeight>>::iterator it = step6.clusters.begin(); it != step6.clusters.end(); it++)
         {
             cv::Vec3b color = cv::Vec3b((rand() % 190) + 50, (rand() % 190) + 50, (rand() % 190) + 50);
-            for (vector<XYWeight>::iterator point = it->second.begin(); point != it->second.end(); point++)
+            for (std::vector<XYWeight>::iterator point = it->second.begin(); point != it->second.end(); point++)
             {
                 *(to_print.ptr<cv::Vec3b>(point->y, point->x)) = color;
             }
@@ -539,7 +536,7 @@ namespace AprilTag {
      */
     typedef struct
     {
-        vector<Quad> quads;
+        std::vector<Quad> quads;
     } Step_9;
 
     /**
@@ -551,8 +548,8 @@ namespace AprilTag {
      */
     Step_9 createQuads(Step_1 step1, Step_7* step7)
     {
-        vector<Quad> quads;
-        vector<Segment*> tmp(5);
+        std::vector<Quad> quads;
+        std::vector<Segment*> tmp(5);
         for (unsigned int i = 0; i < step7->segments.size(); i++) {
             tmp[0] = &(step7->segments[i]);
             Quad::search(tmp, step7->segments[i], 0, quads, step1.opticalCenter);
@@ -729,7 +726,7 @@ namespace AprilTag {
 
         // NOTE: allow multiple non-overlapping detections of the same target.
 
-        for (vector<TagDetection>::const_iterator it = step10.detections.begin();
+        for (std::vector<TagDetection>::const_iterator it = step10.detections.begin();
             it != step10.detections.end(); it++) {
             const TagDetection& thisTagDetection = *it;
 
