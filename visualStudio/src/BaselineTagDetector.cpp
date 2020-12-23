@@ -1,5 +1,6 @@
 #include "BaselineTagDetector.h"
 #include "util.h"
+#include "vs_apriltag.h"
 
 void showStep5(Step_5 step5, int rows, int cols)
 {
@@ -113,7 +114,11 @@ void showStep11(Step_11 step11, Step_1 step1)
 }
 
 std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::TagFamily tagFamily, DemoControls* controls) {
-    //srand(time(0));
+    DO_IF_DRAW_BEGIN
+    srand(time(0));
+    DO_IF_DRAW_END
+    std::ofstream myfile;
+
     int width = image.cols;
     int height = image.rows;
 
@@ -125,10 +130,14 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
     DO_TIMING_IF_ENABLED(100, "Step 1 (x100)",
         step1 = createOriginalImage(image);)
     DO_IF_DRAW_BEGIN
-
     imshow("Step 1", step1.fimOrig);
-
     DO_IF_DRAW_END
+    DO_IF_SAVE_BEGIN
+    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step1.txt");
+    // Needs to be csv file as its the only format that works with 'load' in matlab.
+    myfile << cv::format(step1.fimOrig, cv::Formatter::FMT_CSV);
+    myfile.close();
+    DO_IF_SAVE_END
 
     //! Gaussian smoothing kernel applied to image (0 == no filter).
     /*! Used when sampling bits. Filtering is a good idea in cases
@@ -146,6 +155,11 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
     DO_IF_DRAW_BEGIN
     imshow("Step 2", step2.fim);
     DO_IF_DRAW_END
+    DO_IF_SAVE_BEGIN
+    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step2.txt");
+    myfile << cv::format(step2.fim, cv::Formatter::FMT_CSV);
+    myfile.close();
+    DO_IF_SAVE_END
 
     //! Gaussian smoothing kernel applied to image (0 == no filter).
     /*! Used when detecting the outline of the box. It is almost always
@@ -162,6 +176,11 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
     DO_IF_DRAW_BEGIN
     imshow("Step 3", step3.fimSeg);
     DO_IF_DRAW_END
+    DO_IF_SAVE_BEGIN
+    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step3.txt");
+    myfile << cv::format(step3.fimSeg, cv::Formatter::FMT_CSV);
+    myfile.close();
+    DO_IF_SAVE_END
 
     //================================================================
     // Step four: Compute the local gradient. We store the direction and magnitude.
@@ -176,6 +195,14 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
     imshow("Step 4a: Magnitutde", step4.fimMag);
     imshow("Step 4b: Theta", step4.fimTheta);
     DO_IF_DRAW_END
+    DO_IF_SAVE_BEGIN
+    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step4-mag.txt");
+    myfile << cv::format(step4.fimMag, cv::Formatter::FMT_CSV);
+    myfile.close();
+    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step4-theta.txt");
+    myfile << cv::format(step4.fimTheta, cv::Formatter::FMT_CSV);
+    myfile.close();
+    DO_IF_SAVE_END
 
     //================================================================
     // Step five. Extract edges by grouping pixels with similar

@@ -17,3 +17,6 @@
 else { \
     __VA_ARGS__ \
 }
+
+#define DO_IF_SAVE_BEGIN if (controls->save) {
+#define DO_IF_SAVE_END }

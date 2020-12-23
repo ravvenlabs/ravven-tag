@@ -21,12 +21,15 @@ int main(int argc, char* argv[])
     withVisualExports->draw = true;
     DemoControls* withTiming = new DemoControls();
     withTiming->timing = true;
+    DemoControls* withSavedData = new DemoControls();
+    withSavedData->save = true;
 
     DemoItem demos[] =
     {
         {"Baseline Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, new DemoControls())},
         {"Baseline With Visuals Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, withVisualExports)},
         {"Baseline With Timing Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, withTiming)},
+        {"Baseline With Saved Data Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, withSavedData)},
     };
 
     std::cout << "Select one of the following demos:" << std::endl;

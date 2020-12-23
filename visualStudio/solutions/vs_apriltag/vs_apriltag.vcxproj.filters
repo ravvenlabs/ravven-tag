@@ -46,18 +46,18 @@
     <ClCompile Include="..\..\src\timing.cpp">
       <Filter>Util\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\baseline_demo.cpp">
-      <Filter>Demos\Baseline</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\vs_apriltag.cpp" />
-    <ClCompile Include="..\..\src\Demo.cpp">
-      <Filter>Demos</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\TagDetector.cc">
-      <Filter>Demos\Common</Filter>
+      <Filter>Demos\Common\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Demo.cpp">
+      <Filter>Demos\Common\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\baseline_demo.cpp">
+      <Filter>Demos\Baseline\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\BaselineTagDetector.cpp">
-      <Filter>Demos\Baseline</Filter>
+      <Filter>Demos\Baseline\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,26 +134,26 @@
     <ClInclude Include="..\..\include\timing.h">
       <Filter>Util\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\baseline_demo.h">
-      <Filter>Demos\Baseline</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\Demo.h">
-      <Filter>Demos</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\Tags.h">
       <Filter>AprilTag\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\TagDetector.h">
-      <Filter>Demos\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\BaselineTagDetector.h">
-      <Filter>Demos\Baseline</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\DemoControls.h">
-      <Filter>Demos</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\util.h">
       <Filter>Util\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TagDetector.h">
+      <Filter>Demos\Common\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Demo.h">
+      <Filter>Demos\Common\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\DemoControls.h">
+      <Filter>Demos\Common\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\baseline_demo.h">
+      <Filter>Demos\Baseline\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\BaselineTagDetector.h">
+      <Filter>Demos\Baseline\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +183,18 @@
     </Filter>
     <Filter Include="Demos\Common">
       <UniqueIdentifier>{a6f2cb0c-f61f-4f23-b8f2-647e88816677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Common\Source">
+      <UniqueIdentifier>{b0ac5f12-e7a0-4915-a9ff-b763f2e1b91e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Common\Headers">
+      <UniqueIdentifier>{f13a3c11-e782-4ecb-8422-2d7e94279b47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Baseline\Source">
+      <UniqueIdentifier>{ed709174-71b7-4f2c-a569-e377a796f31a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Baseline\Headers">
+      <UniqueIdentifier>{74503e7f-0722-4002-a8f8-129350d18dc4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
