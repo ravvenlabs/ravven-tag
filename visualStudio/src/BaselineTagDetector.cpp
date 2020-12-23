@@ -1,6 +1,7 @@
-#include "BaselineTagDetector.h"
+#include "TagDetector.h"
 #include "util.h"
 #include "vs_apriltag.h"
+#include "baseline_demo.h"
 
 void showStep5(Step_5 step5, int rows, int cols)
 {
@@ -289,4 +290,3 @@ std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::
 
     return step11.goodDetections;
 }
-

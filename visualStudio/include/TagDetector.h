@@ -271,4 +271,6 @@ typedef struct
     */
 Step_11 removeDuplicates(Step_10 step10);
 
+std::vector<AprilTag::TagDetection> extractTags(const cv::Mat& image, AprilTag::TagFamily tagFamily, DemoControls* controls);
+
 #endif
