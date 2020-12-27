@@ -13,7 +13,6 @@
 // on screen
 #include "opencv2/opencv.hpp"
 #include "baseline_demo.h"
-#include "BaselineTagDetector.h"
 #include "vs_apriltag.h"
 #include "util.h"
 

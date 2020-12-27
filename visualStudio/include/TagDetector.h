@@ -38,6 +38,7 @@
 #include "XYWeight.h"
 
 #include "TagDetector.h"
+#include "DemoControls.h"
 
 //#define DEBUG_APRIL
 
