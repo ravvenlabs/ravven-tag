@@ -59,7 +59,7 @@
     <ClCompile Include="..\..\src\BaselineTagDetector.cpp">
       <Filter>Demos\Baseline\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\include\CordicAlgo.cpp">
+    <ClCompile Include="..\..\src\CordicAtan2.cpp">
       <Filter>Demos\CordicImpl\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -154,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\baseline_demo.h">
       <Filter>Demos\Baseline\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CordicAtan2.h">
+      <Filter>Demos\CordicImpl\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
