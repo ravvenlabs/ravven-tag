@@ -6,11 +6,11 @@
 #include <cmath>
 
 /* Returns the local start time. */
-LPSYSTEMTIME tic();
+const LPSYSTEMTIME tic();
 
 /**
 /* Returns the elapsed time from the last tic.
 *
 * This function also prints out the elapsed time.
 */
-LPSYSTEMTIME toc(unsigned int silence = 0, const char* message = "");
+const LPSYSTEMTIME toc(bool silence = 0, const char* message = "");
