@@ -4,6 +4,7 @@
 #include "Demo.h"
 /* Include different versions here */
 #include "baseline_demo.h"
+#include "CordicDemo.h"
 #include <vs_apriltag.h>
 
 typedef struct
@@ -18,6 +19,7 @@ int main(int argc, char* argv[])
     int user_input = -1;
     int i;
     /* Do not move outside. Doesn't work if you do. No idea why. */
+    DemoControls* nonActive = new DemoControls();
     DemoControls* withVisualExports = new DemoControls();
     withVisualExports->draw = true;
     DemoControls* withTiming = new DemoControls();
@@ -27,10 +29,14 @@ int main(int argc, char* argv[])
 
     DemoItem demos[] =
     {
-        {"Baseline Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, new DemoControls())},
+        {"Baseline Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, nonActive)},
         {"Baseline With Visuals Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, withVisualExports)},
         {"Baseline With Timing Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, withTiming)},
         {"Baseline With Saved Data Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, withSavedData)},
+        {"Cordic Demo", new CordicDemo("Cordic", RELATIVE_IMG_INPUT_DIR, nonActive)},
+        {"Cordic With Visuals Demo", new BaselineDemo("Cordic", RELATIVE_IMG_INPUT_DIR, withVisualExports)},
+        {"Cordic With Timing Demo", new BaselineDemo("Cordic", RELATIVE_IMG_INPUT_DIR, withTiming)},
+        {"Cordic With Saved Data Demo", new BaselineDemo("Cordic", RELATIVE_IMG_INPUT_DIR, withSavedData)},
     };
 
     while (user_input != (sizeof(demos) / sizeof(DemoItem)) + 1)

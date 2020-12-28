@@ -22,7 +22,7 @@ typedef union BrokenFloat
     };
 } float32_t;
 
-cordicLut_t lut12 =
+const cordicLut_t lut12 =
 {
     12,
     {

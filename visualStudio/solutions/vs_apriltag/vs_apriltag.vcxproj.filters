@@ -173,6 +173,9 @@
     <ClInclude Include="..\..\include\CordicTagDetector.h">
       <Filter>Demos\Cordic\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\CordicDemo.h">
+      <Filter>Demos\Cordic\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AprilTag">

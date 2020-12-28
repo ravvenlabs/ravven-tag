@@ -4,6 +4,8 @@
 #include "TagDisplay.h"
 #include "CordicAtan2.h"
 
+#define CORDIC_OUTPUT_IMG_DIR RELATIVE_IMG_OUTPUT_DIR "cordic\\"
+
 TagDetector::Step_4 CordicTagDetector::computeLocalGradients(Step_3 step3)
 {
     cv::Mat fimTheta(step3.fimSeg.rows, step3.fimSeg.cols, CV_32FC1);
@@ -46,7 +48,7 @@ std::vector<AprilTag::TagDetection> CordicTagDetector::extractTags(const cv::Mat
     imshow("Step 1", step1.fimOrig);
     DO_IF_DRAW_END
     DO_IF_SAVE_BEGIN
-    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step1.txt");
+    myfile.open(CORDIC_OUTPUT_IMG_DIR "step1.txt");
     // Needs to be csv file as its the only format that works with 'load' in matlab.
     myfile << cv::format(step1.fimOrig, cv::Formatter::FMT_CSV);
     myfile.close();
@@ -69,7 +71,7 @@ std::vector<AprilTag::TagDetection> CordicTagDetector::extractTags(const cv::Mat
     imshow("Step 2", step2.fim);
     DO_IF_DRAW_END
     DO_IF_SAVE_BEGIN
-    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step2.txt");
+    myfile.open(CORDIC_OUTPUT_IMG_DIR "step2.txt");
     myfile << cv::format(step2.fim, cv::Formatter::FMT_CSV);
     myfile.close();
     DO_IF_SAVE_END
@@ -90,7 +92,7 @@ std::vector<AprilTag::TagDetection> CordicTagDetector::extractTags(const cv::Mat
     imshow("Step 3", step3.fimSeg);
     DO_IF_DRAW_END
     DO_IF_SAVE_BEGIN
-    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step3.txt");
+    myfile.open(CORDIC_OUTPUT_IMG_DIR "step3.txt");
     myfile << cv::format(step3.fimSeg, cv::Formatter::FMT_CSV);
     myfile.close();
     DO_IF_SAVE_END
@@ -109,10 +111,10 @@ std::vector<AprilTag::TagDetection> CordicTagDetector::extractTags(const cv::Mat
     imshow("Step 4b: Theta", step4.fimTheta);
     DO_IF_DRAW_END
     DO_IF_SAVE_BEGIN
-    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step4-mag.txt");
+    myfile.open(CORDIC_OUTPUT_IMG_DIR "step4-mag.txt");
     myfile << cv::format(step4.fimMag, cv::Formatter::FMT_CSV);
     myfile.close();
-    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step4-theta.txt");
+    myfile.open(CORDIC_OUTPUT_IMG_DIR "step4-theta.txt");
     myfile << cv::format(step4.fimTheta, cv::Formatter::FMT_CSV);
     myfile.close();
     DO_IF_SAVE_END

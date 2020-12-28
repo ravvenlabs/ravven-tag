@@ -179,6 +179,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\include\CordicAtan2.h" />
     <ClInclude Include="..\..\include\BaselineTagDetector.h" />
+    <ClInclude Include="..\..\include\CordicDemo.h" />
     <ClInclude Include="..\..\include\CordicTagDetector.h" />
     <ClInclude Include="..\..\include\TagDisplay.h" />
     <ClInclude Include="..\..\include\util.h" />
