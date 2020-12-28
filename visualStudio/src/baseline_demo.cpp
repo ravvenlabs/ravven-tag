@@ -13,6 +13,7 @@
 // on screen
 #include "opencv2/opencv.hpp"
 #include "baseline_demo.h"
+#include "BaselineTagDetector.h"
 #include "vs_apriltag.h"
 #include "util.h"
 
@@ -107,6 +108,7 @@ void BaselineDemo::loadImages()
         key = cv::waitKey(100);
         DO_IF_DRAW_BEGIN
         while ((key = cv::waitKey(100)) == -1) {}
+        cv::destroyAllWindows();
         DO_IF_DRAW_END
     }
 }
@@ -124,7 +126,7 @@ void BaselineDemo::processImage(cv::Mat& image, cv::Mat& image_gray) {
     std::vector<AprilTag::TagDetection> detections;
     DO_TIMING_IF_ENABLED(1, "Tag Extraction",
         AprilTag::TagFamily tagFamily = AprilTag::TagFamily(tagCodes);
-        detections = extractTags(image_gray, tagFamily, controls);
+        detections = BaselineTagDetector::extractTags(image_gray, tagFamily, controls);
     )
 
     // print out each detection

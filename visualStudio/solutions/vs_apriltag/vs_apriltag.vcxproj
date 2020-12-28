@@ -152,7 +152,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\include\CordicAlgo.cpp" />
     <ClCompile Include="..\..\src\BaselineTagDetector.cpp" />
     <ClCompile Include="..\..\src\baseline_demo.cpp" />
     <ClCompile Include="..\..\src\common.cpp" />
@@ -169,12 +168,15 @@
     <ClCompile Include="..\..\src\Segment.cc" />
     <ClCompile Include="..\..\src\TagDetection.cc" />
     <ClCompile Include="..\..\src\TagDetector.cc" />
+    <ClCompile Include="..\..\src\TagDisplay.cpp" />
     <ClCompile Include="..\..\src\TagFamily.cc" />
     <ClCompile Include="..\..\src\timing.cpp" />
     <ClCompile Include="..\..\src\UnionFindSimple.cc" />
     <ClCompile Include="..\..\src\vs_apriltag.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\BaselineTagDetector.h" />
+    <ClInclude Include="..\..\include\TagDisplay.h" />
     <ClInclude Include="..\..\include\util.h" />
     <ClInclude Include="..\..\include\DemoControls.h" />
     <ClInclude Include="..\..\include\Tags.h" />
