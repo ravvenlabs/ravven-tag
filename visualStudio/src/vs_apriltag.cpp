@@ -34,9 +34,9 @@ int main(int argc, char* argv[])
         {"Baseline With Timing Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, withTiming)},
         {"Baseline With Saved Data Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, withSavedData)},
         {"Cordic Demo", new CordicDemo("Cordic", RELATIVE_IMG_INPUT_DIR, nonActive)},
-        {"Cordic With Visuals Demo", new BaselineDemo("Cordic", RELATIVE_IMG_INPUT_DIR, withVisualExports)},
-        {"Cordic With Timing Demo", new BaselineDemo("Cordic", RELATIVE_IMG_INPUT_DIR, withTiming)},
-        {"Cordic With Saved Data Demo", new BaselineDemo("Cordic", RELATIVE_IMG_INPUT_DIR, withSavedData)},
+        {"Cordic With Visuals Demo", new CordicDemo("Cordic", RELATIVE_IMG_INPUT_DIR, withVisualExports)},
+        {"Cordic With Timing Demo", new CordicDemo("Cordic", RELATIVE_IMG_INPUT_DIR, withTiming)},
+        {"Cordic With Saved Data Demo", new CordicDemo("Cordic", RELATIVE_IMG_INPUT_DIR, withSavedData)},
     };
 
     while (user_input != (sizeof(demos) / sizeof(DemoItem)) + 1)

@@ -68,6 +68,9 @@
     <ClCompile Include="..\..\include\CordicTagDetector.cpp">
       <Filter>Demos\Cordic\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\CordicDemo.cpp">
+      <Filter>Demos\Cordic\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\vs_apriltag.h" />

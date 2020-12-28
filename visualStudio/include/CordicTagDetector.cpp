@@ -1,3 +1,4 @@
+#include <filesystem>
 #include "CordicTagDetector.h"
 #include "util.h"
 #include "vs_apriltag.h"
@@ -32,6 +33,9 @@ std::vector<AprilTag::TagDetection> CordicTagDetector::extractTags(const cv::Mat
     DO_IF_DRAW_BEGIN
     srand(time(0));
     DO_IF_DRAW_END
+    DO_IF_SAVE_BEGIN
+    std::filesystem::create_directories(CORDIC_OUTPUT_IMG_DIR);
+    DO_IF_SAVE_END
     std::ofstream myfile;
 
     int width = image.cols;

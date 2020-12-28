@@ -157,6 +157,7 @@
     <ClCompile Include="..\..\src\baseline_demo.cpp" />
     <ClCompile Include="..\..\src\common.cpp" />
     <ClCompile Include="..\..\src\CordicAtan2.cpp" />
+    <ClCompile Include="..\..\src\CordicDemo.cpp" />
     <ClCompile Include="..\..\src\Demo.cpp" />
     <ClCompile Include="..\..\src\Edge.cc" />
     <ClCompile Include="..\..\src\FloatImage.cc" />
