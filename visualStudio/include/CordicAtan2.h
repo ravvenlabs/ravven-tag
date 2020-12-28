@@ -33,4 +33,14 @@ cordicLut_t lut12 =
     },
 };
 
+/**Computes the atan2 function using a cordic implementation.
+*
+* This is to test the affect of the cordic algorithm on the baseline apriltag
+* algorithm.
+*
+* @param y: The y param.
+* @param x: The x param.
+* @param lut: The cordic lut to use with the algorithm.
+* @return: The magnitude and theta values respectively.
+ */
 std::pair<float, float> cordicAtan2(float y, float x, cordicLut_t lut);
