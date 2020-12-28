@@ -59,11 +59,14 @@
     <ClCompile Include="..\..\src\BaselineTagDetector.cpp">
       <Filter>Demos\Baseline\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\CordicAtan2.cpp">
-      <Filter>Demos\CordicImpl\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\TagDisplay.cpp">
       <Filter>Demos\Common\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\CordicAtan2.cpp">
+      <Filter>Demos\Cordic\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\CordicTagDetector.cpp">
+      <Filter>Demos\Cordic\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,14 +161,17 @@
     <ClInclude Include="..\..\include\baseline_demo.h">
       <Filter>Demos\Baseline\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\CordicAtan2.h">
-      <Filter>Demos\CordicImpl\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\BaselineTagDetector.h">
       <Filter>Demos\Baseline\Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\TagDisplay.h">
       <Filter>Demos\Common\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CordicAtan2.h">
+      <Filter>Demos\Cordic\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CordicTagDetector.h">
+      <Filter>Demos\Cordic\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +213,15 @@
     </Filter>
     <Filter Include="Demos\Baseline\Headers">
       <UniqueIdentifier>{74503e7f-0722-4002-a8f8-129350d18dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Cordic">
+      <UniqueIdentifier>{4a926d77-b043-4efa-b59f-4800e477d8f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Cordic\Source">
+      <UniqueIdentifier>{acf82832-18d3-49ad-ab08-209cc0f66236}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\Cordic\Headers">
+      <UniqueIdentifier>{324d2490-221c-46fa-832f-f70d528aee1c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

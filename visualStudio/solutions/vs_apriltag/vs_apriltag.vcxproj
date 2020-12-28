@@ -152,6 +152,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\include\CordicTagDetector.cpp" />
     <ClCompile Include="..\..\src\BaselineTagDetector.cpp" />
     <ClCompile Include="..\..\src\baseline_demo.cpp" />
     <ClCompile Include="..\..\src\common.cpp" />
@@ -178,6 +179,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\include\CordicAtan2.h" />
     <ClInclude Include="..\..\include\BaselineTagDetector.h" />
+    <ClInclude Include="..\..\include\CordicTagDetector.h" />
     <ClInclude Include="..\..\include\TagDisplay.h" />
     <ClInclude Include="..\..\include\util.h" />
     <ClInclude Include="..\..\include\DemoControls.h" />
