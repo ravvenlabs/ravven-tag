@@ -97,13 +97,17 @@ void BaselineDemo::loop() {
 
 void BaselineDemo::loadImages()
 {
+    int key;
     cv::Mat image;
     cv::Mat image_gray;
 
     for (std::list<std::string>::iterator it = imgNames.begin(); it != imgNames.end(); it++) {
         image = cv::imread(*it); // load image with opencv
         processImage(image, image_gray);
-        while (cv::waitKey(100) == -1) {}
+        key = cv::waitKey(100);
+        DO_IF_DRAW_BEGIN
+        while ((key = cv::waitKey(100)) == -1) {}
+        DO_IF_DRAW_END
     }
 }
 
@@ -151,10 +155,11 @@ void BaselineDemo::execute() {
 
     }
     else {
-        std::cout << "Processing image" << std::endl;
+        std::cout << "Processing images" << std::endl;
 
         // process single image
         loadImages();
 
+        std::cout << "Finished processing images" << std::endl;
     }
 }

@@ -15,7 +15,8 @@ typedef struct
 int main(int argc, char* argv[])
 {
     Demo* demo;
-    int user_input;
+    int user_input = -1;
+    int i;
     /* Do not move outside. Doesn't work if you do. No idea why. */
     DemoControls* withVisualExports = new DemoControls();
     withVisualExports->draw = true;
@@ -32,21 +33,35 @@ int main(int argc, char* argv[])
         {"Baseline With Saved Data Demo", new BaselineDemo("Baseline", RELATIVE_IMG_INPUT_DIR, withSavedData)},
     };
 
-    std::cout << "Select one of the following demos:" << std::endl;
-
-    for (int i = 1; i < (sizeof(demos) / sizeof(DemoItem)) + 1; i++)
+    while (user_input != (sizeof(demos) / sizeof(DemoItem)) + 1)
     {
-        std::cout << i << ") " << demos[i - 1].demo_name << std::endl;
+        std::cout << "Select one of the following demos:" << std::endl;
+
+        for (i = 1; i < (sizeof(demos) / sizeof(DemoItem)) + 1; i++)
+        {
+            std::cout << (char) (i + '0') << ") " << demos[i - 1].demo_name << std::endl;
+        }
+        std::cout << i << ") Quit" << std::endl;
+
+        user_input = getchar() - '1';
+
+        if (user_input == i - 1)
+        {
+            std::cout << "Quitting..." << std::endl;
+            break;
+        }
+
+        std::cout << "Executing " << demos[user_input].demo_name << "..." << std::endl;
+
+        demo = demos[user_input].demo;
+
+        demo->setup();
+
+        demo->execute();
+
+        std::cout << "Finished executing " << demos[user_input].demo_name << std::endl;
+        std::cin.clear();
+        std::cin.ignore(INT_MAX, '\n');
     }
-
-    user_input = getchar() - '1';
-
-    std::cout << "Executing " << demos[user_input].demo_name << "..." << std::endl;
-
-    demo = demos[user_input].demo;
-
-    demo->setup();
-
-    demo->execute();
     return 0;
 }
