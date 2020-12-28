@@ -62,6 +62,9 @@
     <ClCompile Include="..\..\src\CordicAtan2.cpp">
       <Filter>Demos\CordicImpl\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\TagDisplay.cpp">
+      <Filter>Demos\Common\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\vs_apriltag.h" />
@@ -158,6 +161,12 @@
     <ClInclude Include="..\..\include\CordicAtan2.h">
       <Filter>Demos\CordicImpl\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\BaselineTagDetector.h">
+      <Filter>Demos\Baseline\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TagDisplay.h">
+      <Filter>Demos\Common\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AprilTag">
@@ -198,15 +207,6 @@
     </Filter>
     <Filter Include="Demos\Baseline\Headers">
       <UniqueIdentifier>{74503e7f-0722-4002-a8f8-129350d18dc4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Demos\CordicImpl">
-      <UniqueIdentifier>{38b3d667-54a9-44e0-ab61-ef45cc7a988e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Demos\CordicImpl\Headers">
-      <UniqueIdentifier>{b6f27db9-72fd-4b4e-ad5b-4f0997d3dbf4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Demos\CordicImpl\Source">
-      <UniqueIdentifier>{f8001adf-0f7e-4274-9f52-81b679243fe6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
