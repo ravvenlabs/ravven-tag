@@ -2,12 +2,18 @@
 #include "vs_apriltag.h"
 #include "BaselineTagDetector.h"
 #include "TagDisplay.h"
+#include <filesystem>
+
+#define BASELINE_OUTPUT_DIR RELATIVE_IMG_OUTPUT_DIR "baseline\\"
 
 std::vector<AprilTag::TagDetection> BaselineTagDetector::extractTags(const cv::Mat& image, AprilTag::TagFamily tagFamily, DemoControls* controls)
 {
     DO_IF_DRAW_BEGIN
     srand(time(0));
     DO_IF_DRAW_END
+    DO_IF_SAVE_BEGIN
+    std::filesystem::create_directories(BASELINE_OUTPUT_DIR);
+    DO_IF_SAVE_END
     std::ofstream myfile;
 
     int width = image.cols;
@@ -24,7 +30,7 @@ std::vector<AprilTag::TagDetection> BaselineTagDetector::extractTags(const cv::M
     imshow("Step 1", step1.fimOrig);
     DO_IF_DRAW_END
     DO_IF_SAVE_BEGIN
-    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step1.txt");
+    myfile.open(BASELINE_OUTPUT_DIR "step1.txt");
     // Needs to be csv file as its the only format that works with 'load' in matlab.
     myfile << cv::format(step1.fimOrig, cv::Formatter::FMT_CSV);
     myfile.close();
@@ -47,7 +53,7 @@ std::vector<AprilTag::TagDetection> BaselineTagDetector::extractTags(const cv::M
     imshow("Step 2", step2.fim);
     DO_IF_DRAW_END
     DO_IF_SAVE_BEGIN
-    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step2.txt");
+    myfile.open(BASELINE_OUTPUT_DIR "step2.txt");
     myfile << cv::format(step2.fim, cv::Formatter::FMT_CSV);
     myfile.close();
     DO_IF_SAVE_END
@@ -68,7 +74,7 @@ std::vector<AprilTag::TagDetection> BaselineTagDetector::extractTags(const cv::M
     imshow("Step 3", step3.fimSeg);
     DO_IF_DRAW_END
     DO_IF_SAVE_BEGIN
-    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step3.txt");
+    myfile.open(BASELINE_OUTPUT_DIR "step3.txt");
     myfile << cv::format(step3.fimSeg, cv::Formatter::FMT_CSV);
     myfile.close();
     DO_IF_SAVE_END
@@ -87,10 +93,10 @@ std::vector<AprilTag::TagDetection> BaselineTagDetector::extractTags(const cv::M
     imshow("Step 4b: Theta", step4.fimTheta);
     DO_IF_DRAW_END
     DO_IF_SAVE_BEGIN
-    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step4-mag.txt");
+    myfile.open(BASELINE_OUTPUT_DIR "step4-mag.txt");
     myfile << cv::format(step4.fimMag, cv::Formatter::FMT_CSV);
     myfile.close();
-    myfile.open(RELATIVE_IMG_OUTPUT_DIR "step4-theta.txt");
+    myfile.open(BASELINE_OUTPUT_DIR "step4-theta.txt");
     myfile << cv::format(step4.fimTheta, cv::Formatter::FMT_CSV);
     myfile.close();
     DO_IF_SAVE_END
