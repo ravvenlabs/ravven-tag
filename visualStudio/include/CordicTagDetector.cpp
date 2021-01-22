@@ -7,16 +7,21 @@
 
 #define CORDIC_OUTPUT_IMG_DIR RELATIVE_IMG_OUTPUT_DIR "cordic\\"
 
-TagDetector::Step_4 CordicTagDetector::computeLocalGradients(Step_3 step3)
+CordicTagDetector::Cordic_Step_4 CordicTagDetector::computeLocalGradients(Step_3 step3)
 {
     cv::Mat fimTheta(step3.fimSeg.rows, step3.fimSeg.cols, CV_32FC1);
     cv::Mat fimMag(step3.fimSeg.rows, step3.fimSeg.cols, CV_32FC1);
+    cv::Mat fimIX(step3.fimSeg.rows, step3.fimSeg.cols, CV_32FC1);
+    cv::Mat fimIY(step3.fimSeg.rows, step3.fimSeg.cols, CV_32FC1);
 
 #pragma omp parallel for
     for (int y = 1; y < step3.fimSeg.rows - 1; y++) {
         for (int x = 1; x < step3.fimSeg.cols - 1; x++) {
             float Ix = step3.fimSeg.at<float>(y, x + 1) - step3.fimSeg.at<float>(y, x - 1);
             float Iy = step3.fimSeg.at<float>(y + 1, x) - step3.fimSeg.at<float>(y - 1, x);
+
+            fimIX.at<float>(y, x) = Ix;
+            fimIY.at<float>(y, x) = Iy;
 
             std::pair<float, float> mag_theta = cordicAtan2(Iy, Ix, lut12);
 
@@ -25,7 +30,7 @@ TagDetector::Step_4 CordicTagDetector::computeLocalGradients(Step_3 step3)
         }
     }
 
-    return { fimTheta, fimMag };
+    return { fimTheta, fimMag, fimIX, fimIY };
 }
 
 std::vector<AprilTag::TagDetection> CordicTagDetector::extractTags(const cv::Mat& image, AprilTag::TagFamily tagFamily, DemoControls* controls)
@@ -107,21 +112,33 @@ std::vector<AprilTag::TagDetection> CordicTagDetector::extractTags(const cv::Mat
     // break up segments, causing us to miss Quads. It is useful to do a Gaussian
     // low pass on this step even if we don't want it for encoding.
 
-    TagDetector::Step_4 step4;
+    CordicTagDetector::Cordic_Step_4 cordicStep4;
     DO_TIMING_IF_ENABLED(100, "Step 4 (x100)",
-        step4 = CordicTagDetector::computeLocalGradients(step3);)
+        cordicStep4 = CordicTagDetector::computeLocalGradients(step3);)
     DO_IF_DRAW_BEGIN
-    imshow("Step 4a: Magnitutde", step4.fimMag);
-    imshow("Step 4b: Theta", step4.fimTheta);
+    imshow("Step 4a: Magnitutde", cordicStep4.fimMag);
+    imshow("Step 4b: Theta", cordicStep4.fimTheta);
+    imshow("Step 4c: Ix Differences", cordicStep4.fimIX);
+    imshow("Step 4d: Iy Differences", cordicStep4.fimIY);
     DO_IF_DRAW_END
     DO_IF_SAVE_BEGIN
     myfile.open(CORDIC_OUTPUT_IMG_DIR "step4-mag.txt");
-    myfile << cv::format(step4.fimMag, cv::Formatter::FMT_CSV);
+    myfile << cv::format(cordicStep4.fimMag, cv::Formatter::FMT_CSV);
     myfile.close();
     myfile.open(CORDIC_OUTPUT_IMG_DIR "step4-theta.txt");
-    myfile << cv::format(step4.fimTheta, cv::Formatter::FMT_CSV);
+    myfile << cv::format(cordicStep4.fimTheta, cv::Formatter::FMT_CSV);
+    myfile.close();
+    myfile.open(CORDIC_OUTPUT_IMG_DIR "step4-ix.txt");
+    myfile << cv::format(cordicStep4.fimIX, cv::Formatter::FMT_CSV);
+    myfile.close();
+    myfile.open(CORDIC_OUTPUT_IMG_DIR "step4-iy.txt");
+    myfile << cv::format(cordicStep4.fimIY, cv::Formatter::FMT_CSV);
     myfile.close();
     DO_IF_SAVE_END
+
+    // Convert to normal step4 struct. This is to maintain compatibility with
+    // the base algorithm.
+    TagDetector::Step_4 step4 = { cordicStep4.fimTheta, cordicStep4.fimMag };
 
     //================================================================
     // Step five. Extract edges by grouping pixels with similar
