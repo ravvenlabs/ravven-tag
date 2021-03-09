@@ -1,6 +1,7 @@
 #pragma once
 
 #include "timing.h"
+#include <opencv2/core/core.hpp>
 
 #define DO_IF_DRAW_BEGIN if (controls->draw) {
 #define DO_IF_DRAW_END }
@@ -20,3 +21,5 @@ else { \
 
 #define DO_IF_SAVE_BEGIN if (controls->save) {
 #define DO_IF_SAVE_END }
+
+cv::Mat read_csvf(std::string inputFileName);

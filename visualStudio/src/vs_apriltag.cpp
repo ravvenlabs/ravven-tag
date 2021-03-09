@@ -6,6 +6,7 @@
 #include "baseline_demo.h"
 #include "CordicDemo.h"
 #include <vs_apriltag.h>
+#include "OnOffRampDemo.h"
 
 typedef struct
 {
@@ -16,7 +17,8 @@ typedef struct
 int main(int argc, char* argv[])
 {
     Demo* demo;
-    int user_input = -1;
+    std::string user_input;
+    int user_input_num = -1;
     int i;
     /* Do not move outside. Doesn't work if you do. No idea why. */
     DemoControls* nonActive = new DemoControls();
@@ -37,37 +39,37 @@ int main(int argc, char* argv[])
         {"Cordic With Visuals Demo", new CordicDemo("Cordic", RELATIVE_IMG_INPUT_DIR, withVisualExports)},
         {"Cordic With Timing Demo", new CordicDemo("Cordic", RELATIVE_IMG_INPUT_DIR, withTiming)},
         {"Cordic With Saved Data Demo", new CordicDemo("Cordic", RELATIVE_IMG_INPUT_DIR, withSavedData)},
+        {"OnOffRamp Theta Mag", new OnOffRampDemo("OnOffRamp", RELATIVE_IMG_INPUT_DIR, withVisualExports)}
     };
 
-    while (user_input != (sizeof(demos) / sizeof(DemoItem)) + 1)
+    while (user_input_num != (sizeof(demos) / sizeof(DemoItem)) + 1)
     {
         std::cout << "Select one of the following demos:" << std::endl;
 
         for (i = 1; i < (sizeof(demos) / sizeof(DemoItem)) + 1; i++)
         {
-            std::cout << (char) (i + '0') << ") " << demos[i - 1].demo_name << std::endl;
+            std::cout << i << ") " << demos[i - 1].demo_name << std::endl;
         }
         std::cout << i << ") Quit" << std::endl;
 
-        user_input = getchar() - '1';
+        std::getline(std::cin, user_input);
+        user_input_num = stoi(user_input);
 
-        if (user_input == i - 1)
+        if (user_input_num == i)
         {
             std::cout << "Quitting..." << std::endl;
             break;
         }
 
-        std::cout << "Executing " << demos[user_input].demo_name << "..." << std::endl;
+        std::cout << "Executing " << demos[user_input_num - 1].demo_name << "..." << std::endl;
 
-        demo = demos[user_input].demo;
+        demo = demos[user_input_num - 1].demo;
 
         demo->setup();
 
         demo->execute();
 
-        std::cout << "Finished executing " << demos[user_input].demo_name << std::endl;
-        std::cin.clear();
-        std::cin.ignore(INT_MAX, '\n');
+        std::cout << "Finished executing " << demos[user_input_num - 1].demo_name << std::endl;
     }
     return 0;
 }

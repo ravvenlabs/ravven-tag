@@ -71,6 +71,15 @@
     <ClCompile Include="..\..\src\CordicDemo.cpp">
       <Filter>Demos\Cordic\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\OnOffRampDemo.cpp">
+      <Filter>Demos\OnOffRamps\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\OnOffRampTagDetector.cpp">
+      <Filter>Demos\OnOffRamps\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\util.cpp">
+      <Filter>Util\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\vs_apriltag.h" />
@@ -179,6 +188,15 @@
     <ClInclude Include="..\..\include\CordicDemo.h">
       <Filter>Demos\Cordic\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\OnOffRampDemo.h">
+      <Filter>Demos\OnOffRamps\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OnOffRampDemoControls.h">
+      <Filter>Demos\OnOffRamps\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OnOffRampTagDetector.h">
+      <Filter>Demos\OnOffRamps\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AprilTag">
@@ -228,6 +246,15 @@
     </Filter>
     <Filter Include="Demos\Cordic\Headers">
       <UniqueIdentifier>{324d2490-221c-46fa-832f-f70d528aee1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\OnOffRamps">
+      <UniqueIdentifier>{3c68e9b9-bcc8-4c41-a0f9-e386f7cbdffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\OnOffRamps\Headers">
+      <UniqueIdentifier>{11c9f852-373a-4cc2-8166-dd7c9a73b7a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\OnOffRamps\Source">
+      <UniqueIdentifier>{671792cb-d552-4b08-963a-eb1182b5b9e6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

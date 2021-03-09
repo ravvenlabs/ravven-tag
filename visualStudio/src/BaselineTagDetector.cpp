@@ -65,7 +65,7 @@ std::vector<AprilTag::TagDetection> BaselineTagDetector::extractTags(const cv::M
         * segsigma has been optimized to avoid a redundant filter
         * operation.
         */
-    float segSigma = 0.8f;
+    float segSigma = 0.75f;
 
     TagDetector::Step_3 step3;
     DO_TIMING_IF_ENABLED(1000, "Step 3 (x1k)",

@@ -35,7 +35,10 @@ class Demo {
         {
             for (const auto& entry : fs::directory_iterator(inputDir))
             {
-                imgNames.push_back(entry.path().string());
+                if (!entry.is_directory())
+                {
+                    imgNames.push_back(entry.path().string());
+                }
             }
         }
 

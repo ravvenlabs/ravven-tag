@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\include\CordicTagDetector.cpp" />
+    <ClCompile Include="..\..\include\util.cpp" />
     <ClCompile Include="..\..\src\BaselineTagDetector.cpp" />
     <ClCompile Include="..\..\src\baseline_demo.cpp" />
     <ClCompile Include="..\..\src\common.cpp" />
@@ -167,6 +168,8 @@
     <ClCompile Include="..\..\src\GrayModel.cc" />
     <ClCompile Include="..\..\src\Homography33.cc" />
     <ClCompile Include="..\..\src\MathUtil.cc" />
+    <ClCompile Include="..\..\src\OnOffRampDemo.cpp" />
+    <ClCompile Include="..\..\src\OnOffRampTagDetector.cpp" />
     <ClCompile Include="..\..\src\Quad.cc" />
     <ClCompile Include="..\..\src\Segment.cc" />
     <ClCompile Include="..\..\src\TagDetection.cc" />
@@ -182,6 +185,9 @@
     <ClInclude Include="..\..\include\BaselineTagDetector.h" />
     <ClInclude Include="..\..\include\CordicDemo.h" />
     <ClInclude Include="..\..\include\CordicTagDetector.h" />
+    <ClInclude Include="..\..\include\OnOffRampDemo.h" />
+    <ClInclude Include="..\..\include\OnOffRampDemoControls.h" />
+    <ClInclude Include="..\..\include\OnOffRampTagDetector.h" />
     <ClInclude Include="..\..\include\TagDisplay.h" />
     <ClInclude Include="..\..\include\util.h" />
     <ClInclude Include="..\..\include\DemoControls.h" />
