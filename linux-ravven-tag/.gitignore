@@ -1,0 +1,3 @@
+build/**
+pod-build/**
+**/__pycache__/**
