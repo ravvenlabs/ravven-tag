@@ -1,3 +1,4 @@
 build/**
 pod-build/**
 **/__pycache__/**
+*.pyc

@@ -1,8 +1,12 @@
-#!/usr/bin/python3/
-import sys
-sys.path.append("..")
+#!/usr/bin/python/
 
-from build.lib import libpyboostapriltags as AT
+try:
+    import libpyboostapriltags as AT
+except:
+    import sys
+    import os
+    sys.path.append("../build/lib")
+    import libpyboostapriltags as AT
 
 class AprilTagDetector:
     def __init__(self):
