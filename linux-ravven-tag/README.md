@@ -12,22 +12,36 @@ Boost is a header library that provides additional functionality to C++.
 The code base uses a compiled version of that library called Boost.Python
 to provide a Python <=> C++ interface that is easy to use and extendable.
 Boost.Python works for a wide range of python versions but we are using
-Python 3.6.5 for everything.
+Python 2.7 for everything.
+
+#### Dependencies
+Below are the following dependencies that should be installed prior to trying
+to install Boost and Boost.Python.
+```bash
+sudo apt-get install python-dev cmake libopencv-dev libeigen3-dev libv4l-dev python-numpy python-opencv
+```
 
 #### Installation
 Boost can be found [here](https://www.boost.org/). Navigate to the
 [Getting Started](https://www.boost.org/doc/libs/1_75_0/more/getting_started/unix-variants.html)
 section for unix systems which provides easy step by step instructions
-to install Boost itself.
+to install Boost itself or use wget below to download the tar directly.
 
 For compiling Boost.Python, run the following commands:
 ```bash
-cd path/to/boost_<boost_version>
-./bootstrap.sh --with-libraries=python --with-python=3.6
+wget https://dl.bintray.com/boostorg/release/1.75.0/source/boost_1_75_0.tar.gz
+tar -zxf boost_1_75_0.tar
+cd path/to/boost_1_75_0
+./bootstrap.sh --with-libraries=python --with-python=2.7
 ./b2 install
 ```
 This will install the Boost.Python library into the default lib folders
 so it is accessible to both Python and C++.
+
+If there are any issues, make sure that all the dependencies are installed and
+that you're running as a super user. The `./b2 install` will copy the necessary
+headers onto the default path and put the compiled .so binary files to default
+library path.
 
 ### Eigen Library
 Coming soon! (Also a header library)
