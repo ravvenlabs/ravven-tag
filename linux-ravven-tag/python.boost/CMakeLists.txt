@@ -2,9 +2,9 @@
 SET(ENV{BOOST_ROOT} "/usr/local/boost_1_75_0")
 
 #substitute your version number
-find_package(Boost 1.75 EXACT COMPONENTS python36 REQUIRED)
+find_package(Boost 1.75 EXACT COMPONENTS python27 REQUIRED)
 
-INCLUDE_DIRECTORIES("${Boost_INCLUDE_DIRS}" "/usr/include/python3.6/" "./include/")
+INCLUDE_DIRECTORIES("${Boost_INCLUDE_DIRS}" "/usr/include/python2.7/" "./include/")
 
 file(GLOB PYTHON_BOOST_SRC "./src/*")
 ADD_LIBRARY(pyboostapriltags SHARED ${PYTHON_BOOST_SRC})
