@@ -69,10 +69,6 @@ std::vector<AprilTag::TagDetection> extractMagThetaTags(
     mag = pbcvt::fromNDArrayToMat(arrMag);
     theta = pbcvt::fromNDArrayToMat(arrTheta);
     /* Pre-processing */
-    // Convert to grayscale
-    cv::cvtColor(start, start, CV_BGR2GRAY);
-    cv::cvtColor(mag, mag, CV_BGR2GRAY);
-    cv::cvtColor(theta, theta, CV_BGR2GRAY);
     // Normalize
     start.convertTo(start, CV_32FC1, (1. / 255.));
     mag.convertTo(mag, CV_32FC1, (1. / 255.));
