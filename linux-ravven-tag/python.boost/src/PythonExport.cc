@@ -55,7 +55,6 @@ std::vector<AprilTag::TagDetection> extractTags(AprilTag::TagDetector& detector,
 {
     cv::Mat image;
     image = pbcvt::fromNDArrayToMat(im_in);
-    cv::cvtColor(image, image, CV_BGR2GRAY);
     return detector.extractTags(image);
 }
 
