@@ -40,7 +40,14 @@ namespace AprilTag {
     int width = image.cols;
     int height = image.rows;
     cv::Mat fimOrig(image.rows, image.cols, CV_32FC1);
-    image.convertTo(fimOrig, CV_32FC1, (1. / 255.));
+    // Uncomment for minor opencv optimization
+    // image.convertTo(fimOrig, CV_32FC1, (1. / 255.));
+    for (int y=0; y<height; y++) {
+      for (int x=0; x<width; x++) {
+        fimOrig.at<float>(y, x) = image.data[i]/255.;
+        i++;
+      }
+    }
     std::pair<int, int> opticalCenter(image.cols / 2, image.rows / 2);
 
     //================================================================
