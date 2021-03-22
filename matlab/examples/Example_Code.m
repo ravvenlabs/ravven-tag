@@ -5,7 +5,7 @@ close all;
 addpath(genpath('../src'))
 addpath(genpath('../Examples'))
 
-user_input_prompt = 'Which algorithm do you want to use?\n1.April Tag 1\n2.April Tag 2\n3.Ravven Detect\n';
+user_input_prompt = 'Which algorithm do you want to use?\n1.April Tag 1\n2.April Tag 2\n3.Ravven Detect\n4.Ravven 2 Detect\n';
 UserAlg = input(user_input_prompt);
 
 user_input_prompt = 'Which example do you want to run?\n1.Webcam\n2.Test Image\n3.Single Image\n4.Analyze Video\n';
@@ -27,7 +27,7 @@ switch usr_input
             disp('User selected cancel')
         else
             profile on;
-            [Detection] = AprilTag(imread([path,file]),UserAlg);
+            [Detection] = AprilTag(imread([path,file]),UserAlg,1);
             Detection
             profile viewer;
         end
