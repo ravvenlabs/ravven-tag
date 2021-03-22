@@ -7,6 +7,7 @@
 #include "AprilTags/TagDetector.h"
 #include "AprilTags/TagDetection.h"
 #include "AprilTags/Tag36h11.h"
+#include "AprilTags/util.h"
 
 using namespace boost::python;
 using namespace pbcvt;
@@ -53,8 +54,10 @@ void draw_detection(cv::Mat& originalImage, AprilTag::TagDetection& detection);
 // Tag extraction functions
 std::vector<AprilTag::TagDetection> extractTags(AprilTag::TagDetector& detector, PyObject* im_in)
 {
-    cv::Mat image;
-    image = pbcvt::fromNDArrayToMat(im_in);
+    PERFORM_TIMING("Pre-Pre Processing",
+        cv::Mat image;
+        image = pbcvt::fromNDArrayToMat(im_in);
+    )
     return detector.extractTags(image);
 }
 
@@ -63,15 +66,17 @@ std::vector<AprilTag::TagDetection> extractMagThetaTags(
     PyObject* arrOrig, PyObject* arrMag, PyObject* arrTheta
 )
 {
-    cv::Mat start, mag, theta;
-    start = pbcvt::fromNDArrayToMat(arrOrig);
-    mag = pbcvt::fromNDArrayToMat(arrMag);
-    theta = pbcvt::fromNDArrayToMat(arrTheta);
-    /* Pre-processing */
-    // Normalize
-    start.convertTo(start, CV_32FC1, (1. / 255.));
-    mag.convertTo(mag, CV_32FC1, (1. / 255.));
-    theta.convertTo(theta, CV_32FC1, ((2. * PI) / 255.), -PI);
+    PERFORM_TIMING("Pre-Pre Processing",
+        cv::Mat start, mag, theta;
+        start = pbcvt::fromNDArrayToMat(arrOrig);
+        mag = pbcvt::fromNDArrayToMat(arrMag);
+        theta = pbcvt::fromNDArrayToMat(arrTheta);
+        /* Pre-processing */
+        // Normalize
+        start.convertTo(start, CV_32FC1, (1. / 255.));
+        mag.convertTo(mag, CV_32FC1, (1. / 255.));
+        theta.convertTo(theta, CV_32FC1, ((2. * PI) / 255.), -PI);
+    )
     return detector.extractMagThetaTags(start, mag, theta);
 }
 
