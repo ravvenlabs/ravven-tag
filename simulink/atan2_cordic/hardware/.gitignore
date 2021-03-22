@@ -1,0 +1,5 @@
+# hdlsrc and vivado_prj are automatically generated
+# text files in tb are also automatically generated
+hdlsrc/**
+tb/*.txt
+vivado_prj/**

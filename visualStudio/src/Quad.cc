@@ -64,70 +64,70 @@ namespace AprilTag {
                 float calculatedPerimeter = 0;
                 bool bad = false;
                 for (int i = 0; i < 4; i++) {
-        // compute intersections between all the lines. This will give us
-        // sub-pixel accuracy for the corners of the quad.
-        GLine2D linea(std::make_pair(path[i]->getX0(),path[i]->getY0()),
-                        std::make_pair(path[i]->getX1(),path[i]->getY1()));
-        GLine2D lineb(std::make_pair(path[i+1]->getX0(),path[i+1]->getY0()),
-                        std::make_pair(path[i+1]->getX1(),path[i+1]->getY1()));
+                    // compute intersections between all the lines. This will give us
+                    // sub-pixel accuracy for the corners of the quad.
+                    GLine2D linea(std::make_pair(path[i]->getX0(),path[i]->getY0()),
+                                    std::make_pair(path[i]->getX1(),path[i]->getY1()));
+                    GLine2D lineb(std::make_pair(path[i+1]->getX0(),path[i+1]->getY0()),
+                                    std::make_pair(path[i+1]->getX1(),path[i+1]->getY1()));
 
-        p[i] = linea.intersectionWith(lineb);
-        calculatedPerimeter += path[i]->getLength();
+                    p[i] = linea.intersectionWith(lineb);
+                    calculatedPerimeter += path[i]->getLength();
 
-        // no intersection? Occurs when the lines are almost parallel.
-        if (p[i].first == -1)
-            bad = true;
+                    // no intersection? Occurs when the lines are almost parallel.
+                    if (p[i].first == -1)
+                        bad = true;
                 }
                 // cout << "bad = " << bad << endl;
                 // eliminate quads that don't form a simply connected loop, i.e., those
                 // that form an hour glass, or wind the wrong way.
                 if (!bad) {
-        float t0 = std::atan2(p[1].second-p[0].second, p[1].first-p[0].first);
-        float t1 = std::atan2(p[2].second-p[1].second, p[2].first-p[1].first);
-        float t2 = std::atan2(p[3].second-p[2].second, p[3].first-p[2].first);
-        float t3 = std::atan2(p[0].second-p[3].second, p[0].first-p[3].first);
+                    float t0 = std::atan2(p[1].second-p[0].second, p[1].first-p[0].first);
+                    float t1 = std::atan2(p[2].second-p[1].second, p[2].first-p[1].first);
+                    float t2 = std::atan2(p[3].second-p[2].second, p[3].first-p[2].first);
+                    float t3 = std::atan2(p[0].second-p[3].second, p[0].first-p[3].first);
 
-        //	double ttheta = fmod(t1-t0, 2*M_PI) + fmod(t2-t1, 2*M_PI) +
-        //	  fmod(t3-t2, 2*M_PI) + fmod(t0-t3, 2*M_PI);
-        float ttheta = MathUtil::mod2pi(t1-t0) + MathUtil::mod2pi(t2-t1) +
-            MathUtil::mod2pi(t3-t2) + MathUtil::mod2pi(t0-t3);
-        // cout << "ttheta=" << ttheta << endl;
-        // the magic value is -2*PI. It should be exact,
-        // but we allow for (lots of) numeric imprecision.
-        if (ttheta < -7 || ttheta > -5)
-            bad = true;
+                    //	double ttheta = fmod(t1-t0, 2*M_PI) + fmod(t2-t1, 2*M_PI) +
+                    //	  fmod(t3-t2, 2*M_PI) + fmod(t0-t3, 2*M_PI);
+                    float ttheta = MathUtil::mod2pi(t1-t0) + MathUtil::mod2pi(t2-t1) +
+                        MathUtil::mod2pi(t3-t2) + MathUtil::mod2pi(t0-t3);
+                    // cout << "ttheta=" << ttheta << endl;
+                    // the magic value is -2*PI. It should be exact,
+                    // but we allow for (lots of) numeric imprecision.
+                    if (ttheta < -7 || ttheta > -5)
+                        bad = true;
                 }
 
                 if (!bad) {
-        float d0 = MathUtil::distance2D(p[0], p[1]);
-        float d1 = MathUtil::distance2D(p[1], p[2]);
-        float d2 = MathUtil::distance2D(p[2], p[3]);
-        float d3 = MathUtil::distance2D(p[3], p[0]);
-        float d4 = MathUtil::distance2D(p[0], p[2]);
-        float d5 = MathUtil::distance2D(p[1], p[3]);
+                    float d0 = MathUtil::distance2D(p[0], p[1]);
+                    float d1 = MathUtil::distance2D(p[1], p[2]);
+                    float d2 = MathUtil::distance2D(p[2], p[3]);
+                    float d3 = MathUtil::distance2D(p[3], p[0]);
+                    float d4 = MathUtil::distance2D(p[0], p[2]);
+                    float d5 = MathUtil::distance2D(p[1], p[3]);
 
-        // check sizes
-        if (d0 < Quad::minimumEdgeLength || d1 < Quad::minimumEdgeLength || d2 < Quad::minimumEdgeLength ||
-                d3 < Quad::minimumEdgeLength || d4 < Quad::minimumEdgeLength || d5 < Quad::minimumEdgeLength) {
-            bad = true;
-            // cout << "tagsize too small" << endl;
-        }
+                    // check sizes
+                    if (d0 < Quad::minimumEdgeLength || d1 < Quad::minimumEdgeLength || d2 < Quad::minimumEdgeLength ||
+                            d3 < Quad::minimumEdgeLength || d4 < Quad::minimumEdgeLength || d5 < Quad::minimumEdgeLength) {
+                        bad = true;
+                        // cout << "tagsize too small" << endl;
+                    }
 
-        // check aspect ratio
-        float dmax = max(max(d0,d1), max(d2,d3));
-        float dmin = min(min(d0,d1), min(d2,d3));
+                    // check aspect ratio
+                    float dmax = max(max(d0,d1), max(d2,d3));
+                    float dmin = min(min(d0,d1), min(d2,d3));
 
-        if (dmax > dmin*Quad::maxQuadAspectRatio) {
-            bad = true;
-            // cout << "aspect ratio too extreme" << endl;
-        }
+                    if (dmax > dmin*Quad::maxQuadAspectRatio) {
+                        bad = true;
+                        // cout << "aspect ratio too extreme" << endl;
+                    }
                 }
 
                 if (!bad) {
-        Quad q(p, opticalCenter);
-        q.segments=path;
-        q.observedPerimeter = calculatedPerimeter;
-        quads.push_back(q);
+                    Quad q(p, opticalCenter);
+                    q.segments=path;
+                    q.observedPerimeter = calculatedPerimeter;
+                    quads.push_back(q);
                 }
             }
             return;
