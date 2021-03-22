@@ -1,4 +1,4 @@
-%clear;
+clear;
 clc;
 close all;
 
@@ -13,8 +13,11 @@ cangle = [];
 ix = [];
 iy = [];
 
-for x = -1:0.01:1
-    for y = -1:0.01:1
+angle_diff = [];
+magnitude_diff = [];
+
+for x = -2:0.01:2
+    for y = -2:0.01:2
         ix = [ix x];
         iy = [iy y];
         [mag, angle] = atan2_mag_cordic(y, x, cordicLut);
@@ -26,21 +29,25 @@ for x = -1:0.01:1
         amag(end+1) = mag;
         aangle(end+1) = angle;
         
-        diff = abs(amag(end) - cmag(end)) / amag(end);
-        if diff > percent_error_thrs
+        magnitude_diff(end+1) = abs(amag(end) - cmag(end)) / amag(end);
+        if magnitude_diff(end) > percent_error_thrs
             disp("Failed mag at: ");
             x
             y
             amag(end)
             cmag(end)
+            disp("Diff of: " );
+            magnitude_diff(end)
         end
-        diff = abs(aangle(end) - cangle(end)) / aangle(end);
-        if diff > percent_error_thrs
+        angle_diff(end+1) = abs(aangle(end) - cangle(end));
+        if angle_diff(end) > percent_error_thrs
             disp("Failed angle at: ");
             x
             y
             aangle(end)
             cangle(end)
+            disp("Diff of: " );
+            angle_diff(end)
         end
     end
 end

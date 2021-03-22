@@ -5,7 +5,7 @@
 void OnOffRampDemo::setup()
 {
     // Params specific to this demo
-    width = 640;
+    width = 752;
     height = 480;
     tagSize = 0.166;
     fx = 600;

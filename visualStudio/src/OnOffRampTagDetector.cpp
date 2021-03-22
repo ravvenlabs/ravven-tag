@@ -183,10 +183,8 @@ std::vector<AprilTag::TagDetection> OnOffRampTagDetector::extractTags(Extraction
     }
     else
     {
-        cv::Mat temp(step3.fimSeg.rows, step3.fimSeg.cols, CV_32FC1);
         input.image1.convertTo(step4.fimMag, CV_32FC1, (1. / 255.));
-        input.image2.convertTo(temp, CV_32FC1, ((2. * 3.14159265358979323846) / 255.));
-        step4.fimTheta = temp - 3.14159265358979323846;
+        input.image2.convertTo(step4.fimTheta, CV_32FC1, ((2. * 3.14159265358979323846) / 255.), -3.14159265358979323846);
         imshow("Step 4a: Magnitutde", step4.fimMag);
         imshow("Step 4b: Theta", step4.fimTheta);
     }
