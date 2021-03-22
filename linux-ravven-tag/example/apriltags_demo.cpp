@@ -19,7 +19,6 @@ using namespace std;
 #include <cstring>
 #include <vector>
 #include <list>
-#include <sys/time.h>
 
 const string usage = "\n"
   "Usage:\n"
@@ -71,6 +70,7 @@ const string intro = "\n"
 #include "AprilTags/Tag25h9.h"
 #include "AprilTags/Tag36h9.h"
 #include "AprilTags/Tag36h11.h"
+#include "AprilTags/util.h"
 
 
 // Needed for getopt / command line options processing
@@ -81,17 +81,7 @@ extern char *optarg;
 // For Arduino: locally defined serial port access class
 #include "Serial.h"
 
-
 const char* windowName = "apriltags_demo";
-
-
-// utility function to provide current system time (used below in
-// determining frame rate at which images are being processed)
-double tic() {
-  struct timeval t;
-  gettimeofday(&t, NULL);
-  return ((double)t.tv_sec + ((double)t.tv_usec)/1000000.);
-}
 
 cv::Mat read_csvf(std::string inputFileName)
 {
