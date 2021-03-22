@@ -13,6 +13,7 @@
 // on screen
 #include "opencv2/opencv.hpp"
 #include "baseline_demo.h"
+#include "BaselineTagDetector.h"
 #include "vs_apriltag.h"
 #include "util.h"
 
@@ -97,13 +98,18 @@ void BaselineDemo::loop() {
 
 void BaselineDemo::loadImages()
 {
+    int key;
     cv::Mat image;
     cv::Mat image_gray;
 
     for (std::list<std::string>::iterator it = imgNames.begin(); it != imgNames.end(); it++) {
         image = cv::imread(*it); // load image with opencv
         processImage(image, image_gray);
-        while (cv::waitKey(100) == -1) {}
+        key = cv::waitKey(100);
+        DO_IF_DRAW_BEGIN
+        while ((key = cv::waitKey(100)) == -1) {}
+        cv::destroyAllWindows();
+        DO_IF_DRAW_END
     }
 }
 
@@ -120,7 +126,7 @@ void BaselineDemo::processImage(cv::Mat& image, cv::Mat& image_gray) {
     std::vector<AprilTag::TagDetection> detections;
     DO_TIMING_IF_ENABLED(1, "Tag Extraction",
         AprilTag::TagFamily tagFamily = AprilTag::TagFamily(tagCodes);
-        detections = extractTags(image_gray, tagFamily, controls);
+        detections = BaselineTagDetector::extractTags(image_gray, tagFamily, controls);
     )
 
     // print out each detection
@@ -151,10 +157,11 @@ void BaselineDemo::execute() {
 
     }
     else {
-        std::cout << "Processing image" << std::endl;
+        std::cout << "Processing images" << std::endl;
 
         // process single image
         loadImages();
 
+        std::cout << "Finished processing images" << std::endl;
     }
 }

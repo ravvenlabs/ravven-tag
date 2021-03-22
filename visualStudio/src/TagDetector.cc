@@ -48,7 +48,7 @@ void cvToFloatImage(const cv::Mat& mat, AprilTag::FloatImage& toRet, double scal
     }
 }
 
-Step_1 createOriginalImage(const cv::Mat& image)
+TagDetector::Step_1 TagDetector::createOriginalImage(const cv::Mat& image)
 {
     cv::Mat fimOrig(image.rows, image.cols, CV_32FC1);
     image.convertTo(fimOrig, CV_32FC1, (1. / 255.));
@@ -57,7 +57,7 @@ Step_1 createOriginalImage(const cv::Mat& image)
     return { fimOrig, opticalCenter };
 }
 
-Step_2 optionallyApplyLowPassFilter(Step_1 step1, float sigma)
+TagDetector::Step_2 TagDetector::optionallyApplyLowPassFilter(Step_1 step1, float sigma)
 {
     cv::Mat fim = step1.fimOrig.clone();
     cv::Mat kernel_h;
@@ -78,7 +78,7 @@ Step_2 optionallyApplyLowPassFilter(Step_1 step1, float sigma)
     return { fim };
 }
 
-Step_3 applyLowPassFilterAndGrayScale(Step_1 step1, Step_2 step2, float sigma, float segSigma)
+TagDetector::Step_3 TagDetector::applyLowPassFilterAndGrayScale(Step_1 step1, Step_2 step2, float sigma, float segSigma)
 {
     cv::Mat fimSeg = step1.fimOrig.clone();
     if (segSigma > 0) {
@@ -93,7 +93,7 @@ Step_3 applyLowPassFilterAndGrayScale(Step_1 step1, Step_2 step2, float sigma, f
     return { fimSeg };
 }
 
-Step_4 computeLocalGradients(Step_3 step3)
+TagDetector::Step_4 TagDetector::computeLocalGradients(Step_3 step3)
 {
     cv::Mat fimTheta(step3.fimSeg.rows, step3.fimSeg.cols, CV_32FC1);
     cv::Mat fimMag(step3.fimSeg.rows, step3.fimSeg.cols, CV_32FC1);
@@ -116,7 +116,7 @@ Step_4 computeLocalGradients(Step_3 step3)
     return { fimTheta, fimMag };
 }
 
-Step_5 extractEdges(Step_3 step3, Step_4 step4, int width, int height)
+TagDetector::Step_5 TagDetector::extractEdges(Step_3 step3, Step_4 step4, int width, int height)
 {
     AprilTag::UnionFindSimple uf(step3.fimSeg.cols * step3.fimSeg.rows);
 
@@ -165,7 +165,7 @@ Step_5 extractEdges(Step_3 step3, Step_4 step4, int width, int height)
     return { uf };
 }
 
-Step_6 createClusters(Step_3 step3, Step_4 step4, Step_5 step5)
+TagDetector::Step_6 TagDetector::createClusters(Step_3 step3, Step_4 step4, Step_5 step5)
 {
     std::map<int, std::vector<AprilTag::XYWeight> > clusters;
     for (int y = 0; y + 1 < step3.fimSeg.rows; y++) {
@@ -188,7 +188,7 @@ Step_6 createClusters(Step_3 step3, Step_4 step4, Step_5 step5)
     return { clusters };
 }
 
-Step_7 fitSegments(Step_4 step4, Step_6 step6)
+TagDetector::Step_7 TagDetector::fitSegments(Step_4 step4, Step_6 step6)
 {
     std::vector<AprilTag::Segment> segments; //used in Step six
     std::map<int, std::vector<AprilTag::XYWeight> >::const_iterator clustersItr;
@@ -255,7 +255,7 @@ Step_7 fitSegments(Step_4 step4, Step_6 step6)
     return { segments };
 }
 
-Step_8 connectSegments(Step_7* step7, int width, int height)
+TagDetector::Step_8 TagDetector::connectSegments(Step_7* step7, int width, int height)
 {
     AprilTag::Gridder<AprilTag::Segment> gridder(0, 0, width, height, 10);
 
@@ -305,7 +305,7 @@ Step_8 connectSegments(Step_7* step7, int width, int height)
     return {};
 }
 
-Step_9 createQuads(Step_1 step1, Step_7* step7)
+TagDetector::Step_9 TagDetector::createQuads(Step_1 step1, Step_7* step7)
 {
     std::vector<AprilTag::Quad> quads;
     std::vector<AprilTag::Segment*> tmp(5);
@@ -317,7 +317,7 @@ Step_9 createQuads(Step_1 step1, Step_7* step7)
     return { quads };
 }
 
-Step_10 decodeQuads(Step_2 step2, Step_9 step9, int width, int height, AprilTag::TagFamily tagFamily)
+TagDetector::Step_10 TagDetector::decodeQuads(Step_2 step2, Step_9 step9, int width, int height, AprilTag::TagFamily tagFamily)
 {
     std::vector<AprilTag::TagDetection> detections;
 
@@ -416,7 +416,7 @@ Step_10 decodeQuads(Step_2 step2, Step_9 step9, int width, int height, AprilTag:
     return { detections };
 }
 
-Step_11 removeDuplicates(Step_10 step10)
+TagDetector::Step_11 TagDetector::removeDuplicates(Step_10 step10)
 {
     std::vector<AprilTag::TagDetection> goodDetections;
 

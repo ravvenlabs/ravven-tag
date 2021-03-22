@@ -5,14 +5,28 @@ adapting the linux-c-code source files in the root of this project. Most of the
 work was completed by fixing include paths and getting the correct libraries
 but a lot of work was also done simply refactoring the code.
 
-## Additional Dependencies
+## Directory Breakdown
 
-Aside from the normal dependencies required (such as OpenCV), the April Tag
-algorithm also requires a template library called [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page). Installation of that library is as easy as downloading and 
-unzipping the project to the desired directory. By default, the vs_apriltag
-solution will look for the <b>Eigen</b> library in the C:\Opencv-Cuda directory.
-For this project, <b>Eigen</b> 3.3.7 was used and verified to be working. Since
-it is a header library, no compiling is required and can be used out of the box.
+The folders below are described by their intended purposes and where one may
+find specific files.
+
+- dll: Contains external libraries/dlls that are linked together with the final
+binary.
+- images: Contains input and output images for the project to execute with.
+- images/input: Contains the input images for all executions of the project. The
+project will read ALL images in this directory to perform the apriltag
+algorithm.
+- images/output: Contains (or will contain) the output images for a specific
+execution if the option is enabled. They will be broken down further into the
+demo name and the files will be labeled with the step of execution. Output is
+currently set as text files so they can loaded easily into matlab for further
+testing.
+- include: Contains all the header files for this project.
+- lib: Contains any additional libraries that are to be compiled into the final
+binary.
+- res: A resource folder for any documentation.
+- solutions: Contains the various projects for this visual studio solution.
+- src: Contains all the source files for this project.
 
 ## Testing
 

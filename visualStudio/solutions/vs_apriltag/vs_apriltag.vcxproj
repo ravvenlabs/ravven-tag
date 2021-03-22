@@ -137,7 +137,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\lib\eigen-3.3.7;$(SolutionDir)..\..\include;$(CUDA_PATH)\include;$(OPENCV_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,10 +152,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\include\CordicAlgo.cpp" />
+    <ClCompile Include="..\..\include\CordicTagDetector.cpp" />
+    <ClCompile Include="..\..\include\util.cpp" />
     <ClCompile Include="..\..\src\BaselineTagDetector.cpp" />
     <ClCompile Include="..\..\src\baseline_demo.cpp" />
     <ClCompile Include="..\..\src\common.cpp" />
+    <ClCompile Include="..\..\src\CordicAtan2.cpp" />
+    <ClCompile Include="..\..\src\CordicDemo.cpp" />
     <ClCompile Include="..\..\src\Demo.cpp" />
     <ClCompile Include="..\..\src\Edge.cc" />
     <ClCompile Include="..\..\src\FloatImage.cc" />
@@ -165,16 +168,27 @@
     <ClCompile Include="..\..\src\GrayModel.cc" />
     <ClCompile Include="..\..\src\Homography33.cc" />
     <ClCompile Include="..\..\src\MathUtil.cc" />
+    <ClCompile Include="..\..\src\OnOffRampDemo.cpp" />
+    <ClCompile Include="..\..\src\OnOffRampTagDetector.cpp" />
     <ClCompile Include="..\..\src\Quad.cc" />
     <ClCompile Include="..\..\src\Segment.cc" />
     <ClCompile Include="..\..\src\TagDetection.cc" />
     <ClCompile Include="..\..\src\TagDetector.cc" />
+    <ClCompile Include="..\..\src\TagDisplay.cpp" />
     <ClCompile Include="..\..\src\TagFamily.cc" />
     <ClCompile Include="..\..\src\timing.cpp" />
     <ClCompile Include="..\..\src\UnionFindSimple.cc" />
     <ClCompile Include="..\..\src\vs_apriltag.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\CordicAtan2.h" />
+    <ClInclude Include="..\..\include\BaselineTagDetector.h" />
+    <ClInclude Include="..\..\include\CordicDemo.h" />
+    <ClInclude Include="..\..\include\CordicTagDetector.h" />
+    <ClInclude Include="..\..\include\OnOffRampDemo.h" />
+    <ClInclude Include="..\..\include\OnOffRampDemoControls.h" />
+    <ClInclude Include="..\..\include\OnOffRampTagDetector.h" />
+    <ClInclude Include="..\..\include\TagDisplay.h" />
     <ClInclude Include="..\..\include\util.h" />
     <ClInclude Include="..\..\include\DemoControls.h" />
     <ClInclude Include="..\..\include\Tags.h" />

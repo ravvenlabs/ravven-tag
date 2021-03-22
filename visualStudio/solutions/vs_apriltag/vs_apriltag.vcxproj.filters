@@ -59,8 +59,26 @@
     <ClCompile Include="..\..\src\BaselineTagDetector.cpp">
       <Filter>Demos\Baseline\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\include\CordicAlgo.cpp">
-      <Filter>Demos\CordicImpl\Source</Filter>
+    <ClCompile Include="..\..\src\TagDisplay.cpp">
+      <Filter>Demos\Common\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\CordicAtan2.cpp">
+      <Filter>Demos\Cordic\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\CordicTagDetector.cpp">
+      <Filter>Demos\Cordic\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\CordicDemo.cpp">
+      <Filter>Demos\Cordic\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\OnOffRampDemo.cpp">
+      <Filter>Demos\OnOffRamps\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\OnOffRampTagDetector.cpp">
+      <Filter>Demos\OnOffRamps\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\util.cpp">
+      <Filter>Util\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +173,30 @@
     <ClInclude Include="..\..\include\baseline_demo.h">
       <Filter>Demos\Baseline\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\BaselineTagDetector.h">
+      <Filter>Demos\Baseline\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TagDisplay.h">
+      <Filter>Demos\Common\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CordicAtan2.h">
+      <Filter>Demos\Cordic\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CordicTagDetector.h">
+      <Filter>Demos\Cordic\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CordicDemo.h">
+      <Filter>Demos\Cordic\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OnOffRampDemo.h">
+      <Filter>Demos\OnOffRamps\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OnOffRampDemoControls.h">
+      <Filter>Demos\OnOffRamps\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OnOffRampTagDetector.h">
+      <Filter>Demos\OnOffRamps\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AprilTag">
@@ -196,14 +238,23 @@
     <Filter Include="Demos\Baseline\Headers">
       <UniqueIdentifier>{74503e7f-0722-4002-a8f8-129350d18dc4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Demos\CordicImpl">
-      <UniqueIdentifier>{38b3d667-54a9-44e0-ab61-ef45cc7a988e}</UniqueIdentifier>
+    <Filter Include="Demos\Cordic">
+      <UniqueIdentifier>{4a926d77-b043-4efa-b59f-4800e477d8f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Demos\CordicImpl\Headers">
-      <UniqueIdentifier>{b6f27db9-72fd-4b4e-ad5b-4f0997d3dbf4}</UniqueIdentifier>
+    <Filter Include="Demos\Cordic\Source">
+      <UniqueIdentifier>{acf82832-18d3-49ad-ab08-209cc0f66236}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Demos\CordicImpl\Source">
-      <UniqueIdentifier>{f8001adf-0f7e-4274-9f52-81b679243fe6}</UniqueIdentifier>
+    <Filter Include="Demos\Cordic\Headers">
+      <UniqueIdentifier>{324d2490-221c-46fa-832f-f70d528aee1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\OnOffRamps">
+      <UniqueIdentifier>{3c68e9b9-bcc8-4c41-a0f9-e386f7cbdffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\OnOffRamps\Headers">
+      <UniqueIdentifier>{11c9f852-373a-4cc2-8166-dd7c9a73b7a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demos\OnOffRamps\Source">
+      <UniqueIdentifier>{671792cb-d552-4b08-963a-eb1182b5b9e6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
