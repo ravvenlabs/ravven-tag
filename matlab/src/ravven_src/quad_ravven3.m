@@ -4,6 +4,11 @@ Debug_Gradient = 0;
 width = size(image_gray,2);
 height = size(image_gray,1);
 
+image_blurred = image_blurred .* 255;
+image_blurred = uint8(image_blurred);
+image_blurred = single(image_blurred);
+image_blurred = image_blurred ./ 255;
+
 %Stage 2: Calculating Gradients (Without toolbox)
 dx = [ 0, 0,0;...
        1, 0,-1;...
@@ -25,16 +30,38 @@ if(Debug_Gradient == 1)
     title('Stage 2a: Gradient Magnitue (y direction)');
 end
 
-%gm = single(Ix.^2 + Iy.^2);   %Magnitude
-%gd = single(atan2(Iy,Ix));    %Direction
+load data.mat
 
-gm = single(imread('../pics/data/mag.tif'));
-gd = single(imread('../pics/data/theta.tif'));
+gm = single(Ix.^2 + Iy.^2);   %Magnitude
+gd = single(atan2(Iy,Ix));    %Direction
 
-gd = gd - 32768;
-gd = gd .* pi/32768;
+ix = single(ix);
+iy = single(iy);
 
-gm = gm ./ 16384;
+ix = ix./255;
+iy = iy./255;
+
+gm = single(ix.^2 + iy.^2);   %Magnitude
+gd = single(atan2(iy,ix));    %Direction
+
+% gm = single(imread('../pics/data/mag.tif'));
+% gd = single(imread('../pics/data/theta.tif'));
+% 
+% gd = gd - 32768;
+% gd = gd .* pi/32768;
+% 
+% gm = gm ./ 8192;
+% 
+% ixx = single(ix);
+% iyy = single(iy);
+% gm = ixx.^2 + iyy.^2;
+% gm = gm./32768;
+% 
+% figure
+% subplot(1,2,1)
+% imagesc(gm_default)
+% subplot(1,2,2)
+% imagesc(gm)
 
 if(debug == 1)
 figure('Name','Stage 2a: Gradient Magnitue');

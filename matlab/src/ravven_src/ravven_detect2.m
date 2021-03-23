@@ -24,6 +24,7 @@ function Clusters = ravven_detect2(im_gray,gm,gd,Debug)
     
         BW1 = imbinarize(DirMag,MagThr);
         BW2 = imbinarize(gm,.04);
+        %BW2 = imbinarize(gm,.3);
         BW3 = imbinarize(DirMag,MagThr1);
         BW = bitand(BW2, BW3);
         BW = bitor(BW,BW1);
@@ -126,7 +127,7 @@ function Clusters = ravven_detect2(im_gray,gm,gd,Debug)
             
             hold on
             SegLength = Pt2PtDist(lineTemp(1),lineTemp(2),lineTemp(3),lineTemp(4));
-            if((SegLength > 10) && (SegLength < 630))
+            if((SegLength > 5) && (SegLength < 630))
                 lineTemp(6) = SegLength; %Record Segment Length
                 lineTemp = FindDirection(lineTemp,mags,thetas); %find the dir
                 segments = [segments;lineTemp]; %Add to the good segments
@@ -203,7 +204,7 @@ flip = 0;
 %goodThetas = thetas(indices);
 %goldenTheta = mean(goodThetas);
 
-goldenTheta = thetas(10);
+goldenTheta = thetas(5);
 %maxMag = max(mags);
 %maxIndex = find(mags == maxMag);
 %maxIndex = maxIndex(1);
