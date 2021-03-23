@@ -1,4 +1,4 @@
-function quads = quad_gradient(image_blurred,image_gray,debug)
+function quads = quad_ravven3(image_blurred,image_gray,debug)
 Debug_Gradient = 0;
 
 width = size(image_gray,2);
@@ -25,18 +25,18 @@ if(Debug_Gradient == 1)
     title('Stage 2a: Gradient Magnitue (y direction)');
 end
 
-gm = single(Ix.^2 + Iy.^2);   %Magnitude
-gd = single(atan2(Iy,Ix));    %Direction
+%gm = single(Ix.^2 + Iy.^2);   %Magnitude
+%gd = single(atan2(Iy,Ix));    %Direction
 
-gm = single(imread('../pics/data/mag2.bmp'));
-gd = single(imread('../pics/data/theta2.bmp'));
+gm = single(imread('../pics/data/mag.tif'));
+gd = single(imread('../pics/data/theta.tif'));
 
-gd = gd - 127;
-gd = gd .* pi/127;
+gd = gd - 32768;
+gd = gd .* pi/32768;
 
-gm = gm ./ 255;
+gm = gm ./ 16384;
 
-if(debug)
+if(debug == 1)
 figure('Name','Stage 2a: Gradient Magnitue');
 imagesc(gm);
 colorbar;
@@ -45,43 +45,16 @@ title('Stage 2a: Gradient Magnitue');
     saveas(gca,[thisdir,'\','GradMag']);
 
 figure('Name','Stage 2b: Gradient Direction');
-imagesc(gd);
+imagesc(gd .* 180/pi);
 colorbar;
 title('Stage 2b: Gradient Direction');
     thisdir = getOutputdir();
     saveas(gca,[thisdir,'\','GradDir']);
 end
 
-min_mag = 0.004;
-%Stage 3: Edge Extraction
-image_edges = CalcEdges(ArraytoList(gm),ArraytoList(gd)...
-    ,min_mag, height, width);
-image_clusters = MergeEdges(image_edges,ArraytoList(gm),ArraytoList(gd)); %Merges the detected edges
+FoundSegs = ravven_detect2(image_gray*256,gm,gd,debug);
 
-if(debug)
-%Debug Code for visualization
-Cluster_Num = unique(image_clusters(:,4)); %Gets each unique cluster
-current_num = 1; %holds the offset of the where we're grabbing clusters
-
-    figure('Name','Grouped Edges');
-    imshow(image_gray);
-    title('Grouped Edges');
-    hold on;
-    for i = 1:size(Cluster_Num)
-        num_of_pts = size(find(image_clusters(:,4) == Cluster_Num(i)),1);
-        temp = image_clusters(current_num:num_of_pts+current_num - 1,:);
-        plot(temp(:,1),temp(:,2),'*','LineWidth',2);
-        current_num = current_num + num_of_pts; %Add to the offset
-    end
-    thisdir = getOutputdir();
-    saveas(gca,[thisdir,'\','Grouped Edges']);
-end
-
-%Stage 5: Segmentation 
-MinCluster = 4;
-FoundSegs   = Segmenter(image_clusters,ArraytoList(gd)...
-    ,ArraytoList(gm),width,height);
-if(debug)
+if(debug == 1)
     figure('Name','Segments');
     imshow(image_gray);
     title('Segments');
@@ -94,9 +67,15 @@ if(debug)
            'LineWidth',2,'color',LineColor);%plot the segment
     end
     hold off;
-    thisdir = getOutputdir();
+        thisdir = getOutputdir();
     saveas(gca,[thisdir,'\','Segments']);
+    
 end
+if(isempty(FoundSegs))
+    quads = [];
+    return;
+end
+
 %Stage 6: Chain Segments
 linked_segments = LinkSegs(FoundSegs);
 %Stage 7: Find Quads

@@ -64,6 +64,8 @@ switch alg
 		quads = quad_ravven(image_blurred,image_gray,debug);
     case 4
 		quads = quad_ravven2(image_blurred,image_gray,debug);
+    case 5
+		quads = quad_ravven3(image_blurred,image_gray,debug);
     otherwise
         disp('Please select a valid option');
 end

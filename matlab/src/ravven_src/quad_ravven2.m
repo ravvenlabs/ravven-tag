@@ -27,6 +27,7 @@ end
 
 gm = single(Ix.^2 + Iy.^2);   %Magnitude
 gd = single(atan2(Iy,Ix));    %Direction
+
 if(debug == 1)
 figure('Name','Stage 2a: Gradient Magnitue');
 imagesc(gm);
