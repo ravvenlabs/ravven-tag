@@ -3,6 +3,7 @@ function Clusters = ravven_detect2(im_gray,gm,gd,Debug)
     Compass_Filters = KirschFilters();
     lineTemp = zeros(1,6);
     segments = []; %Array for holding segments
+    bramData = []; %Array for holding segments
     for i = 1:1:4
         %Do an inital convolution to get stats about the camera 
         %(Can be done realtime)
@@ -78,6 +79,27 @@ function Clusters = ravven_detect2(im_gray,gm,gd,Debug)
             index = find(row == maxYy);
             maxYx = col(index(1));
             
+            thetaLength = size(thetas);
+            thetaLength = thetaLength(1);
+            
+            if (thetaLength >10)
+                bramData = [bramData;[minXx,minXy,thetas(5)]]; 
+                bramData = [bramData;[maxXx,maxXy,thetas(10)]]; 
+                if(thetaLength > 15)
+                    tempTheta = thetas(15); 
+                else
+                    tempTheta = 99;
+                end
+                bramData = [bramData;[minYx,minYy,tempTheta]];          
+
+                if(thetaLength > 20)
+                    tempTheta = thetas(20); 
+                else
+                    tempTheta = 99;
+                end
+                bramData = [bramData;[maxYx,maxYy,tempTheta]]; 
+            end
+            
             % find longest line
             length = [];
             length(1)  = Pt2PtDist(maxXx,maxXy,minXx,minXy);
@@ -127,7 +149,7 @@ function Clusters = ravven_detect2(im_gray,gm,gd,Debug)
             
             hold on
             SegLength = Pt2PtDist(lineTemp(1),lineTemp(2),lineTemp(3),lineTemp(4));
-            if((SegLength > 5) && (SegLength < 630))
+            if((SegLength > 10) && (SegLength < 630))
                 lineTemp(6) = SegLength; %Record Segment Length
                 lineTemp = FindDirection(lineTemp,mags,thetas); %find the dir
                 segments = [segments;lineTemp]; %Add to the good segments
@@ -136,6 +158,7 @@ function Clusters = ravven_detect2(im_gray,gm,gd,Debug)
         end   
     end
     size(segments)
+    save bram.mat bramData
     Clusters = segments;
 end
 
@@ -204,7 +227,7 @@ flip = 0;
 %goodThetas = thetas(indices);
 %goldenTheta = mean(goodThetas);
 
-goldenTheta = thetas(5);
+goldenTheta = thetas(10);
 %maxMag = max(mags);
 %maxIndex = find(mags == maxMag);
 %maxIndex = maxIndex(1);
