@@ -19,9 +19,9 @@ namespace AprilTag {
             // note: TagFamily is instantiated here from TagCodes
             TagDetector(const TagCodes& tagCodes) : thisTagFamily(tagCodes) {}
             
-            std::vector<TagDetection> extractTags(const cv::Mat& image);
-            std::vector<TagDetection> extractMagThetaTags(const cv::Mat& fimOrig, const cv::Mat& fimMag, const cv::Mat& fimTheta);
-            std::vector<TagDetection> extractTags(const cv::Mat& fimOrig, std::vector<AprilTag::Segment> segments);
+            std::vector<TagDetection> detect(const cv::Mat& image);
+            std::vector<TagDetection> detect(const cv::Mat& fimOrig, const cv::Mat& fimMag, const cv::Mat& fimTheta);
+            std::vector<TagDetection> detect(const cv::Mat& fimOrig, std::vector<AprilTag::Segment> segments);
     };
 } // namespace
 

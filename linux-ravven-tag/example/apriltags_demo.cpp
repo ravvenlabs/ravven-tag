@@ -421,7 +421,7 @@ public:
     if (m_timing) {
       t0 = tic();
     }
-    vector<AprilTag::TagDetection> detections = m_tagDetector->extractTags(image_gray);
+    vector<AprilTag::TagDetection> detections = m_tagDetector->detect(image_gray);
     if (m_timing) {
       double dt = tic()-t0;
       cout << "Extracting tags took " << dt << " seconds." << endl;
@@ -488,7 +488,7 @@ public:
         if (m_timing) {
             t0 = tic();
         }
-        vector<AprilTag::TagDetection> detections = m_tagDetector->extractMagThetaTags(start, mag, theta);
+        vector<AprilTag::TagDetection> detections = m_tagDetector->detect(start, mag, theta);
         if (m_timing) {
             double dt = tic()-t0;
             cout << "Extracting tags took " << dt << " seconds." << endl;

@@ -35,7 +35,7 @@ using namespace std;
 
 namespace AprilTag
 {
-    std::vector<TagDetection> TagDetector::extractTags(const cv::Mat& image)
+    std::vector<TagDetection> TagDetector::detect(const cv::Mat& image)
     {
         PERFORM_TIMING("Preprocessing",
             // convert to internal AprilTags image (todo: slow, change internally to OpenCV)
@@ -140,10 +140,10 @@ namespace AprilTag
         )
 
         /* Simplifying timing but forcibly filtering the decoding image. */
-        return extractMagThetaTags(fimSeg, fimMag, fimTheta);
+        return detect(fimSeg, fimMag, fimTheta);
     }
 
-    std::vector<TagDetection> TagDetector::extractMagThetaTags(const cv::Mat& fimOrig, const cv::Mat& fimMag, const cv::Mat& fimTheta)
+    std::vector<TagDetection> TagDetector::detect(const cv::Mat& fimOrig, const cv::Mat& fimMag, const cv::Mat& fimTheta)
     {
         PERFORM_TIMING("Establish Constants",
             int width = fimOrig.cols;
@@ -289,10 +289,10 @@ namespace AprilTag
             }
         )
         
-        return extractTags(fimOrig, segments);
+        return detect(fimOrig, segments);
     }
 
-    std::vector<TagDetection> TagDetector::extractTags(const cv::Mat& fimOrig, std::vector<AprilTag::Segment> segments)
+    std::vector<TagDetection> TagDetector::detect(const cv::Mat& fimOrig, std::vector<AprilTag::Segment> segments)
     {
         PERFORM_TIMING("Establish Constants",
             int width = fimOrig.cols;

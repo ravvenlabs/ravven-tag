@@ -58,7 +58,7 @@ std::vector<AprilTag::TagDetection> extractTags(AprilTag::TagDetector& detector,
         cv::Mat image;
         image = pbcvt::fromNDArrayToMat(im_in);
     )
-    return detector.extractTags(image);
+    return detector.detect(image);
 }
 
 std::vector<AprilTag::TagDetection> extractMagThetaTags(
@@ -77,7 +77,7 @@ std::vector<AprilTag::TagDetection> extractMagThetaTags(
         mag.convertTo(mag, CV_32FC1, (1. / 255.));
         theta.convertTo(theta, CV_32FC1, ((2. * PI) / 255.), -PI);
     )
-    return detector.extractMagThetaTags(start, mag, theta);
+    return detector.detect(start, mag, theta);
 }
 
 #if (PY_VERSION_HEX >= 0x03000000)
