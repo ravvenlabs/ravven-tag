@@ -35,6 +35,13 @@ class AprilTagDetector:
                 AT.print_detection(self.cp, detection)
         return AprilTagDetectionDataFactory.create_detections(self, detections)
 
+    def extractSegmentedTags(self, start, bram_data, debug = False):
+        detections = AT.extractSegmentedTags(self.detector, start, bram_data)
+        if debug:
+            for detection in detections:
+                AT.print_detection(self.cp, detection)
+        return AprilTagDetectionDataFactory.create_detections(self, detections)
+
 class AprilTagDetectionDataFactory:
     @staticmethod
     def create_detection(detector, cpp_tag_detection):

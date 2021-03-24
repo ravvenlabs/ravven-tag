@@ -1,6 +1,7 @@
 // Expose internals to Python
 #define PY_ARRAY_UNIQUE_SYMBOL pbcvt_ARRAY_API
 
+#include <utility>
 #include <boost/python.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 #include <pyboostcvconverter/pyboostcvconverter.hpp>
@@ -8,11 +9,17 @@
 #include "AprilTags/TagDetection.h"
 #include "AprilTags/Tag36h11.h"
 #include "AprilTags/util.h"
+#include "AprilTags/XYWeight.h"
+#include "AprilTags/MathUtil.h"
 
 using namespace boost::python;
 using namespace pbcvt;
 
 #define STAMP(x) std::cout << x << std::endl
+
+template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+}
 
 class GlobalModule
 {
@@ -50,6 +57,7 @@ void wRo_to_euler(const Eigen::Matrix3d& wRo, double& yaw, double& pitch, double
 void print_detection(struct CameraParameters cp, AprilTag::TagDetection& detection);
 struct DetectionData break_out_detection(struct CameraParameters cp, AprilTag::TagDetection& detection);
 void draw_detection(cv::Mat& originalImage, AprilTag::TagDetection& detection);
+std::vector<AprilTag::Segment> ccaSegmentation(const cv::Mat& segPoints);
 
 // Tag extraction functions
 std::vector<AprilTag::TagDetection> extractTags(AprilTag::TagDetector& detector, PyObject* im_in)
@@ -80,6 +88,165 @@ std::vector<AprilTag::TagDetection> extractMagThetaTags(
     return detector.detect(start, mag, theta);
 }
 
+string type2str(int type) {
+  string r;
+
+  uchar depth = type & CV_MAT_DEPTH_MASK;
+  uchar chans = 1 + (type >> CV_CN_SHIFT);
+
+  switch ( depth ) {
+    case CV_8U:  r = "8U"; break;
+    case CV_8S:  r = "8S"; break;
+    case CV_16U: r = "16U"; break;
+    case CV_16S: r = "16S"; break;
+    case CV_32S: r = "32S"; break;
+    case CV_32F: r = "32F"; break;
+    case CV_64F: r = "64F"; break;
+    default:     r = "User"; break;
+  }
+
+  r += "C";
+  r += (chans+'0');
+
+  return r;
+}
+
+std::vector<AprilTag::TagDetection> extractSegmentedTags(
+    AprilTag::TagDetector& detector,
+    PyObject* arrOrig, PyObject* arrSegPts
+)
+{
+    PERFORM_TIMING("Pre-Pre Processiong",
+        cv::Mat fimOrig, segPoints;
+        fimOrig = pbcvt::fromNDArrayToMat(arrOrig);
+        segPoints = pbcvt::fromNDArrayToMat(arrSegPts);
+        
+        fimOrig.convertTo(fimOrig, CV_32FC1, (1. / 255.));
+        std::vector<AprilTag::Segment> segments = ccaSegmentation(segPoints);
+        std::cout << "Num of Good Segments: " << segments.size() << std::endl;
+    )
+
+    ofstream seg_out;
+    seg_out.open("SegOut.csv");
+    seg_out << "x0, y0, x1, y1, theta, length" << std::endl;
+    for (const auto& seg : segments)
+    {
+        seg_out << seg.getX0() << ",";
+        seg_out << seg.getY0() << ",";
+        seg_out << seg.getX1() << ",";
+        seg_out << seg.getY1() << ",";
+        seg_out << seg.getTheta() << ",";
+        seg_out << seg.getLength() << std::endl;
+    }
+    seg_out.close();
+    return detector.detect(fimOrig, segments);
+}
+
+std::vector<AprilTag::Segment> ccaSegmentation(const cv::Mat& segPoints)
+{
+    std::vector<AprilTag::Segment> goodSegments;
+    // Iterate over matrix points in strides of 4
+    for (int i = 0; i < segPoints.rows; i += 4)
+    {
+        // Retrieve 4 points
+        AprilTag::XYWeight minXPt(
+            segPoints.at<float>(i,0),   // minXx
+            segPoints.at<float>(i,1),   // minXy
+            segPoints.at<float>(i,2)    // theta
+        );
+        AprilTag::XYWeight maxXPt(
+            segPoints.at<float>(i+1,0),   // maxXx
+            segPoints.at<float>(i+1,1),   // maxXy
+            segPoints.at<float>(i+1,2)    // theta
+        );
+        AprilTag::XYWeight minYPt(
+            segPoints.at<float>(i+2,0),   // minYx
+            segPoints.at<float>(i+2,1),   // minYy
+            segPoints.at<float>(i+2,2)    // theta
+        );
+        AprilTag::XYWeight maxYPt(
+            segPoints.at<float>(i+3,0),   // maxYx
+            segPoints.at<float>(i+3,1),   // maxYy
+            segPoints.at<float>(i+3,2)    // theta
+        );
+        // Save lines in an array
+        std::vector<std::pair<AprilTag::XYWeight, AprilTag::XYWeight>> linePts =
+        {
+            { minXPt, minYPt },
+            { minXPt, maxXPt },
+            { minXPt, maxYPt },
+            { minYPt, maxXPt },
+            { minYPt, maxYPt },
+            { maxXPt, maxYPt },
+        };
+        // Calculate line lengths
+        float longestLength = 0;
+        std::pair<AprilTag::XYWeight, AprilTag::XYWeight> longestPointPair = {minXPt, minYPt};
+
+        for (const std::pair<AprilTag::XYWeight, AprilTag::XYWeight>& ptPair: linePts)
+        {
+            float length = AprilTag::MathUtil::distance2D(
+                { ptPair.first.x, ptPair.first.y },
+                { ptPair.second.x, ptPair.second.y }
+            );
+            if (length > longestLength)
+            {
+                longestLength = length;
+                longestPointPair = ptPair;
+            }
+        }
+        // Check if the length fits within the bounds
+        if (longestLength > 10 && longestLength < 630)
+        {
+            AprilTag::Segment goodSegment;
+            // if yes, find its direction and save
+            float dx = longestPointPair.first.x - longestPointPair.second.x;
+            float dy = longestPointPair.first.y - longestPointPair.second.y;
+            float theta = atan2(dy, dx);
+
+
+            float goldenTheta = maxXPt.weight;
+            float err = std::abs(AprilTag::MathUtil::mod2pi(goldenTheta - theta));
+            if (err > 0)
+            {
+                theta += PI;
+            }
+
+            float avgThetaRotate = goldenTheta + (PI / 2.0f);
+            float dyNew = sin(avgThetaRotate) * longestLength;
+            float dxNew = cos(avgThetaRotate) * longestLength;
+            if (sgn<float>(dyNew) != sgn<float>(dy))
+                dyNew *= -1;
+            if (sgn<float>(dxNew) != sgn<float>(dx))
+                dxNew *= -1;
+            
+            float dot = dx * cos(theta) + dy * sin(theta);
+            if (dot > 0)
+            {
+                goodSegment.setX0(longestPointPair.second.x);
+                goodSegment.setY0(longestPointPair.second.y);
+                goodSegment.setX1(longestPointPair.first.x);
+                goodSegment.setY1(longestPointPair.first.y);
+            }
+            else
+            {
+                goodSegment.setX0(longestPointPair.first.x);
+                goodSegment.setY0(longestPointPair.first.y);
+                goodSegment.setX1(longestPointPair.second.x);
+                goodSegment.setY1(longestPointPair.second.y);
+            }
+
+            goodSegment.setTheta(theta);
+            goodSegment.setLength(longestLength);
+
+            goodSegments.push_back(goodSegment);
+        }
+        // if no, continue
+    }
+
+    return goodSegments;
+}
+
 #if (PY_VERSION_HEX >= 0x03000000)
 
     static void *init_ar() {
@@ -104,6 +271,7 @@ BOOST_PYTHON_MODULE(libpyboostapriltags)
     def("draw_detection", &draw_detection);
     def("extractTags", &extractTags);
     def("extractMagThetaTags", &extractMagThetaTags);
+    def("extractSegmentedTags", &extractSegmentedTags);
 
     class_<CameraParameters>("CameraParameters")
         .def_readwrite("tagSize", &CameraParameters::tagSize)
