@@ -5,6 +5,7 @@
 
 #include "opencv2/opencv.hpp"
 
+#include "AprilTags/Segment.h"
 #include "AprilTags/TagDetection.h"
 #include "AprilTags/TagFamily.h"
 
@@ -20,6 +21,7 @@ namespace AprilTag {
             
             std::vector<TagDetection> extractTags(const cv::Mat& image);
             std::vector<TagDetection> extractMagThetaTags(const cv::Mat& fimOrig, const cv::Mat& fimMag, const cv::Mat& fimTheta);
+            std::vector<TagDetection> extractTags(const cv::Mat& fimOrig, std::vector<AprilTag::Segment> segments);
     };
 } // namespace
 

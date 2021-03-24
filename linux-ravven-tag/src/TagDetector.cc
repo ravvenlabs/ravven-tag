@@ -49,7 +49,6 @@ namespace AprilTag
                     fimOrig.at<float>(y, x) = image.at<unsigned char>(y, x) / 255.;
                 }
             }
-            std::pair<int, int> opticalCenter(image.cols / 2, image.rows / 2);
         )
 
         //================================================================
@@ -150,9 +149,6 @@ namespace AprilTag
             int width = fimOrig.cols;
             int height = fimOrig.rows;
 
-            std::pair<int, int> opticalCenter(width / 2, height / 2);
-
-            cv::Mat fim = fimOrig;
             cv::Mat fimSeg = fimOrig;
         )
 
@@ -291,6 +287,20 @@ namespace AprilTag
 
                 segments.push_back(seg);
             }
+        )
+        
+        return extractTags(fimOrig, segments);
+    }
+
+    std::vector<TagDetection> TagDetector::extractTags(const cv::Mat& fimOrig, std::vector<AprilTag::Segment> segments)
+    {
+        PERFORM_TIMING("Establish Constants",
+            int width = fimOrig.cols;
+            int height = fimOrig.rows;
+
+            std::pair<int, int> opticalCenter(width / 2, height / 2);
+
+            cv::Mat fim = fimOrig;
         )
         // Step six: For each segment, find segments that begin where this segment ends.
         // (We will chain segments together next...) The gridder accelerates the search by
