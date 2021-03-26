@@ -172,12 +172,12 @@ std::vector<AprilTag::Segment> ccaSegmentation(const cv::Mat& segPoints)
         // Save lines in an array
         std::vector<std::pair<AprilTag::XYWeight, AprilTag::XYWeight>> linePts =
         {
-            { minXPt, minYPt },
-            { minXPt, maxXPt },
-            { minXPt, maxYPt },
-            { minYPt, maxXPt },
-            { minYPt, maxYPt },
+            { maxXPt, minXPt },
+            { maxXPt, minYPt },
             { maxXPt, maxYPt },
+            { maxYPt, minXPt },
+            { maxYPt, minYPt },
+            { minXPt, minYPt },
         };
         // Calculate line lengths
         float longestLength = 0;
@@ -200,25 +200,17 @@ std::vector<AprilTag::Segment> ccaSegmentation(const cv::Mat& segPoints)
         {
             AprilTag::Segment goodSegment;
             // if yes, find its direction and save
-            float dx = longestPointPair.first.x - longestPointPair.second.x;
-            float dy = longestPointPair.first.y - longestPointPair.second.y;
+            float dx = longestPointPair.second.x - longestPointPair.first.x;
+            float dy = longestPointPair.second.y - longestPointPair.first.y;
             float theta = atan2(dy, dx);
 
 
             float goldenTheta = maxXPt.weight;
-            float err = std::abs(AprilTag::MathUtil::mod2pi(goldenTheta - theta));
+            float err = AprilTag::MathUtil::mod2pi(goldenTheta - theta);
             if (err > 0)
             {
                 theta += PI;
             }
-
-            float avgThetaRotate = goldenTheta + (PI / 2.0f);
-            float dyNew = sin(avgThetaRotate) * longestLength;
-            float dxNew = cos(avgThetaRotate) * longestLength;
-            if (sgn<float>(dyNew) != sgn<float>(dy))
-                dyNew *= -1;
-            if (sgn<float>(dxNew) != sgn<float>(dx))
-                dxNew *= -1;
             
             float dot = dx * cos(theta) + dy * sin(theta);
             if (dot > 0)
