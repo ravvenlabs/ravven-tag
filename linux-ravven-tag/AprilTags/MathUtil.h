@@ -31,7 +31,7 @@ class MathUtil {
             const float twopi_inv = 1.f / (2.f * (float)M_PI);
             float absv = std::abs(vin);
             float q = absv*twopi_inv + 0.5f;
-            int qi = (int) q;
+            int qi = floor(q);
             float r = absv - qi*twopi;
             return (vin<0) ? -r : r;
         }
