@@ -15,8 +15,6 @@
 using namespace boost::python;
 using namespace pbcvt;
 
-#define STAMP(x) std::cout << x << std::endl
-
 template <typename T> int sgn(T val) {
     return (T(0) < val) - (val < T(0));
 }
@@ -88,29 +86,6 @@ std::vector<AprilTag::TagDetection> extractMagThetaTags(
     return detector.detect(start, mag, theta);
 }
 
-string type2str(int type) {
-  string r;
-
-  uchar depth = type & CV_MAT_DEPTH_MASK;
-  uchar chans = 1 + (type >> CV_CN_SHIFT);
-
-  switch ( depth ) {
-    case CV_8U:  r = "8U"; break;
-    case CV_8S:  r = "8S"; break;
-    case CV_16U: r = "16U"; break;
-    case CV_16S: r = "16S"; break;
-    case CV_32S: r = "32S"; break;
-    case CV_32F: r = "32F"; break;
-    case CV_64F: r = "64F"; break;
-    default:     r = "User"; break;
-  }
-
-  r += "C";
-  r += (chans+'0');
-
-  return r;
-}
-
 std::vector<AprilTag::TagDetection> extractSegmentedTags(
     AprilTag::TagDetector& detector,
     PyObject* arrOrig, PyObject* arrSegPts
@@ -123,22 +98,7 @@ std::vector<AprilTag::TagDetection> extractSegmentedTags(
         
         fimOrig.convertTo(fimOrig, CV_32FC1, (1. / 255.));
         std::vector<AprilTag::Segment> segments = ccaSegmentation(segPoints);
-        std::cout << "Num of Good Segments: " << segments.size() << std::endl;
     )
-
-    ofstream seg_out;
-    seg_out.open("SegOut.csv");
-    seg_out << "x0, y0, x1, y1, theta, length" << std::endl;
-    for (const auto& seg : segments)
-    {
-        seg_out << seg.getX0() << ",";
-        seg_out << seg.getY0() << ",";
-        seg_out << seg.getX1() << ",";
-        seg_out << seg.getY1() << ",";
-        seg_out << seg.getTheta() << ",";
-        seg_out << seg.getLength() << std::endl;
-    }
-    seg_out.close();
     return detector.detect(fimOrig, segments);
 }
 
