@@ -97,6 +97,8 @@ std::vector<AprilTag::TagDetection> extractSegmentedTags(
         segPoints = pbcvt::fromNDArrayToMat(arrSegPts);
         
         fimOrig.convertTo(fimOrig, CV_32FC1, (1. / 255.));
+    )
+    PERFORM_TIMING("CCA Segmentation",
         std::vector<AprilTag::Segment> segments = ccaSegmentation(segPoints);
     )
     return detector.detect(fimOrig, segments);
