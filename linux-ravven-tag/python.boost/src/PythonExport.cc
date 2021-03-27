@@ -95,20 +95,20 @@ std::vector<AprilTag::TagDetection> extractSegmentedTags(
         cv::Mat fimOrig, segPoints;
         fimOrig = pbcvt::fromNDArrayToMat(arrOrig);
         segPoints = pbcvt::fromNDArrayToMat(arrSegPts);
-        
-        fimOrig.convertTo(fimOrig, CV_32FC1, (1. / 255.));
     )
     PERFORM_TIMING("CCA Segmentation",
         std::vector<AprilTag::Segment> segments = ccaSegmentation(segPoints);
     )
-    return detector.detect(fimOrig, segments);
+    return detector.detect<uchar>(fimOrig, segments);
 }
 
 std::vector<AprilTag::Segment> ccaSegmentation(const cv::Mat& segPoints)
 {
     std::vector<AprilTag::Segment> goodSegments;
+
+    int i;
     // Iterate over matrix points in strides of 4
-    for (int i = 0; i < segPoints.rows; i += 4)
+    for (i = 0; i < segPoints.rows; i += 4)
     {
         // Retrieve 4 points
         AprilTag::XYWeight minXPt(
@@ -165,7 +165,6 @@ std::vector<AprilTag::Segment> ccaSegmentation(const cv::Mat& segPoints)
             float dx = longestPointPair.second.x - longestPointPair.first.x;
             float dy = longestPointPair.second.y - longestPointPair.first.y;
             float theta = atan2(dy, dx);
-
 
             float goldenTheta = maxXPt.weight;
             float err = AprilTag::MathUtil::mod2pi(goldenTheta - theta);

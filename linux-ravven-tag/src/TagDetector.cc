@@ -289,9 +289,10 @@ namespace AprilTag
             }
         )
         
-        return detect(fimOrig, segments);
+        return detect<float>(fimOrig, segments);
     }
 
+    template<class T>
     std::vector<TagDetection> TagDetector::detect(const cv::Mat& fimOrig, std::vector<AprilTag::Segment> segments)
     {
         PERFORM_TIMING("Establish Constants",
@@ -386,7 +387,7 @@ namespace AprilTag
                         int iry = (int)(pxy.second + 0.5);
                         if (irx < 0 || irx >= width || iry < 0 || iry >= height)
                             continue;
-                        float v = fim.at<float>(iry, irx);
+                        float v = fim.at<T>(iry, irx);
                         if (iy == -1 || iy == dd || ix == -1 || ix == dd)
                             whiteModel.addObservation(x, y, v);
                         else if (iy == 0 || iy == (dd - 1) || ix == 0 || ix == (dd - 1))
@@ -409,7 +410,7 @@ namespace AprilTag
                             continue;
                         }
                         float threshold = (blackModel.interpolate(x, y) + whiteModel.interpolate(x, y)) * 0.5f;
-                        float v = fim.at<float>(iry, irx);
+                        float v = fim.at<T>(iry, irx);
                         tagCode = tagCode << 1;
                         if (v > threshold)
                             tagCode |= 1;
@@ -508,5 +509,11 @@ namespace AprilTag
 
         return goodDetections;
     }
+
+    /** When calling this detection portion with the segments pre-calculated,
+     * the grayscaled original image doesn't have to be normalized, thus saving
+     * ~8ms
+     */
+    template std::vector<TagDetection> TagDetector::detect<uchar>(const cv::Mat& fimOrig, std::vector<AprilTag::Segment> segments);
 
 } // namespace

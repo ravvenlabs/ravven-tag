@@ -21,6 +21,8 @@ namespace AprilTag {
             
             std::vector<TagDetection> detect(const cv::Mat& image);
             std::vector<TagDetection> detect(const cv::Mat& fimOrig, const cv::Mat& fimMag, const cv::Mat& fimTheta);
+
+            template<class T>
             std::vector<TagDetection> detect(const cv::Mat& fimOrig, std::vector<AprilTag::Segment> segments);
     };
 } // namespace
