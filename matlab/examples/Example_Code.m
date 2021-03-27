@@ -5,7 +5,7 @@ close all;
 addpath(genpath('../src'))
 addpath(genpath('../Examples'))
 
-user_input_prompt = 'Which algorithm do you want to use?\n1.April Tag 1\n2.April Tag 2\n3.Ravven Detect\n4.Ravven 2 Detect\n5.Ravven 2 Mag/Theta\n';
+user_input_prompt = 'Which algorithm do you want to use?\n1.April Tag 1\n2.April Tag 2\n3.Ravven Detect\n4.Ravven 2 Detect\n5.Ravven 2 Mag/Theta\n6.Ravven 2 FPGA\n';
 UserAlg = input(user_input_prompt);
 
 user_input_prompt = 'Which example do you want to run?\n1.Webcam\n2.Test Image\n3.Single Image\n4.Analyze Video\n';
@@ -79,6 +79,7 @@ switch usr_input
                 
 %                 saveas(vidDisp,'test.png');
                 annotatedFrame = getframe;
+                
                 output(k).cdata = annotatedFrame.cdata;
 %                 imwrite(CurrFrame,sprintf('vidframes/%05i.png',k));
                 k = k + 1;
