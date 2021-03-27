@@ -294,20 +294,26 @@ struct DetectionData break_out_detection(struct CameraParameters cp, AprilTag::T
     // NOTE: for this to be accurate, it is necessary to use the
     // actual camera parameters here as well as the actual tag size
     // (m_fx, m_fy, m_px, m_py, m_tagSize)
+    PERFORM_TIMING("Pose Estimation",
+        Eigen::Vector3d translation;
+        Eigen::Matrix3d rotation;
+        detection.getRelativeTranslationRotation(cp.tagSize, cp.fx, cp.fy, cp.px, cp.py,
+                                                translation, rotation);
 
-    Eigen::Vector3d translation;
-    Eigen::Matrix3d rotation;
-    detection.getRelativeTranslationRotation(cp.tagSize, cp.fx, cp.fy, cp.px, cp.py,
-                                             translation, rotation);
-
-    Eigen::Matrix3d F;
-    F <<
-      1, 0,  0,
-      0,  -1,  0,
-      0,  0,  1;
-    Eigen::Matrix3d fixed_rot = F*rotation;
-    double yaw, pitch, roll;
-    wRo_to_euler(fixed_rot, yaw, pitch, roll);
+        Eigen::Matrix3d F;
+        F <<
+        1, 0,  0,
+        0,  -1,  0,
+        0,  0,  1;
+        Eigen::Matrix3d fixed_rot = F*rotation;
+        double yaw, pitch, roll;
+        wRo_to_euler(fixed_rot, yaw, pitch, roll);
+        double x, y, z;
+        x = translation(0);
+        y = translation(1);
+        z = translation(2);
+        double distance = translation.norm();
+    )
 
     return {
         detection.id, detection.hammingDistance,
@@ -317,7 +323,7 @@ struct DetectionData break_out_detection(struct CameraParameters cp, AprilTag::T
             { detection.p[2].first, detection.p[2].second },
             { detection.p[3].first, detection.p[3].second },
         },
-        translation.norm(), translation(0), translation(1), translation(2),
+        distance, x, y, z,
         yaw, pitch, roll
     };
 }
