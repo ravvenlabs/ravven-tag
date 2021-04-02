@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 project(apriltags)
 
 #add_definitions(-pg) #"-fopenmp)
+#add_definitions(-DTIMING_ENABLED)
 
 # pull in the pods macros. See cmake/pods.cmake for documentation
 set(POD_NAME apriltags)
