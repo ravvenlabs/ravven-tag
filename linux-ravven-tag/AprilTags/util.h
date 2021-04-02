@@ -4,10 +4,14 @@
 #include <sys/time.h>
 #include <iostream>
 
+#ifdef TIMING_ENABLED
 #define PERFORM_TIMING(name, ...) \
     TIMING_VAR = tic(); \
     __VA_ARGS__ \
     std::cout << name " Time: " << tic() - TIMING_VAR << "s" << std::endl;
+#else
+#define PERFORM_TIMING(name, ...) __VA_ARGS__
+#endif
 
 double TIMING_VAR;
 
