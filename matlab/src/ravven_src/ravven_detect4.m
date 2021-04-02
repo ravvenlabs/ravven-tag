@@ -1,9 +1,9 @@
-function Clusters = ravven_detect4(im_gray,gm,gd,Debug)
+function Clusters = ravven_detect4(im_gray,gm,gd,Debug,imNum)
     %Get all the filters
     Compass_Filters = KirschFilters();
     lineTemp = zeros(1,6);
+    bram = []; %Array for holding maxX, maxY, minX, minY points from CCA
     segments = []; %Array for holding segments
-    bramData = []; %Array for holding segments
 
     for i = 1:1:4
         %Convolve the gray image with each 3x3 filter
@@ -13,8 +13,8 @@ function Clusters = ravven_detect4(im_gray,gm,gd,Debug)
         test(test == 0) = [];
         avg = mean(test);     %Get the mean of the frame
         stdDev = std(test);   %Get the stddev of the frame
-        MagThr = avg + stdDev *7; %Take the top %3 of the magnitudes
-        MagThr1 = avg + stdDev *3; %Take the top %6 of the magnitudes
+        MagThr = avg + stdDev * 7;%1.89; %Take the top %3 of the magnitudes
+        MagThr1 = avg + stdDev * 3;%1.56; %Take the top %6 of the magnitudes
 
         BW1 = imbinarize(DirMag,MagThr);
         BW2 = imbinarize(gm,.04);
@@ -33,7 +33,6 @@ function Clusters = ravven_detect4(im_gray,gm,gd,Debug)
         
         temp = size(maxX);
         temp = temp(1);
-        
         for i = 1:temp    
             % find a legit blob
             if (maxX(i,4) == 1)
@@ -47,7 +46,7 @@ function Clusters = ravven_detect4(im_gray,gm,gd,Debug)
                 minYy = minY(i,2);
                 maxYx = maxY(i,1);
                 maxYy = maxY(i,2);
-            
+                            
                 % find longest line
                 length = [];
                 length(1)  = Pt2PtDist(maxXx,maxXy,minXx,minXy);
@@ -96,19 +95,17 @@ function Clusters = ravven_detect4(im_gray,gm,gd,Debug)
                 end
                 lineTemp(5) = maxX(i,3);       % theta
             
-                hold on
                 SegLength = Pt2PtDist(lineTemp(1),lineTemp(2),lineTemp(3),lineTemp(4));
                 if((SegLength > 5) && (SegLength < 630))
+                    bram = [bram; lineTemp(1:5)];
                     lineTemp(6) = SegLength; %Record Segment Length
                     lineTemp = FindDirection(lineTemp); %find the dir
                     segments = [segments;lineTemp]; %Add to the good segments
-                    plot([lineTemp(1),lineTemp(3)],[lineTemp(2),lineTemp(4)],'LineWidth',1,'Color','r');
-                end 
+                end
             end
         end
     end
-    size(segments)
-    save bram.mat minX maxX minY maxY
+    writematrix(bram, sprintf("../pics/data/bram%d.csv", imNum));
     Clusters = segments;
 end
 
@@ -163,76 +160,12 @@ dy = LineTemp(4) - LineTemp(2); %Find the change in y
 
 tmpTheta = atan2(dy,dx); %'Assumed' direction of the line
 
-%Variables for our votes
-noflip = 0;
-flip = 0;
-
-% find the correct theta by waiting for 3 exact thetas in a row
-% y = diff(thetas);
-% goldenThetaIndex = find(y == 0);
-% goldenThetaIndex = goldenThetaIndex(1);
-%goldenTheta = mode(thetas);
-
-%indices = find(mags > .06);
-%goodThetas = thetas(indices);
-%goldenTheta = mean(goodThetas);
-
 goldenTheta = LineTemp(5);
-%maxMag = max(mags);
-%maxIndex = find(mags == maxMag);
-%maxIndex = maxIndex(1);
-
-%goldenTheta = thetas(maxIndex);
-
-%figure
-%subplot(2,1,1)
-%plot(thetas)
-%subplot(2,1,2)
-%plot(mags)
 err = single(mod2pi(goldenTheta - tmpTheta)); 
 if (err > 0) %If it's flipped add PI
     LineTemp(5) = tmpTheta + pi;
 else
     LineTemp(5) = tmpTheta;
-end
-
-% for i = 1:size(thetas)
-%     Get all the thetas of the line
-%     theta = thetas(i);
-%     
-%     Calculate the error of our assumed direction
-%     err = single(mod2pi(theta - tmpTheta)); 
-%     
-%    if(err < 0) %If the error is negative vote for no flip
-%        noflip = noflip + mags(i);
-%    else           %If the error is positive vote for to flip
-%        flip = flip + mags(i);
-%    end
-% end
-% 
-% if (flip > noflip) %If it's flipped add PI
-%     LineTemp(5) = tmpTheta + pi;
-%     disp 'flipped'
-% else
-%     LineTemp(5) = tmpTheta;
-% end
-
-avgTheta = goldenTheta;
-
-avgThetaRotate = avgTheta + pi/2;
-
-avgThetaRotateDeg = avgThetaRotate * 180/pi;
-answerDeg = LineTemp(5) * 180/pi;
-
-dyNew = sin(avgThetaRotate) * LineTemp(6);
-dxNew = cos(avgThetaRotate) * LineTemp(6);
-
-if (sign(dyNew) ~= sign(dy))
-    dyNew = dyNew * -1;
-end
-
-if (sign(dxNew) ~= sign(dx))
-    dxNew = dxNew * -1;
 end
 
 %Check if it's the right direction
@@ -246,35 +179,5 @@ if(dot > 0) %If not flip the line direction
     tmpY = LineTemp(2);
     LineTemp(2) = LineTemp(4);
     LineTemp(4) = tmpY;
-    
-    % center the new line
-    x1 = LineTemp(1);
-    y1 = LineTemp(2);
-    x2 = LineTemp(3);
-    y2 = LineTemp(4);
-
-    yError = (dy - dyNew)/2;
-    xError = (dx - dxNew)/2;
-
-    %LineTemp(3) = LineTemp(1) - dxNew - xError;
-    %LineTemp(4) = LineTemp(2) - dyNew - yError;
-
-    %LineTemp(3) = LineTemp(1) - dxNew;
-    %LineTemp(4) = LineTemp(2) - dyNew;
-else
-    % center the new line
-    x1 = LineTemp(1);
-    y1 = LineTemp(2);
-    x2 = LineTemp(3);
-    y2 = LineTemp(4);
-    
-    yError = (dy - dyNew)/2;
-    xError = (dx - dxNew)/2;
-    
-    %LineTemp(3) = dxNew + LineTemp(1) - xError;
-    %LineTemp(4) = dyNew + LineTemp(2) - yError;
-    
-    %LineTemp(3) = dxNew + LineTemp(1);
-    %LineTemp(4) = dyNew + LineTemp(2);
 end
 end

@@ -5,29 +5,33 @@ close all;
 addpath(genpath('../src'))
 addpath(genpath('../Examples'))
 
+DEBUG = 1;
+
 user_input_prompt = 'Which algorithm do you want to use?\n1.April Tag 1\n2.April Tag 2\n3.Ravven Detect\n4.Ravven 2 Detect\n5.Ravven 2 Mag/Theta\n6.Ravven 2 FPGA\n';
 UserAlg = input(user_input_prompt);
 
-user_input_prompt = 'Which example do you want to run?\n1.Webcam\n2.Test Image\n3.Single Image\n4.Analyze Video\n';
+user_input_prompt = 'Which example do you want to run?\n1.Webcam\n2.Test Image\n3.Single Image\n4.Analyze Video\n5.Run Input Test Suite\n';
 usr_input = input(user_input_prompt);
 
 setupOutputDir([pwd,'\outputdir']);
+
+inputFileNumbers = 1:20;
 
 switch usr_input
     case 1
         WebcamDemo;
     case 2
         profile on;
-        [Detection] = AprilTag(imread('../pics/test_tag.png'),UserAlg,1);
+        [Detection] = AprilTag(imread('../pics/test_tag.png'),UserAlg,DEBUG);
         Detection
         profile viewer;
     case 3
-        [file, path] = uigetfile('../pics/test_tag.png');
+        [file, path] = uigetfile('../pics/data/*');
         if isequal(file,0)
             disp('User selected cancel')
         else
             profile on;
-            [Detection] = AprilTag(imread([path,file]),UserAlg,1);
+            [Detection] = AprilTag(imread([path,file]),UserAlg,DEBUG);
             Detection
             profile viewer;
         end
@@ -90,6 +94,13 @@ switch usr_input
             open(vout);
             writeVideo(vout,output);
             close(vout);
+        end
+    case 5
+        for i = inputFileNumbers
+            file = sprintf("../pics/data/input%d.bmp", i)
+            detection = AprilTag(imread(file),UserAlg,0,i);
+            found(i).file = file;
+            found(i).detection = detection;
         end
     otherwise
         disp('Please select a valid option');
