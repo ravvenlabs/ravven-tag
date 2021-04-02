@@ -56,6 +56,12 @@ void print_detection(struct CameraParameters cp, AprilTag::TagDetection& detecti
 struct DetectionData break_out_detection(struct CameraParameters cp, AprilTag::TagDetection& detection);
 void draw_detection(cv::Mat& originalImage, AprilTag::TagDetection& detection);
 std::vector<AprilTag::Segment> ccaSegmentation(const cv::Mat& segPoints);
+void reorientSegment(
+    std::vector<AprilTag::Segment>& segments,
+    std::pair<AprilTag::XYWeight, AprilTag::XYWeight>& pointPair,
+    float length,
+    float goldenTheta
+);
 
 // Tag extraction functions
 std::vector<AprilTag::TagDetection> extractTags(AprilTag::TagDetector& detector, PyObject* im_in)
@@ -86,18 +92,56 @@ std::vector<AprilTag::TagDetection> extractMagThetaTags(
     return detector.detect(start, mag, theta);
 }
 
-std::vector<AprilTag::TagDetection> extractSegmentedTags(
+std::vector<AprilTag::TagDetection> extractCCATags(
     AprilTag::TagDetector& detector,
     PyObject* arrOrig, PyObject* arrSegPts
 )
 {
-    PERFORM_TIMING("Pre-Pre Processiong",
+    PERFORM_TIMING("Pre-Processiong",
         cv::Mat fimOrig, segPoints;
         fimOrig = pbcvt::fromNDArrayToMat(arrOrig);
         segPoints = pbcvt::fromNDArrayToMat(arrSegPts);
     )
     PERFORM_TIMING("CCA Segmentation",
         std::vector<AprilTag::Segment> segments = ccaSegmentation(segPoints);
+    )
+    return detector.detect<uchar>(fimOrig, segments);
+}
+
+std::vector<AprilTag::TagDetection> extractSegmentedTags(
+    AprilTag::TagDetector& detector,
+    PyObject* arrOrig, PyObject* arrSegments
+)
+{
+    PERFORM_TIMING("Pre-Processing",
+        cv::Mat fimOrig, segmentsMat;
+        fimOrig = pbcvt::fromNDArrayToMat(arrOrig);
+        segmentsMat = pbcvt::fromNDArrayToMat(arrSegments);
+    )
+    PERFORM_TIMING("Segment Correction",
+        std::vector<AprilTag::Segment> segments;
+        for (int i = 0; i < segmentsMat.rows; i++)
+        {
+            float x0 = segmentsMat.at<float>(i,0);
+            float y0 = segmentsMat.at<float>(i,1);
+            float x1 = segmentsMat.at<float>(i,2);
+            float y1 = segmentsMat.at<float>(i,3);
+            float theta = segmentsMat.at<float>(i,4);
+            float length = AprilTag::MathUtil::distance2D(
+                { x0, y0 },
+                { x1, y1 }
+            );
+            std::pair<AprilTag::XYWeight, AprilTag::XYWeight> pointPair = {
+                { x0, y0, 0 },
+                { x1, y1, 0 }
+            };
+            reorientSegment(
+                segments, 
+                pointPair,
+                length,
+                theta
+            );
+        }
     )
     return detector.detect<uchar>(fimOrig, segments);
 }
@@ -160,44 +204,53 @@ std::vector<AprilTag::Segment> ccaSegmentation(const cv::Mat& segPoints)
         // Check if the length fits within the bounds
         if (longestLength > 10 && longestLength < 630)
         {
-            AprilTag::Segment goodSegment;
-            // if yes, find its direction and save
-            float dx = longestPointPair.second.x - longestPointPair.first.x;
-            float dy = longestPointPair.second.y - longestPointPair.first.y;
-            float theta = atan2(dy, dx);
-
-            float goldenTheta = maxXPt.weight;
-            float err = AprilTag::MathUtil::mod2pi(goldenTheta - theta);
-            if (err > 0)
-            {
-                theta += PI;
-            }
-            
-            float dot = dx * cos(theta) + dy * sin(theta);
-            if (dot > 0)
-            {
-                goodSegment.setX0(longestPointPair.second.x);
-                goodSegment.setY0(longestPointPair.second.y);
-                goodSegment.setX1(longestPointPair.first.x);
-                goodSegment.setY1(longestPointPair.first.y);
-            }
-            else
-            {
-                goodSegment.setX0(longestPointPair.first.x);
-                goodSegment.setY0(longestPointPair.first.y);
-                goodSegment.setX1(longestPointPair.second.x);
-                goodSegment.setY1(longestPointPair.second.y);
-            }
-
-            goodSegment.setTheta(theta);
-            goodSegment.setLength(longestLength);
-
-            goodSegments.push_back(goodSegment);
+            reorientSegment(goodSegments, longestPointPair, longestLength, maxXPt.weight);
         }
         // if no, continue
     }
 
     return goodSegments;
+}
+
+void reorientSegment(
+    std::vector<AprilTag::Segment>& segments,
+    std::pair<AprilTag::XYWeight, AprilTag::XYWeight>& pointPair,
+    float length,
+    float goldenTheta
+)
+{
+    AprilTag::Segment seg;
+    // if yes, find its direction and save
+    float dx = pointPair.second.x - pointPair.first.x;
+    float dy = pointPair.second.y - pointPair.first.y;
+    float theta = atan2(dy, dx);
+
+    float err = AprilTag::MathUtil::mod2pi(goldenTheta - theta);
+    if (err > 0)
+    {
+        theta += PI;
+    }
+
+    float dot = dx * cos(theta) + dy * sin(theta);
+    if (dot > 0)
+    {
+        seg.setX0(pointPair.second.x);
+        seg.setY0(pointPair.second.y);
+        seg.setX1(pointPair.first.x);
+        seg.setY1(pointPair.first.y);
+    }
+    else
+    {
+        seg.setX0(pointPair.first.x);
+        seg.setY0(pointPair.first.y);
+        seg.setX1(pointPair.second.x);
+        seg.setY1(pointPair.second.y);
+    }
+
+    seg.setTheta(theta);
+    seg.setLength(length);
+
+    segments.push_back(seg);
 }
 
 #if (PY_VERSION_HEX >= 0x03000000)
@@ -224,6 +277,7 @@ BOOST_PYTHON_MODULE(libpyboostapriltags)
     def("draw_detection", &draw_detection);
     def("extractTags", &extractTags);
     def("extractMagThetaTags", &extractMagThetaTags);
+    def("extractCCATags", &extractCCATags);
     def("extractSegmentedTags", &extractSegmentedTags);
 
     class_<CameraParameters>("CameraParameters")
