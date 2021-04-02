@@ -43,52 +43,36 @@ namespace AprilTag
             int height = image.rows;
             cv::Mat fimOrig(image.rows, image.cols, CV_32FC1);
             // Uncomment for minor opencv optimization
-            // image.convertTo(fimOrig, CV_32FC1, (1. / 255.));
-            for (int y=0; y<height; y++) {
-                for (int x=0; x<width; x++) {
-                    fimOrig.at<float>(y, x) = image.at<unsigned char>(y, x) / 255.;
-                }
-            }
+            image.convertTo(fimOrig, CV_32FC1, (1. / 255.));
         )
 
         //================================================================
         // Step one: preprocess image (convert to grayscale) and low pass if necessary
 
-        PERFORM_TIMING("Gaussian Smoothing (1)",
-            cv::Mat fim = fimOrig.clone();
-            
-            //! Gaussian smoothing kernel applied to image (0 == no filter).
-            /*! Used when sampling bits. Filtering is a good idea in cases
-            * where A) a cheap camera is introducing artifical sharpening, B)
-            * the bayer pattern is creating artifcats, C) the sensor is very
-            * noisy and/or has hot/cold pixels. However, filtering makes it
-            * harder to decode very small tags. Reasonable values are 0, or
-            * [0.8, 1.5].
-            */
-            float sigma = 0;
+        //! Gaussian smoothing kernel applied to image (0 == no filter).
+        /*! Used when detecting the outline of the box. It is almost always
+        * useful to have some filtering, since the loss of small details
+        * won't hurt. Recommended value = 0.8. The case where sigma ==
+        * segsigma has been optimized to avoid a redundant filter
+        * operation.
+        */
+        float segSigma = 0.8f;
 
-            //! Gaussian smoothing kernel applied to image (0 == no filter).
-            /*! Used when detecting the outline of the box. It is almost always
-            * useful to have some filtering, since the loss of small details
-            * won't hurt. Recommended value = 0.8. The case where sigma ==
-            * segsigma has been optimized to avoid a redundant filter
-            * operation.
-            */
-            float segSigma = 0.8f;
-
-            cv::Mat kernel_h;
-            cv::Mat kernel_v;
-
-            if (sigma > 0) {
-                int filtsz = ((int)AprilTag::max(3.0f, 3 * sigma)) | 1;
-                std::vector<float> filt = AprilTag::Gaussian::makeGaussianFilter(sigma, filtsz);
-                kernel_h = cv::Mat(filt.size(), 1, CV_32FC1);
+        PERFORM_TIMING("Gaussian Smoothing",
+            cv::Mat fimSeg;
+            if (segSigma > 0) {
+                // blur anew
+                int filtsz = ((int)AprilTag::max(3.0f, 3 * segSigma)) | 1;
+                std::vector<float> filt = AprilTag::Gaussian::makeGaussianFilter(segSigma, filtsz);
+                cv::Mat kernel_h = cv::Mat(filt.size(), 1, CV_32FC1);
                 memcpy(kernel_h.data, filt.data(), filt.size() * sizeof(float));
-                kernel_v = cv::Mat(1, filt.size(), CV_32FC1);
+                cv::Mat kernel_v = cv::Mat(1, filt.size(), CV_32FC1);
                 memcpy(kernel_v.data, filt.data(), filt.size() * sizeof(float));
 
-                cv::filter2D(fimOrig, fim, -1, kernel_h);
-                cv::filter2D(fim, fim, -1, kernel_v);
+                cv::filter2D(fimOrig, fimSeg, -1, kernel_h);
+                cv::filter2D(fimSeg, fimSeg, -1, kernel_v);
+            } else {
+                fimSeg = fimOrig.clone();
             }
         )
 
@@ -98,27 +82,6 @@ namespace AprilTag
         // break up segments, causing us to miss Quads. It is useful to do a Gaussian
         // low pass on this step even if we don't want it for encoding.
 
-        PERFORM_TIMING("Gaussian Smoothing (2)",
-            cv::Mat fimSeg;
-            if (segSigma > 0) {
-                if (segSigma == sigma) {
-                fimSeg = fim.clone();
-                } else {
-                // blur anew
-                    int filtsz = ((int)AprilTag::max(3.0f, 3 * sigma)) | 1;
-                    std::vector<float> filt = AprilTag::Gaussian::makeGaussianFilter(sigma, filtsz);
-                    kernel_h = cv::Mat(filt.size(), 1, CV_32FC1);
-                    memcpy(kernel_h.data, filt.data(), filt.size() * sizeof(float));
-                    kernel_v = cv::Mat(1, filt.size(), CV_32FC1);
-                    memcpy(kernel_v.data, filt.data(), filt.size() * sizeof(float));
-
-                    cv::filter2D(fim, fimSeg, -1, kernel_h);
-                    cv::filter2D(fimSeg, fimSeg, -1, kernel_v);
-                }
-            } else {
-                fimSeg = fimOrig.clone();
-            }
-        )
 
         PERFORM_TIMING("Gradient",
             cv::Mat fimTheta(fimSeg.rows, fimSeg.cols, CV_32FC1);
@@ -139,8 +102,7 @@ namespace AprilTag
             }
         )
 
-        /* Simplifying timing but forcibly filtering the decoding image. */
-        return detect(fimSeg, fimMag, fimTheta);
+        return detect(fimOrig, fimMag, fimTheta);
     }
 
     std::vector<TagDetection> TagDetector::detect(const cv::Mat& fimOrig, const cv::Mat& fimMag, const cv::Mat& fimTheta)
@@ -148,8 +110,6 @@ namespace AprilTag
         PERFORM_TIMING("Establish Constants",
             int width = fimOrig.cols;
             int height = fimOrig.rows;
-
-            cv::Mat fimSeg = fimOrig;
         )
 
         //================================================================
@@ -206,12 +166,12 @@ namespace AprilTag
         // We will soon fit lines (segments) to these points.
         PERFORM_TIMING("Cluster",
             std::map<int, std::vector<AprilTag::XYWeight> > clusters;
-            for (int y = 0; y + 1 < fimSeg.rows; y++) {
-                for (int x = 0; x + 1 < fimSeg.cols; x++) {
-                    if (uf.getSetSize(y * fimSeg.cols + x) < AprilTag::Segment::minimumSegmentSize)
+            for (int y = 0; y + 1 < fimOrig.rows; y++) {
+                for (int x = 0; x + 1 < fimOrig.cols; x++) {
+                    if (uf.getSetSize(y * fimOrig.cols + x) < AprilTag::Segment::minimumSegmentSize)
                         continue;
 
-                    int rep = (int)uf.getRepresentative(y * fimSeg.cols + x);
+                    int rep = (int)uf.getRepresentative(y * fimOrig.cols + x);
 
                     std::map<int, std::vector<AprilTag::XYWeight> >::iterator it = clusters.find(rep);
                     if (it == clusters.end()) {
@@ -300,8 +260,6 @@ namespace AprilTag
             int height = fimOrig.rows;
 
             std::pair<int, int> opticalCenter(width / 2, height / 2);
-
-            cv::Mat fim = fimOrig;
         )
         // Step six: For each segment, find segments that begin where this segment ends.
         // (We will chain segments together next...) The gridder accelerates the search by
@@ -387,7 +345,7 @@ namespace AprilTag
                         int iry = (int)(pxy.second + 0.5);
                         if (irx < 0 || irx >= width || iry < 0 || iry >= height)
                             continue;
-                        float v = fim.at<T>(iry, irx);
+                        float v = fimOrig.at<T>(iry, irx);
                         if (iy == -1 || iy == dd || ix == -1 || ix == dd)
                             whiteModel.addObservation(x, y, v);
                         else if (iy == 0 || iy == (dd - 1) || ix == 0 || ix == (dd - 1))
@@ -410,7 +368,7 @@ namespace AprilTag
                             continue;
                         }
                         float threshold = (blackModel.interpolate(x, y) + whiteModel.interpolate(x, y)) * 0.5f;
-                        float v = fim.at<T>(iry, irx);
+                        float v = fimOrig.at<T>(iry, irx);
                         tagCode = tagCode << 1;
                         if (v > threshold)
                             tagCode |= 1;
