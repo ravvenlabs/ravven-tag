@@ -48,7 +48,7 @@ for y = 1:height
             if ((left ~= 0) && (above ~= 0))
                 % merger
                 if (left < above)
-                    assignmet = left;
+                    assignment = left;
                     mergerLookup(above) = left;
                     
                     maxX(left,:) = maxX(above,:);

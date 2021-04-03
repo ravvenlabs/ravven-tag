@@ -9,18 +9,14 @@ end
 
 %Preprocessing to Grayscale
 switch alg
-    case 1
-    case 2
-    case 3
-    case 4
+    case {1, 2, 3, 4}
         if(ndims(image) > 2)
             image_gray = cvtColor(image);
         else
             image_gray = single(image);
         end
-    case 5
-    case 6
-        image_gray = uint8(readmatrix(sprintf("../pics/data/gray%d.csv", i)));
+    case {5, 6}
+        image_gray = uint8(readmatrix(sprintf("../pics/data/gray%d.csv", inputNum)));
         % Temp Norm
         image_gray = single(image_gray) ./ 255;
 end

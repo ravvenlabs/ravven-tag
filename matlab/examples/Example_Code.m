@@ -31,7 +31,14 @@ switch usr_input
             disp('User selected cancel')
         else
             profile on;
-            [Detection] = AprilTag(imread([path,file]),UserAlg,DEBUG);
+            imageNum = -1;
+            switch UserAlg
+                case {5, 6}
+                    imageNum = input("Input the number associated with the image and csvs\n");
+                otherwise
+                    imageNum = -1;
+            end
+            [Detection] = AprilTag(imread([path,file]),UserAlg,DEBUG,imageNum);
             Detection
             profile viewer;
         end
