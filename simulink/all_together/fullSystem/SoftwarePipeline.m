@@ -1,5 +1,7 @@
 %% Main entry point for Simulink model end results analysis.
 function detections = SoftwarePipeline(gray, raw_segments)
+    % Cast
+    raw_segments = single(raw_segments);
     % Step 7b
     correctedSegments = SegmentCorrection(...
         raw_segments(1), raw_segments(2),...
