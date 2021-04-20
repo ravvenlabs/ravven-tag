@@ -1,0 +1,2 @@
+# Ignore hardware generated objects from HDL Coder
+hdl_prj**
