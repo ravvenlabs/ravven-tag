@@ -83,7 +83,7 @@ function QuadPts = FindIntersections(Path, SegmentList)
 
         %Oops they're parallel (shouldn't happen because we're looking down
         %the sides of the quad
-        if(IsNAN(Point(i,1)))
+        if(isnan(Point(i,1)))
             QuadPts = [NaN,NaN;NaN,NaN;NaN,NaN;NaN,NaN];
             return;
         end
