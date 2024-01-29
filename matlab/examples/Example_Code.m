@@ -34,7 +34,12 @@ switch usr_input
             imageNum = -1;
             switch UserAlg
                 case {5, 6}
-                    imageNum = input("Input the number associated with the image and csvs\n");
+                    if length(file) == 11
+                        imageNum = str2num(file(6:7));
+                    else
+                        imageNum = str2num(file(6));
+                    end
+                    %imageNum = input("Input the number associated with the image and csvs\n");
                 otherwise
                     imageNum = -1;
             end
