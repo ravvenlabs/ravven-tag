@@ -25,10 +25,17 @@ function Clusters = ravven_detect4(im_gray,gm,gd,Debug,imNum)
         [L,minX,maxX,minY,maxY] = dskFeatureDetectorFunction(BW,gd);
         
         if(Debug == 1)
-            figure
+            %figure
+            %imagesc(L);
+            %title('cca'); 
+            %hold on
+
+            FigH = figure('Position', get(0, 'Screensize'));
             imagesc(L);
-            title('cca'); 
-            hold on
+            axis off
+            title(['CCA' num2str(i)]); 
+            saveas(FigH,append(['images\cca' num2str(i) '.png']))
+            close(FigH)
         end
         
         temp = size(maxX);

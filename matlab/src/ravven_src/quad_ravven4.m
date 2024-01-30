@@ -3,28 +3,32 @@ gm = single(reinterpretcast(uint16(readmatrix(sprintf("../pics/data/mag%d.csv", 
 gd = single(reinterpretcast(uint16(readmatrix(sprintf("../pics/data/theta%d.csv", inputNum))), numerictype(1,16,13)));
 
 if(debug == 1)
-figure('Name','Stage 2a: Gradient Magnitue');
-imagesc(gm);
-colorbar;
-title('Stage 2a: Gradient Magnitue');
-    thisdir = getOutputdir();
-    saveas(gca,[thisdir,'\','GradMag']);
+    FigH = figure('Position', get(0, 'Screensize'));
+    imagesc(gm);
+    axis off
+    title('Stage 2a: Gradient Magnitue');
+    saveas(FigH,append('images\gradientMagnitude.png'))
+    colorbar;
+    close(FigH)
 
-figure('Name','Stage 2b: Gradient Direction');
-imagesc(gd .* 180/pi);
-colorbar;
-title('Stage 2b: Gradient Direction');
-    thisdir = getOutputdir();
-    saveas(gca,[thisdir,'\','GradDir']);
+    FigH = figure('Position', get(0, 'Screensize'));
+    imagesc(gd .* 180/pi);
+    axis off
+    title('Stage 2b: Gradient Direction');
+    saveas(FigH,append('images\gradientDirection.png'))
+    colorbar;
+    close(FigH)
 end
 
 FoundSegs = ravven_detect4(image_gray,gm,gd,debug,inputNum);
 
 if(debug == 1)
-    figure('Name','Segments');
-    imshow(image_gray);
+    FigH = figure('Position', get(0, 'Screensize'));
+    imagesc(image_gray);
+    axis off
     title('Segments');
     hold on;
+
     %Debug Code
     for k = 1:length(FoundSegs)
         LineColor = [146/255,abs(FoundSegs(k,5))/(4*pi),1];
@@ -33,9 +37,9 @@ if(debug == 1)
            'LineWidth',2,'color',LineColor);%plot the segment
     end
     hold off;
-        thisdir = getOutputdir();
-    saveas(gca,[thisdir,'\','Segments']);
-    
+    saveas(FigH,append('images\segments.png'))
+    close(FigH)
+
 end
 if(isempty(FoundSegs))
     quads = [];
@@ -48,8 +52,9 @@ linked_segments = LinkSegs(FoundSegs);
 quads = QuadDetection(linked_segments,FoundSegs);
 if(debug == 1)
     %Debug visualization
-    figure('Name','Detected Quads with intersections');
-    imshow(image_gray);
+    FigH = figure('Position', get(0, 'Screensize'));
+    imagesc(image_gray);
+    axis off
     title('Detected Quads with intersections');
     hold on;
     for inputNum = 1:size(quads,1)
@@ -67,8 +72,8 @@ if(debug == 1)
         scatter([sum(Seg1(1,:))/2,sum(Seg2(1,:))/2,sum(Seg3(1,:))/2,sum(Seg4(1,:))/2],...
             [sum(Seg1(2,:))/2,sum(Seg2(2,:))/2,sum(Seg3(2,:))/2,sum(Seg4(2,:))/2],15,'go');
     end
-    thisdir = getOutputdir();
-    saveas(gca,[thisdir,'\','DetectedQuads']);
+    saveas(FigH,append('images\detectedQuads.png'))
+    close(FigH)
 end
 end
 

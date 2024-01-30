@@ -22,11 +22,12 @@ switch alg
 end
 
 if(debug == 1)
-    figure('Name','Preprocessing: Grayscale');
-    imshow(image_gray);
+    FigH = figure('Position', get(0, 'Screensize'));
+    imagesc(image_gray);
+    axis off
     title('Preprocessing: Grayscale');
-        thisdir = getOutputdir();
-        saveas(gca,[thisdir,'\','Grayscale']);
+    saveas(FigH,append('images\grayscale.png'))
+    close(FigH)
 end
 
 %Stage 1: Gaussian Blurring (Without toolbox)
@@ -36,12 +37,14 @@ G = [0.0571, 0.1248 ,0.0571;
      0.0571, 0.1248 ,0.0571];
 image_blurred = conv2(image_gray,G,'same'); %Convolve across image
 
-
 %Displaying the results of blurring
 if(debug == 1)
-figure('Name','Stage 1:Gaussian Blurring');
-imshow(image_blurred);
-title('Stage 1:Gaussian Blurring');
+    FigH = figure('Position', get(0, 'Screensize'));
+    imagesc(image_blurred);
+    axis off
+    title('Stage 1:Gaussian Blurring');
+    saveas(FigH,append('images\gaussianBlurring.png'))
+    close(FigH)
 end
 
 switch alg
@@ -69,8 +72,9 @@ Detections = RemoveDuplicates(Detections);
 
 if(debug == 1)
     %Debug visualization
-    figure('Name','Detected Tags');
-    imshow(image);
+    FigH = figure('Position', get(0, 'Screensize'));
+    imagesc(image);
+    axis off
     title('Detected Tags');
     hold on;
     for i = 1:length(Detections)
@@ -82,8 +86,8 @@ if(debug == 1)
         text(Detections(i).cxy(1)+10,Detections(i).cxy(2)+5,sprintf('#%i',Detections(i).id),'color','r');
     end
     hold off;
-        thisdir = getOutputdir();
-    saveas(gca,[thisdir,'\','Detections']);
+    saveas(FigH,append('images\detectedTags.png'))
+    close(FigH)
 end
 
 end
