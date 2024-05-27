@@ -1,7 +1,7 @@
 debug = 1;
 fpga = 1;
 inputImage = imread('input.bmp');
-image_gray = rgb2gray(inputImage);
+image_gray = single(rgb2gray(inputImage));
 
 if(debug == 1)
     FigH = figure('Position', get(0, 'Screensize'));
@@ -20,12 +20,9 @@ G = [0.0571, 0.1248 ,0.0571;
 image_blurred = conv2(image_gray,G,'same'); %Convolve across image
 
 if fpga == 1
-    Gfixed = fi(G,1,16,15);
     sim("models\gaussianFilter\gaussianFilter.slx",1);
     image_blurred = image_blurred_mdl;
 end
-
-image_gray = single(rgb2gray(inputImage));
 
 %Displaying the results of blurring
 if(debug == 1)
@@ -41,12 +38,12 @@ end
 width = size(image_gray,2);
 height = size(image_gray,1);
 
-dx = [ 0, 0,0;...
+dx = single([ 0, 0,0;...
        1, 0,-1;...
-       0, 0,0];
-dy = [ 0, 1,0;...
+       0, 0,0]);
+dy = single([ 0, 1,0;...
        0, 0,0;...
-       0,-1,0];
+       0,-1,0]);
 Ix = conv2(image_blurred,dx,'same');  %Convolve across x direction of image
 Iy = conv2(image_blurred,dy,'same');  %Convolve across y direction of image
 
@@ -64,13 +61,9 @@ end
 gm = single(Ix.^2 + Iy.^2);   %Magnitude
 gd = single(atan2(Iy,Ix));    %Direction
 
-gmDSK = gm;
-gdDSK = gd;
-
 if fpga == 1
-    image_blurred = uint8(image_blurred);
-    dx = fi(dx,1,8,0);
-    dy = fi(dx,1,8,0);
+    dx = fliplr(dx);          % should do this for gaussian kernel as well
+    dy = flipud(dy);
     sim("models\magPhase\magPhase.slx",1);
     gm = gm_mdl;
     gd = gd_mdl;
