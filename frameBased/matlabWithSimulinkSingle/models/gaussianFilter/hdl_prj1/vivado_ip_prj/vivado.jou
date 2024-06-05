@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Tue Jun  4 12:58:45 2024
+# Process ID: 29752
+# Current directory: D:/rit/private/mathworks/fileExchange/ravven-tag/frameBased/matlabWithSimulinkSingle/models/gaussianFilter/hdl_prj1/vivado_ip_prj
+# Command line: vivado.exe -mode batch -notrace -source vivado_build.tcl
+# Log file: D:/rit/private/mathworks/fileExchange/ravven-tag/frameBased/matlabWithSimulinkSingle/models/gaussianFilter/hdl_prj1/vivado_ip_prj/vivado.log
+# Journal file: D:/rit/private/mathworks/fileExchange/ravven-tag/frameBased/matlabWithSimulinkSingle/models/gaussianFilter/hdl_prj1/vivado_ip_prj\vivado.jou
+#-----------------------------------------------------------
+source vivado_build.tcl -notrace

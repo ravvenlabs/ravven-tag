@@ -1,0 +1,167 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="rtwreport.css" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>
+Delay Balancing Report for gaussianFilter
+</title>
+
+</head>
+<body bgcolor="#ffffff" link="0033CC" vlink="#666666" onload="try {if (top) {if (top.rtwPageOnLoad) top.rtwPageOnLoad('rtwIdDelayBalancing'); else local_onload();}} catch(err) {};">
+<font SIZE="+2" COLOR="#000066">
+Delay Balancing Report for gaussianFilter
+</font>
+<br /><br /><br /><table width="100%" border="1">
+<tr style="background-color: #eeeeee">
+<th align="left" valign="top" style="border-style: none">
+<b>
+Port
+</b>
+
+</th>
+<th align="left" valign="top" style="border-style: none">
+<b>
+Pipeline Latency
+</b>
+
+</th>
+<th align="left" valign="top" style="border-style: none">
+<b>
+Phase Delay
+</b>
+
+</th>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td align="left" valign="top" style="border-style: none">
+gaussianFilter/gaussianFilter/imageOut
+</td>
+<td align="left" valign="top" style="border-style: none">
+167
+</td>
+<td align="left" valign="top" style="border-style: none">
+0
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td align="left" valign="top" style="border-style: none">
+gaussianFilter/gaussianFilter/imageOut_valid
+</td>
+<td align="left" valign="top" style="border-style: none">
+167
+</td>
+<td align="left" valign="top" style="border-style: none">
+0
+</td>
+
+</tr>
+
+</table>
+<br /><br /><a name="Delay Absorption Summary">
+<font size="+1" color="#000066">
+<b class="midprod">
+Delay Absorption Summary
+</b>
+
+</font>
+
+</a>
+<br /><br />Design delays may not be fully utilized to absorb latency introduced by optimizations and block implementations because there are blockers that inhibit delay absorption. Consider changing <a href="matlab:configset.internal.open('gaussianFilter','PipelineDistributionPriority')"> PipelineDistributionPriority</a> to 'Performance' to allow delay absorption across the blockers. Note that this can lead to validation model mismatches during the initialization cycles or whole simulation time if the model has feedback loops.<br /><br /><a href="matlab:run('hdl_prj1\hdlsrc\gaussianFilter\highlightDelayAbsorption.m')">
+Highlight delay absorption blockers and design delays excluded from absorption
+</a>
+<br /><a href="matlab:run('hdl_prj1\hdlsrc\gaussianFilter\clearhighlighting.m')">
+Clear highlighting
+</a>
+<br /><br /><a name="Delay Absorption Detailed Report">
+<font size="+1" color="#000066">
+<b class="midprod">
+Delay Absorption Detailed Report
+</b>
+
+</font>
+
+</a>
+<br /><br />List of delays used for absorption, delays excluded from absorption, and delay absorption blockers. To exclude specific block from being used for absorption, turn off block property 'AllowDelayDistribution'.<br /><p><hr /></p><h5>
+Report for Subsystem:    <a href="matlab:coder.internal.code2model('gaussianFilter:12021')" name="code2model" class="code2model">
+uint32Tosingle2
+</a>
+
+</h5>
+<table width="100%" border="1">
+<tr style="background-color: #eeeeff">
+<td align="left" valign="top" style="border-style: none">
+<a href="matlab:coder.internal.code2model('gaussianFilter:12035')" name="code2model" class="code2model">
+Math
+Function1
+</a>
+
+</td>
+<td align="left" valign="top" style="border-style: none">
+12 cycles of extra latency cannot be absorbed because of this blocker
+</td>
+
+</tr>
+
+</table>
+<br /><p><hr /></p><h5>
+Report for Subsystem:    <a href="matlab:coder.internal.code2model('gaussianFilter:12043')" name="code2model" class="code2model">
+singleToUint32
+</a>
+
+</h5>
+<table width="100%" border="1">
+<tr style="background-color: #eeeeff">
+<td align="left" valign="top" style="border-style: none">
+<a href="matlab:coder.internal.code2model('gaussianFilter:12059')" name="code2model" class="code2model">
+Divide
+</a>
+
+</td>
+<td align="left" valign="top" style="border-style: none">
+20 cycles of extra latency cannot be absorbed because of this blocker
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td align="left" valign="top" style="border-style: none">
+<a href="matlab:coder.internal.code2model('gaussianFilter:12060')" name="code2model" class="code2model">
+Divide1_recip
+</a>
+
+</td>
+<td align="left" valign="top" style="border-style: none">
+33 cycles of extra latency cannot be absorbed because of this blocker
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td align="left" valign="top" style="border-style: none">
+<a href="matlab:coder.internal.code2model('gaussianFilter:12061')" name="code2model" class="code2model">
+Log
+</a>
+
+</td>
+<td align="left" valign="top" style="border-style: none">
+39 cycles of extra latency cannot be absorbed because of this blocker
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td align="left" valign="top" style="border-style: none">
+<a href="matlab:coder.internal.code2model('gaussianFilter:12063')" name="code2model" class="code2model">
+Math
+Function1
+</a>
+
+</td>
+<td align="left" valign="top" style="border-style: none">
+29 cycles of extra latency cannot be absorbed because of this blocker
+</td>
+
+</tr>
+
+</table>
+<br /><br /><br /><br />
+</body>
+
+</html>

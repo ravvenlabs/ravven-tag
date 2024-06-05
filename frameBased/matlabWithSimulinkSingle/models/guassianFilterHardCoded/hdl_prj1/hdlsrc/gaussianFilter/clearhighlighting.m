@@ -1,0 +1,15 @@
+SLStudio.Utils.RemoveHighlighting(get_param('gaussianFilter', 'handle'));
+SLStudio.Utils.RemoveHighlighting(get_param('gm_gaussianFilter', 'handle'));
+annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition', 0, 1, '');
+annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/singleToUint32/Divide', 0, 1, '');
+annotate_port('gaussianFilter/gaussianFilter/singleToUint32/Divide', 0, 1, '');
+annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/singleToUint32/Divide1_recip', 0, 1, '');
+annotate_port('gaussianFilter/gaussianFilter/singleToUint32/Divide1', 0, 1, '');
+annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/singleToUint32/Log', 0, 1, '');
+annotate_port('gaussianFilter/gaussianFilter/singleToUint32/Log', 0, 1, '');
+annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/singleToUint32/Math Function1', 0, 1, '');
+annotate_port('gaussianFilter/gaussianFilter/singleToUint32/Math Function1', 0, 1, '');
+annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/uint32Tosingle2/Math Function', 0, 1, '');
+annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/uint32Tosingle2/Math Function1', 0, 1, '');
+annotate_port('gaussianFilter/gaussianFilter/uint32Tosingle2/Math Function1', 0, 1, '');
+annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/uint32Tosingle2', 0, 1, '');

@@ -19,8 +19,17 @@ G = [0.0571, 0.1248 ,0.0571;
      0.0571, 0.1248 ,0.0571];
 image_blurred = conv2(image_gray,G,'same'); %Convolve across image
 
+% function Result = frameBasedGaussianFilter(image_gray, G)
+%     Result = hdl.npufun(@gaussianKernel, [3 3], ImageIn,'NonSampleInput', data); 
+% end
+% 
+% function e = gaussianKernel(in,data)
+%     temp = in.*data;
+%     e = sum(sum(temp));
+% end
+
 if fpga == 1
-    sim("models\gaussianFilter\gaussianFilter.slx",1);
+    sim("models\guassianFilterHardCoded\gaussianFilter.slx",1);
     image_blurred = image_blurred_mdl;
 end
 
