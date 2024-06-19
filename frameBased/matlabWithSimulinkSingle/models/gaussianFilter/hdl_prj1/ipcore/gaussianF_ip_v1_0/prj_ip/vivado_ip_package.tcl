@@ -20,7 +20,6 @@ add_files -norecurse {../hdl/gaussianF_ip_src_boundaryCounters_3_3.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_BoundaryCheck_3x3.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_ImageIn_NeighborhoodCreator.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_gaussianKernel.vhd}
-add_files -norecurse {../hdl/gaussianF_ip_src_enabledDelayMatch.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_frameBasedGaussianFilter.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_nfp_abs_single.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_nfp_convert_single_to_fix_8_En0.vhd}
@@ -33,12 +32,10 @@ add_files -norecurse {../hdl/gaussianF_ip_src_nfp_recip_single.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_nfp_log_single.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_singleToUint32.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_imageIn_FIFO.vhd}
-add_files -norecurse {../hdl/gaussianF_ip_src_coeffs_memory.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_Input_FIFOs.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_y_FIFO.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_Output_FIFOs.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_src_gaussianFilter.vhd}
-add_files -norecurse {../hdl/gaussianF_ip_pkg.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_reset_sync.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_dut.vhd}
 add_files -norecurse {../hdl/gaussianF_ip_SimpleDualPortRAM_generic.vhd}
@@ -77,7 +74,7 @@ foreach family $Families {append IPSupportedFamily "{$family} {Production} "}
 set_property supported_families $IPSupportedFamily [ipx::current_core]
 set_property taxonomy {{/HDL Coder Generated IP}} [ipx::current_core]
 set_property description {HDL Coder generated IP} [ipx::current_core]
-set_property core_revision 2113587537 [ipx::current_core]
+set_property core_revision 2113608954 [ipx::current_core]
 
 # Add HDL source files to IP
 ipx::add_file {hdl/gaussianF_ip_src_gaussianFilter_pkg.vhd} [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
@@ -152,10 +149,6 @@ ipx::add_file {hdl/gaussianF_ip_src_gaussianKernel.vhd} [ipx::get_file_groups xi
 set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_src_gaussianKernel.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]]
 ipx::add_file {hdl/gaussianF_ip_src_gaussianKernel.vhd} [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
 set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_src_gaussianKernel.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]]
-ipx::add_file {hdl/gaussianF_ip_src_enabledDelayMatch.vhd} [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
-set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_src_enabledDelayMatch.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]]
-ipx::add_file {hdl/gaussianF_ip_src_enabledDelayMatch.vhd} [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
-set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_src_enabledDelayMatch.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]]
 ipx::add_file {hdl/gaussianF_ip_src_frameBasedGaussianFilter.vhd} [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
 set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_src_frameBasedGaussianFilter.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]]
 ipx::add_file {hdl/gaussianF_ip_src_frameBasedGaussianFilter.vhd} [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
@@ -204,10 +197,6 @@ ipx::add_file {hdl/gaussianF_ip_src_imageIn_FIFO.vhd} [ipx::get_file_groups xili
 set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_src_imageIn_FIFO.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]]
 ipx::add_file {hdl/gaussianF_ip_src_imageIn_FIFO.vhd} [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
 set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_src_imageIn_FIFO.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]]
-ipx::add_file {hdl/gaussianF_ip_src_coeffs_memory.vhd} [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
-set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_src_coeffs_memory.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]]
-ipx::add_file {hdl/gaussianF_ip_src_coeffs_memory.vhd} [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
-set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_src_coeffs_memory.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]]
 ipx::add_file {hdl/gaussianF_ip_src_Input_FIFOs.vhd} [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
 set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_src_Input_FIFOs.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]]
 ipx::add_file {hdl/gaussianF_ip_src_Input_FIFOs.vhd} [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
@@ -224,10 +213,6 @@ ipx::add_file {hdl/gaussianF_ip_src_gaussianFilter.vhd} [ipx::get_file_groups xi
 set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_src_gaussianFilter.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]]
 ipx::add_file {hdl/gaussianF_ip_src_gaussianFilter.vhd} [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
 set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_src_gaussianFilter.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]]
-ipx::add_file {hdl/gaussianF_ip_pkg.vhd} [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
-set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_pkg.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]]
-ipx::add_file {hdl/gaussianF_ip_pkg.vhd} [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
-set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_pkg.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]]
 ipx::add_file {hdl/gaussianF_ip_reset_sync.vhd} [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
 set_property type {{vhdlSource}} [ipx::get_files {hdl/gaussianF_ip_reset_sync.vhd} -of_objects [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]]
 ipx::add_file {hdl/gaussianF_ip_reset_sync.vhd} [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
@@ -426,8 +411,6 @@ ipx::add_file {doc/doc_arch_axi4_lite.jpg} [ipx::get_file_groups xilinx_productg
 set_property type {{image}} [ipx::get_files {doc/doc_arch_axi4_lite.jpg} -of_objects [ipx::get_file_groups xilinx_productguide -of_objects [ipx::current_core]]]
 ipx::add_file {doc/free_running.jpg} [ipx::get_file_groups xilinx_productguide -of_objects [ipx::current_core]]
 set_property type {{image}} [ipx::get_files {doc/free_running.jpg} -of_objects [ipx::get_file_groups xilinx_productguide -of_objects [ipx::current_core]]]
-ipx::add_file {doc/vector_strobe.jpg} [ipx::get_file_groups xilinx_productguide -of_objects [ipx::current_core]]
-set_property type {{image}} [ipx::get_files {doc/vector_strobe.jpg} -of_objects [ipx::get_file_groups xilinx_productguide -of_objects [ipx::current_core]]]
 ipx::add_file {doc/gaussianFilter_ip_core_report.html} [ipx::get_file_groups xilinx_productguide -of_objects [ipx::current_core]]
 set_property type {{html}} [ipx::get_files {doc/gaussianFilter_ip_core_report.html} -of_objects [ipx::get_file_groups xilinx_productguide -of_objects [ipx::current_core]]]
 

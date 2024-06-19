@@ -1,19 +1,23 @@
 function RTW_Sid2UrlHash() {
 	this.urlHashMap = new Array();
+	/* <S2>/Constant */
+	this.urlHashMap["gaussianFilter:11850"] = "gaussianF_ip_src_gaussianFilter.vhd:243,244,245,246,247,248,249,250,251";
 	/* <S2>/Reshape */
-	this.urlHashMap["gaussianFilter:12111"] = "gaussianF_ip_src_gaussianFilter.vhd:289,290,291,292,293";
+	this.urlHashMap["gaussianFilter:12111"] = "msg=rtwMsg_notTraceable&block=gaussianFilter:12111";
+	/* <S2>/Reshape1 */
+	this.urlHashMap["gaussianFilter:12110"] = "msg=rtwMsg_notTraceable&block=gaussianFilter:12110";
 	/* <S2>/frameBasedGaussianFilter */
-	this.urlHashMap["gaussianFilter:11771"] = "gaussianF_ip_src_gaussianFilter.vhd:213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230";
+	this.urlHashMap["gaussianFilter:11771"] = "gaussianF_ip_src_gaussianFilter.vhd:186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203";
 	/* <S2>/singleToUint32 */
-	this.urlHashMap["gaussianFilter:12043"] = "gaussianF_ip_src_gaussianFilter.vhd:232,233,234,235,236,237,238,239,240";
+	this.urlHashMap["gaussianFilter:12043"] = "gaussianF_ip_src_gaussianFilter.vhd:205,206,207,208,209,210,211,212,213";
 	/* <S2>/uint32Tosingle2 */
-	this.urlHashMap["gaussianFilter:12021"] = "gaussianF_ip_src_gaussianFilter.vhd:203,204,205,206,207,208,209,210,211";
+	this.urlHashMap["gaussianFilter:12021"] = "gaussianF_ip_src_gaussianFilter.vhd:176,177,178,179,180,181,182,183,184";
 	/* <S5>:1 */
 	this.urlHashMap["gaussianFilter:11771:1"] = "msg=rtwMsg_optimizedSfObject&block=gaussianFilter:11771:1";
 	/* <S5>:1:7 */
-	this.urlHashMap["gaussianFilter:11771:1:7"] = "gaussianF_ip_src_gaussianKernel.vhd:223,224,225,226,230,232,233,234,235,239,254,255,256,257,261,263,264,265,266,270,272,273,274,275,279,281,282,283,284,288,290,291,292,293,297,299,300,301,302,306";
+	this.urlHashMap["gaussianFilter:11771:1:7"] = "gaussianF_ip_src_gaussianKernel.vhd:136,137,138,139,143,145,146,147,148,152,167,168,169,170,174,176,177,178,179,183,185,186,187,188,192,194,195,196,197,201,203,204,205,206,210,212,213,214,215,219";
 	/* <S5>:1:2 */
-	this.urlHashMap["gaussianFilter:11771:1:2"] = "gaussianF_ip_src_frameBasedGaussianFilter.vhd:197,198,199,200,219,221,222";
+	this.urlHashMap["gaussianFilter:11771:1:2"] = "gaussianF_ip_src_frameBasedGaussianFilter.vhd:132,133,134,135,154,156,157";
 	/* <S6>/Abs */
 	this.urlHashMap["gaussianFilter:12045"] = "gaussianF_ip_src_singleToUint32.vhd:264,265,266,267";
 	/* <S6>/Abs1 */
@@ -157,10 +161,12 @@ function RTW_rtwnameSIDMap() {
 	this.sidHashMap["gaussianFilter"] = {rtwname: "<Root>"};
 	this.rtwnameHashMap["<S2>/imageIn"] = {sid: "gaussianFilter:11768"};
 	this.sidHashMap["gaussianFilter:11768"] = {rtwname: "<S2>/imageIn"};
-	this.rtwnameHashMap["<S2>/coeffs"] = {sid: "gaussianFilter:11851"};
-	this.sidHashMap["gaussianFilter:11851"] = {rtwname: "<S2>/coeffs"};
+	this.rtwnameHashMap["<S2>/Constant"] = {sid: "gaussianFilter:11850"};
+	this.sidHashMap["gaussianFilter:11850"] = {rtwname: "<S2>/Constant"};
 	this.rtwnameHashMap["<S2>/Reshape"] = {sid: "gaussianFilter:12111"};
 	this.sidHashMap["gaussianFilter:12111"] = {rtwname: "<S2>/Reshape"};
+	this.rtwnameHashMap["<S2>/Reshape1"] = {sid: "gaussianFilter:12110"};
+	this.sidHashMap["gaussianFilter:12110"] = {rtwname: "<S2>/Reshape1"};
 	this.rtwnameHashMap["<S2>/frameBasedGaussianFilter"] = {sid: "gaussianFilter:11771"};
 	this.sidHashMap["gaussianFilter:11771"] = {rtwname: "<S2>/frameBasedGaussianFilter"};
 	this.rtwnameHashMap["<S2>/singleToUint32"] = {sid: "gaussianFilter:12043"};

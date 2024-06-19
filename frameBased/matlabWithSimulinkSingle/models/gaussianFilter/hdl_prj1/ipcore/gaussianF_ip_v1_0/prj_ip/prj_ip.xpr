@@ -6,7 +6,7 @@
 <Project Version="7" Minor="40" Path="D:/rit/private/mathworks/fileExchange/ravven-tag/frameBased/matlabWithSimulinkSingle/models/gaussianFilter/hdl_prj1/ipcore/gaussianF_ip_v1_0/prj_ip/prj_ip.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="a6fc5d3f4daa438aab1b879dba325b2b"/>
+    <Option Name="Id" Val="9552e74838d349f79cabf9a5d61d5d7e"/>
     <Option Name="Part" Val="xc7z020clg400-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -109,12 +109,6 @@
         </FileInfo>
       </File>
       <File Path="$PPRDIR/../hdl/gaussianF_ip_axi4_stream_video_slave.vhd">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/../hdl/gaussianF_ip_pkg.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -240,12 +234,6 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../hdl/gaussianF_ip_src_enabledDelayMatch.vhd">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
       <File Path="$PPRDIR/../hdl/gaussianF_ip_src_gaussianKernel.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -319,12 +307,6 @@
         </FileInfo>
       </File>
       <File Path="$PPRDIR/../hdl/gaussianF_ip_src_imageIn_FIFO.vhd">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/../hdl/gaussianF_ip_src_coeffs_memory.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>

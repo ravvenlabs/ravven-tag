@@ -14,7 +14,7 @@ fprintf(1,"Connected to server\n");
 
 inputImage = imread('input.bmp');
 image_gray = single(rgb2gray(inputImage));
-sim("singleToUint8.slx",1);
+sim("singleToUint32.slx",1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % send raw frames
@@ -38,7 +38,7 @@ temp = read(client,1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % receive processed frames
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
-if x < 10
+if x < 5
     % receive feedthrough frame
     write(client,'1');
     flush(client);
@@ -47,18 +47,19 @@ else
     write(client,'2');
     flush(client); 
 end
-dataLeft = read(client,width*height);   
+dataLeft = read(client,width*height,"uint32");   
 temp = reshape(dataLeft,[width,height]);
 leftProcessed = permute(temp,[2 1]);
 
-dataRight = read(client,width*height);
+dataRight = read(client,width*height,"uint32");
 temp    = reshape(dataRight,[width,height]);
 rightProcessed = permute(temp,[2 1]);
 
 image_received = leftProcessed;
-sim("uint8toSingle.slx",1);
+sim("uint32toSingle.slx",1);
 
-pause(1)
+imagesc(image_single)
+x
 end
 t = tiledlayout(1,2, 'Padding', 'none', 'TileSpacing', 'compact'); 
 t.TileSpacing = 'compact';

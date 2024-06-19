@@ -22,9 +22,9 @@ INFO: [PS7-6] Configuring Board Preset part0. Please wait ......
 INFO: [Ipptcl 7-1463] No Compatible Board Interface found. Board Tab not created in customize GUI
 Wrote  : <D:\rit\private\mathworks\fileExchange\ravven-tag\frameBased\matlabWithSimulinkSingle\models\gaussianFilter\hdl_prj1\vivado_ip_prj\src\design_1\design_1.bd> 
 WARNING: [BD_TCL-1000] This Tcl script was generated from a block design that has not been validated. It is possible that design <design_1> may result in errors during validation.
-INFO: [Common 17-206] Exiting Vivado at Tue Jun  4 12:57:56 2024...
+INFO: [Common 17-206] Exiting Vivado at Wed Jun 19 09:55:56 2024...
 
-Elapsed time is 10.5763 seconds.
+Elapsed time is 8.5347 seconds.
 
 ****** Vivado v2019.1 (64-bit)
   **** SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
@@ -67,10 +67,10 @@ Wrote  : <D:\rit\private\mathworks\fileExchange\ravven-tag\frameBased\matlabWith
 VHDL Output written to : D:/rit/private/mathworks/fileExchange/ravven-tag/frameBased/matlabWithSimulinkSingle/models/gaussianFilter/hdl_prj1/vivado_ip_prj/src/design_1/synth/design_1.vhd
 VHDL Output written to : D:/rit/private/mathworks/fileExchange/ravven-tag/frameBased/matlabWithSimulinkSingle/models/gaussianFilter/hdl_prj1/vivado_ip_prj/src/design_1/sim/design_1.vhd
 VHDL Output written to : D:/rit/private/mathworks/fileExchange/ravven-tag/frameBased/matlabWithSimulinkSingle/models/gaussianFilter/hdl_prj1/vivado_ip_prj/src/design_1/hdl/design_1_wrapper.vhd
-make_wrapper: Time (s): cpu = 00:00:01 ; elapsed = 00:00:10 . Memory (MB): peak = 653.730 ; gain = 308.398
+make_wrapper: Time (s): cpu = 00:00:03 ; elapsed = 00:00:08 . Memory (MB): peak = 652.785 ; gain = 309.234
 INFO: [BD 5-320] Validate design is not run, since the design is already validated.
-INFO: [Common 17-206] Exiting Vivado at Tue Jun  4 12:58:13 2024...
+INFO: [Common 17-206] Exiting Vivado at Wed Jun 19 09:56:11 2024...
 
-Elapsed time is 17.4699 seconds.
+Elapsed time is 15.2638 seconds.
 
 

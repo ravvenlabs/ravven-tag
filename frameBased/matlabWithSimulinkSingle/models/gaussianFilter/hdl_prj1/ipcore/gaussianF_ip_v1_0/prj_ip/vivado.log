@@ -2,8 +2,8 @@
 # Vivado v2019.1 (64-bit)
 # SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
 # IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
-# Start of session at: Tue Jun  4 12:57:20 2024
-# Process ID: 29332
+# Start of session at: Wed Jun 19 09:54:27 2024
+# Process ID: 85724
 # Current directory: D:/rit/private/mathworks/fileExchange/ravven-tag/frameBased/matlabWithSimulinkSingle/models/gaussianFilter/hdl_prj1/ipcore/gaussianF_ip_v1_0/prj_ip
 # Command line: vivado.exe -mode batch -notrace -source vivado_ip_package.tcl
 # Log file: D:/rit/private/mathworks/fileExchange/ravven-tag/frameBased/matlabWithSimulinkSingle/models/gaussianFilter/hdl_prj1/ipcore/gaussianF_ip_v1_0/prj_ip/vivado.log
@@ -70,8 +70,6 @@ WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_ImageIn_Neighborhood
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_ImageIn_NeighborhoodCreator.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_gaussianKernel.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_gaussianKernel.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
-WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_enabledDelayMatch.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
-WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_enabledDelayMatch.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_frameBasedGaussianFilter.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_frameBasedGaussianFilter.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_nfp_abs_single.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
@@ -96,8 +94,6 @@ WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_singleToUint32.vhd" 
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_singleToUint32.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_imageIn_FIFO.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_imageIn_FIFO.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
-WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_coeffs_memory.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
-WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_coeffs_memory.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_Input_FIFOs.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_Input_FIFOs.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_y_FIFO.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
@@ -106,8 +102,6 @@ WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_Output_FIFOs.vhd" al
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_Output_FIFOs.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_gaussianFilter.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_src_gaussianFilter.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
-WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_pkg.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
-WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_pkg.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_reset_sync.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_reset_sync.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_dut.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
@@ -134,5 +128,11 @@ WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_fifo_eol.vhd" already ex
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_fifo_eol.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_adapter_in_module.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
 WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_adapter_in_module.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
+WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_adapter_in.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
+WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_adapter_in.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
+WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_axi4_stream_video_slave.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
+WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_axi4_stream_video_slave.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
+WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_addr_decoder.vhd" already exists in file group "xilinx_anylanguagesynthesis", cannot add it again.
+WARNING: [IP_Flow 19-1971] File named "hdl/gaussianF_ip_addr_decoder.vhd" already exists in file group "xilinx_anylanguagebehavioralsimulation", cannot add it again.
 INFO: [Common 17-14] Message 'IP_Flow 19-1971' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
-INFO: [Common 17-206] Exiting Vivado at Tue Jun  4 12:57:26 2024...
+INFO: [Common 17-206] Exiting Vivado at Wed Jun 19 09:54:34 2024...

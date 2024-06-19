@@ -1,8 +1,9 @@
 function RTW_SidParentMap() {
     this.sidParentMap = new Array();
     this.sidParentMap["gaussianFilter:11768"] = "gaussianFilter:11767";
-    this.sidParentMap["gaussianFilter:11851"] = "gaussianFilter:11767";
+    this.sidParentMap["gaussianFilter:11850"] = "gaussianFilter:11767";
     this.sidParentMap["gaussianFilter:12111"] = "gaussianFilter:11767";
+    this.sidParentMap["gaussianFilter:12110"] = "gaussianFilter:11767";
     this.sidParentMap["gaussianFilter:11771"] = "gaussianFilter:11767";
     this.sidParentMap["gaussianFilter:12043"] = "gaussianFilter:11767";
     this.sidParentMap["gaussianFilter:12021"] = "gaussianFilter:11767";

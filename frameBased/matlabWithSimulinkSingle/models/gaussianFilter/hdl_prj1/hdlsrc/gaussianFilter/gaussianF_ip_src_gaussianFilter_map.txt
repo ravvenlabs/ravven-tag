@@ -16,7 +16,6 @@ boundaryCounters_3_3 --> gaussianF_ip_src_boundaryCounters_3_3
 BoundaryCheck_3x3 --> gaussianF_ip_src_BoundaryCheck_3x3
  --> gaussianF_ip_src_ImageIn_NeighborhoodCreator
 gaussianFilter/gaussianFilter/frameBasedGaussianFilter/gaussianKernel --> gaussianF_ip_src_gaussianKernel
-gaussianFilter/gaussianFilter/frameBasedGaussianFilter/enabledDelayMatch --> gaussianF_ip_src_enabledDelayMatch
 gaussianFilter/gaussianFilter/frameBasedGaussianFilter --> gaussianF_ip_src_frameBasedGaussianFilter
 gaussianFilter/gaussianFilter/singleToUint32/nfp_abs_single --> gaussianF_ip_src_nfp_abs_single
 gaussianFilter/gaussianFilter/singleToUint32/nfp_convert_single_to_fix_8_En0 --> gaussianF_ip_src_nfp_convert_single_to_fix_8_En0
@@ -29,7 +28,6 @@ gaussianFilter/gaussianFilter/singleToUint32/nfp_recip_single --> gaussianF_ip_s
 gaussianFilter/gaussianFilter/singleToUint32/nfp_log_single --> gaussianF_ip_src_nfp_log_single
 gaussianFilter/gaussianFilter/singleToUint32 --> gaussianF_ip_src_singleToUint32
 gaussianFilter/gaussianFilter/Input_FIFOs/imageIn_FIFO --> gaussianF_ip_src_imageIn_FIFO
-gaussianFilter/gaussianFilter/Input_FIFOs/coeffs_memory --> gaussianF_ip_src_coeffs_memory
 gaussianFilter/gaussianFilter/Input_FIFOs --> gaussianF_ip_src_Input_FIFOs
 gaussianFilter/gaussianFilter/Output_FIFOs/y_FIFO --> gaussianF_ip_src_y_FIFO
 gaussianFilter/gaussianFilter/Output_FIFOs --> gaussianF_ip_src_Output_FIFOs

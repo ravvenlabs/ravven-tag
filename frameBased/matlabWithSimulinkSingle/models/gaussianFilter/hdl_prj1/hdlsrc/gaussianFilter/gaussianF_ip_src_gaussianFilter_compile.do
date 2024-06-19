@@ -18,7 +18,6 @@ vcom  gaussianF_ip_src_boundaryCounters_3_3.vhd
 vcom  gaussianF_ip_src_BoundaryCheck_3x3.vhd
 vcom  gaussianF_ip_src_ImageIn_NeighborhoodCreator.vhd
 vcom  gaussianF_ip_src_gaussianKernel.vhd
-vcom  gaussianF_ip_src_enabledDelayMatch.vhd
 vcom  gaussianF_ip_src_frameBasedGaussianFilter.vhd
 vcom  gaussianF_ip_src_nfp_abs_single.vhd
 vcom  gaussianF_ip_src_nfp_convert_single_to_fix_8_En0.vhd
@@ -31,7 +30,6 @@ vcom  gaussianF_ip_src_nfp_recip_single.vhd
 vcom  gaussianF_ip_src_nfp_log_single.vhd
 vcom  gaussianF_ip_src_singleToUint32.vhd
 vcom  gaussianF_ip_src_imageIn_FIFO.vhd
-vcom  gaussianF_ip_src_coeffs_memory.vhd
 vcom  gaussianF_ip_src_Input_FIFOs.vhd
 vcom  gaussianF_ip_src_y_FIFO.vhd
 vcom  gaussianF_ip_src_Output_FIFOs.vhd

@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:ip:gaussianF_ip:1.0
--- IP Revision: 2113587537
+-- IP Revision: 2113608954
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;

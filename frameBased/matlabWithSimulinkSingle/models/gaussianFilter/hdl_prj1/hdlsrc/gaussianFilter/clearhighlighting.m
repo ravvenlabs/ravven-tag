@@ -16,15 +16,11 @@ annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/frame
 annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/frameBasedGaussianFilter/gaussianKernel/t6', 1, 1, '');
 annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/frameBasedGaussianFilter/gaussianKernel/t7', 1, 1, '');
 annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/uint32Tosingle2', 0, 1, '');
-annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/Reshape', 1, 1, '');
-annotate_port('gaussianFilter/gaussianFilter/Reshape', 1, 1, '');
 annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/singleToUint32', 0, 1, '');
 annotate_port('gaussianFilter/gaussianFilter/singleToUint32', 0, 1, '');
+annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/t', 1, 1, '');
 annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/frameBasedGaussianFilter/ImageIn_NeighborhoodCreator/NeighborhoodCreator_3x3/row2_linebuffer', 0, 1, '');
 annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/frameBasedGaussianFilter/ImageIn_NeighborhoodCreator/NeighborhoodCreator_3x3/row1_linebuffer/ram_generic', 1, 1, '');
 annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/frameBasedGaussianFilter/ImageIn_NeighborhoodCreator/BoundaryCheck_3x3/t', 1, 1, '');
 annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/frameBasedGaussianFilter/ImageIn_NeighborhoodCreator/BoundaryCheck_3x3/t1', 1, 1, '');
 annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/frameBasedGaussianFilter/ImageIn_NeighborhoodCreator/BoundaryCheck_3x3/t2', 1, 1, '');
-annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/frameBasedGaussianFilter/enabledDelayMatch/t', 1, 1, '');
-annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/frameBasedGaussianFilter/enabledDelayMatch/t1', 1, 1, '');
-annotate_port('gm_gaussianFilter/gaussianFilter/streaming_matrix_partition/frameBasedGaussianFilter/enabledDelayMatch/t2', 1, 1, '');

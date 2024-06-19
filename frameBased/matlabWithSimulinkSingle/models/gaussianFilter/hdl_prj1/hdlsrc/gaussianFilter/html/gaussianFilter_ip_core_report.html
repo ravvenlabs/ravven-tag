@@ -106,7 +106,7 @@ thead.reportTableHeader {
 <tr>
 <td>Model version
 </td>
-<td class="summaryTableSndColEvenRow">8.37
+<td class="summaryTableSndColEvenRow">8.39
 </td>
 </tr>
 <tr>
@@ -118,7 +118,7 @@ thead.reportTableHeader {
 <tr>
 <td>IP core generated on
 </td>
-<td class="summaryTableSndColEvenRow">04-Jun-2024 12:57:11
+<td class="summaryTableSndColEvenRow">19-Jun-2024 09:54:19
 </td>
 </tr>
 <tr>
@@ -174,31 +174,17 @@ Target platform interface table:
 </td>
 </tr>
 <tr>
-<td class="distinctCellColor"><a class="code2model" id="code2model" href="matlab:Simulink.ID.hilite('gaussianFilter:11851')">coeffs</a>
+<td class="distinctCellColor"><a class="code2model" id="code2model" href="matlab:Simulink.ID.hilite('gaussianFilter:11784')">imageOut</a>
 </td>
-<td class="distinctCellColor">Inport
+<td class="distinctCellColor">Outport
 </td>
-<td class="distinctCellColor">single (9)
+<td class="distinctCellColor">uint32 [480 x 752] (streamed port)
 </td>
-<td class="distinctCellColor">AXI4-Lite
+<td class="distinctCellColor">AXI4-Stream Video Master
 </td>
-<td class="distinctCellColor">x"100"
+<td class="distinctCellColor">Pixel Data
 </td>
 <td class="distinctCellColor">
-</td>
-</tr>
-<tr>
-<td><a class="code2model" id="code2model" href="matlab:Simulink.ID.hilite('gaussianFilter:11784')">imageOut</a>
-</td>
-<td>Outport
-</td>
-<td>uint32 [480 x 752] (streamed port)
-</td>
-<td>AXI4-Stream Video Master
-</td>
-<td>Pixel Data
-</td>
-<td>
 </td>
 </tr>
 </tbody>
@@ -273,23 +259,7 @@ The following AXI4-Lite bus accessible registers were generated for this IP core
 </td>
 <td>0x18
 </td>
-<td>contains unique IP timestamp (yymmddHHMM): 2406041257
-</td>
-</tr>
-<tr>
-<td class="distinctCellColor">coeffs_Data
-</td>
-<td class="distinctCellColor">0x100
-</td>
-<td class="distinctCellColor">data register for Inport coeffs. Vector with 9 elements. Register is split across a total of 9 addresses, last address is 0x120.
-</td>
-</tr>
-<tr>
-<td>coeffs_Strobe
-</td>
-<td>0x140
-</td>
-<td>strobe register for port coeffs
+<td>contains unique IP timestamp (yymmddHHMM): 2406190954
 </td>
 </tr>
 </tbody>
@@ -328,7 +298,7 @@ For example, to reset the IP core, write 0x1 to the bit 0 of IPCore_Reset regist
 <br/><br/>
 The AXI4 Slave port to pipeline register ratio selected as 35 in task 3.2 for this model. The default delay to read AXI4 register is one clock cycle.
 Depending on the selected ratio and IO connected to AXI4 interface, register pipelining is introduced in the read logic of AXI4 registers.
-For your model AXI4 pipeline register ratio setting 35 is larger than all the readable AXI4 slave registers. Total readable AXI4 slave registers are 15, so no pipelining is added to the AXI4 register read back logic.
+For your model AXI4 pipeline register ratio setting 35 is larger than all the readable AXI4 slave registers. Total readable AXI4 slave registers are 6, so no pipelining is added to the AXI4 register read back logic.
 <br/><br/>
 <b>Processor/FPGA Synchronization</b>
 <br/><br/>
@@ -337,17 +307,6 @@ The
 mode means there is no explicit synchronization between embedded processor software execution (SW) and the IP core (HW). SW and HW runs independently. The data written from the processor to IP core takes effect immediately, and the data read from the IP core is the latest data available on the IP core output ports. 
 <br/><br/>
 <img src="free_running.jpg"/>
-<br/><br/>
-<b>Vector Data Read/Write with Strobe Synchronization</b>
-<br/><br/>
-Vector data and data whose bit width is wider than the AXI4 register width (32 bits) use multiple registers and therefore require multiple sequential AXI4 reads/writes. All such data is treated as synchronous to the IP core algorithm logic. Additional strobe registers added for each such input and output port maintain this synchronization across multiple sequential AXI4 reads/writes. For input ports, the strobe register controls the enables on a set of shadow registers, allowing the IP core logic to see all the updated data elements simultaneously. For output ports, the strobe register controls the synchronous capturing of data elements to be read.
-<br/><br/>
-To read a data port that uses multiple registers, first write the strobe address with 0x1, then read each desired data element from corresponding address range. To write a data port that uses multiple registers, first write each desired data element, then write 0x1 to the strobe address to complete the transaction.
-<br/><br/>
-To read data whose bit width is wider than the AXI4 register width (32 bits), the individual 32-bit data elements should be concatenated after reading. For write operations, the data should be sliced into 32-bit sections before writing.
-<br/><br/>
-<img src="vector_strobe.jpg"/>
-<br/><br/>
 <br/><br/>
 <b>Xilinx Vivado Environment Integration</b>
 <br/><br/>
@@ -435,8 +394,6 @@ Following files are generated under this folder:
 <br/>
 <a href="matlab:edit('hdl_prj1\ipcore\gaussianF_ip_v1_0\hdl\gaussianF_ip_src_gaussianKernel.vhd')">hdl\gaussianF_ip_src_gaussianKernel.vhd</a>
 <br/>
-<a href="matlab:edit('hdl_prj1\ipcore\gaussianF_ip_v1_0\hdl\gaussianF_ip_src_enabledDelayMatch.vhd')">hdl\gaussianF_ip_src_enabledDelayMatch.vhd</a>
-<br/>
 <a href="matlab:edit('hdl_prj1\ipcore\gaussianF_ip_v1_0\hdl\gaussianF_ip_src_frameBasedGaussianFilter.vhd')">hdl\gaussianF_ip_src_frameBasedGaussianFilter.vhd</a>
 <br/>
 <a href="matlab:edit('hdl_prj1\ipcore\gaussianF_ip_v1_0\hdl\gaussianF_ip_src_nfp_abs_single.vhd')">hdl\gaussianF_ip_src_nfp_abs_single.vhd</a>
@@ -461,8 +418,6 @@ Following files are generated under this folder:
 <br/>
 <a href="matlab:edit('hdl_prj1\ipcore\gaussianF_ip_v1_0\hdl\gaussianF_ip_src_imageIn_FIFO.vhd')">hdl\gaussianF_ip_src_imageIn_FIFO.vhd</a>
 <br/>
-<a href="matlab:edit('hdl_prj1\ipcore\gaussianF_ip_v1_0\hdl\gaussianF_ip_src_coeffs_memory.vhd')">hdl\gaussianF_ip_src_coeffs_memory.vhd</a>
-<br/>
 <a href="matlab:edit('hdl_prj1\ipcore\gaussianF_ip_v1_0\hdl\gaussianF_ip_src_Input_FIFOs.vhd')">hdl\gaussianF_ip_src_Input_FIFOs.vhd</a>
 <br/>
 <a href="matlab:edit('hdl_prj1\ipcore\gaussianF_ip_v1_0\hdl\gaussianF_ip_src_y_FIFO.vhd')">hdl\gaussianF_ip_src_y_FIFO.vhd</a>
@@ -470,8 +425,6 @@ Following files are generated under this folder:
 <a href="matlab:edit('hdl_prj1\ipcore\gaussianF_ip_v1_0\hdl\gaussianF_ip_src_Output_FIFOs.vhd')">hdl\gaussianF_ip_src_Output_FIFOs.vhd</a>
 <br/>
 <a href="matlab:edit('hdl_prj1\ipcore\gaussianF_ip_v1_0\hdl\gaussianF_ip_src_gaussianFilter.vhd')">hdl\gaussianF_ip_src_gaussianFilter.vhd</a>
-<br/>
-<a href="matlab:edit('hdl_prj1\ipcore\gaussianF_ip_v1_0\hdl\gaussianF_ip_pkg.vhd')">hdl\gaussianF_ip_pkg.vhd</a>
 <br/>
 <a href="matlab:edit('hdl_prj1\ipcore\gaussianF_ip_v1_0\hdl\gaussianF_ip_reset_sync.vhd')">hdl\gaussianF_ip_reset_sync.vhd</a>
 <br/>
