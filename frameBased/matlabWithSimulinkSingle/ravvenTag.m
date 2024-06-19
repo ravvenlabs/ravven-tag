@@ -29,7 +29,7 @@ image_blurred = conv2(image_gray,G,'same'); %Convolve across image
 % end
 
 if fpga == 1
-    sim("models\guassianFilterHardCoded\gaussianFilter.slx",1);
+    sim("models\gaussianFilter\gaussianFilter.slx",1);
     image_blurred = image_blurred_mdl;
 end
 
@@ -365,7 +365,7 @@ if(debug == 1)
     end
     hold off;
     saveas(FigH,append('outputs\detectedTags.png'))
-    close(FigH)
+    %close(FigH)
 end
 
 %These are helper / utility functions
