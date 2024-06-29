@@ -1,5 +1,5 @@
 debug = 1;
-fpga = 0;
+fpga = 1;
 inputImage = imread('input.bmp');
 image_gray = single(rgb2gray(inputImage));
 
