@@ -106,7 +106,7 @@ gd = single(atan2(Iy,Ix));    %Direction
 if fpga == 1
     dx = fliplr(dx);          % should do this for gaussian kernel as well
     dy = flipud(dy);
-    sim("models\fixedPointStats.slx",2);
+    sim("models\fixedPointStats16bit.slx",2);
     gm = gm_mdl;
     gd = gd_mdl;
 end
