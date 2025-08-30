@@ -29,7 +29,7 @@ LinkedSegments = struct('SegNum',Pos,'LSeg',[]); %struct to hold seg data
 GoodPts = PossibleIdx;
 
 ValidPts = [];
-for i = 1:size(GoodPts)
+for i = 1:length(GoodPts)
     %Checks that the next segment has the right winding
     if(mod2pi(SegmentList(GoodPts(i),5) - SegmentList(Pos,5)) < 0)
         ValidPts = [ValidPts,GoodPts(i)];
